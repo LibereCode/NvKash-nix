@@ -3,7 +3,7 @@ let
   pluginName = "tiny-inline-diagnostic";
 in
 {
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.plugins =
     {
       pkgs,
       config,

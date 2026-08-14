@@ -1,11 +1,15 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "mini";
+in
 {
-
-  # flake.homeModules.nixvim_plug_mini =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkraw;
+    in
     {
-      plugins.mini = {
+      plugins.${plugin_name} = {
         enable = true;
         mockDevIcons = true;
 

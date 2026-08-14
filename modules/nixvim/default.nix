@@ -7,7 +7,7 @@ let
   moduleName = "default";
 in
 {
-  flake.homeModules.${moduleName} =
+  flake.nixvimModules.${moduleName} =
     {
       pkgs,
       config,
@@ -15,16 +15,9 @@ in
       ...
     }@a:
     let
-      enable = config.my.modules.${moduleName}.enable;
-      mkIf = lib.mkIf enable;
       lua = a.lib.nixvim.mkRaw;
     in
     {
-      options.my.modules.${moduleName}.enable = a.lib.mkOption {
-        default = true; # TODO # a.config.my.bundles.${bundleName}.enable;
-        type = a.lib.types.bool;
-        description = "Whether to enable {module}`${moduleName}`";
-      };
 
       /*
         =====================================================================
@@ -48,14 +41,12 @@ in
         =====================================================================
       */
 
-      # config = top.lib.mkIf (config.my.nixvim.enable) {
-      config = mkIf {
+      config = {
         # ## platforms -- HM-options
         # inherit enable;
         # defaultEditor = true;
         # vimdiffAlias = true;
-
-        nixpkgs.useGlobalPackages = true;
+        # nixpkgs.useGlobalPackages = true;
 
         # options -- neovim
         viAlias = true;
@@ -65,11 +56,12 @@ in
           ''
             -- extraConfigLuaPost (nixvim)
             require("lua")
+            print("require('lua')")
           '';
 
         globals = {
           mapleader = " ";
-          localmapleader = "  ";
+          localmapleader = "<leader><leader>";
         };
         keymaps = [
           {

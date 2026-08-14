@@ -1,13 +1,16 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "dap";
+in
 {
-
-  # flake.homeModules.nixvim_plug_dap =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkRaw;
+    in
     {
       plugins = {
-
-        dap = {
+        ${plugin_name} = {
           enable = true;
           # adapters = {}; # TODO:
           # configurations = {}; # TODO:

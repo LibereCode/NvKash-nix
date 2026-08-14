@@ -4,7 +4,7 @@
   ...
 }@top:
 {
-  flake.homeModules.nixvim_lsp =
+  flake.nixvimModules.lsp =
     {
       pkgs,
       lib,

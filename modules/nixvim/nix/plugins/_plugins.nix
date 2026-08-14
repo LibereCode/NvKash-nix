@@ -4,7 +4,7 @@ let
   pluginName = "FOOBAR";
 in
 {
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.plugins =
     {
       pkgs,
       config,

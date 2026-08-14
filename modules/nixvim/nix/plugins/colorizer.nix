@@ -1,13 +1,13 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "colorizer";
+in
 {
-
-  # flake.homeModules.nixvim_plug_colorizer =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, ... }@a:
     {
       plugins = {
-
-        colorizer = {
+        ${plugin_name} = {
           enable = true;
           # settings = {}; # TODO:
         };

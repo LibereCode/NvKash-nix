@@ -1,12 +1,17 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "treesitter";
+in
 {
-  # flake.homeModules.nixvim_plug_treesitter =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkraw;
+    in
     {
       plugins = {
         # https://nix-community.github.io/nixvim/plugins/treesitter/index.html#treesitter
-        treesitter = {
+        ${plugin_name} = {
           enable = true;
           highlight.enable = true;
           indent.enable = true;

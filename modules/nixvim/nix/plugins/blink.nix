@@ -1,8 +1,9 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "blink-cmp";
+in
 {
-
-  # flake.homeModules.nixvim_plug_blink =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     {
       config,
       lib,
@@ -17,7 +18,7 @@
     {
       #INFO: <https://nix-community.github.io/nixvim/plugins/blink-cmp/settings/index.html>
       plugins = {
-        blink-cmp = {
+        ${plugin_name} = {
           enable = true;
           setupLspCapabilities = true;
 

@@ -1,10 +1,9 @@
 { self, inputs, ... }@top:
 let
-  #XXX: RENAME TO PLUGIN'S NAME
   pluginName = "markdown";
 in
 {
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.plugins =
     {
       pkgs,
       config,

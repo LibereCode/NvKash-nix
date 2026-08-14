@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
 
-  flake.homeModules.nixvim_dependencies =
+  flake.nixvimModules.nixvim_dependencies =
     { pkgs, ... }@args:
     {
       dependencies = builtins.listToAttrs (

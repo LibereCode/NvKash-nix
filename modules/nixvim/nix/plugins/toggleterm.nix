@@ -4,7 +4,7 @@ let
 in
 {
   # flake.homeModules."nixvim_plug_${pluginName}" =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.plugins =
     { pkgs, config, ... }@a:
     let
       lua = a.lib.nixvim.mkRaw;

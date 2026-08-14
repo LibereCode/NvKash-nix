@@ -3,7 +3,7 @@ let
   pluginName = "nvim-autopairs";
 in
 {
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.plugins =
     {
       pkgs,
       config,

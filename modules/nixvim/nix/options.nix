@@ -7,7 +7,7 @@ let
   tabLen = 4;
 in
 {
-  config.flake.homeModules.nixvim_options =
+  flake.nixvimModules.options =
     { pkgs, ... }@a:
     let
       lua = a.lib.nixvim.mkRaw;

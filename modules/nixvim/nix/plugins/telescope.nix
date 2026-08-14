@@ -1,13 +1,16 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "telescope";
+in
 {
-
-  # flake.homeModules.nixvim_plug_telescope =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkraw;
+    in
     {
       plugins = {
-
-        telescope = {
+        ${plugin_name} = {
           enable = true;
           # keymaps = {}; # TODO:
           # extensions = {}; # TODO:

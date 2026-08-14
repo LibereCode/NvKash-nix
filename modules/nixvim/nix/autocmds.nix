@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.homeModules.nixvim_autocmds =
+  flake.nixvimModules.autocmds =
     {
       config,
       pkgs,

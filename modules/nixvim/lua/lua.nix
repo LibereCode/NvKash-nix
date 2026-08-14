@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.homeModules.nixvim_lua =
+  flake.nixvimModules.lua =
     { pkgs, ... }@a:
     {
       # <https://nix-community.github.io/nixvim/NeovimOptions/index.html#files>

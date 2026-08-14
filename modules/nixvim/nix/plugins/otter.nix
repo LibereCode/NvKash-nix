@@ -1,9 +1,9 @@
 { self, inputs, ... }@top:
 let
-  pluginName = "otter";
+  plugin_name = "otter";
 in
 {
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     {
       pkgs,
       config,
@@ -15,7 +15,7 @@ in
     in
     {
       plugins = {
-        ${pluginName} = {
+        ${plugin_name} = {
           enable = false; # FIXME: need better lsp use
 
           # settings = {};

@@ -1,18 +1,21 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "lualine";
+in
 {
-  # flake.homeModules.nixvim_plug_lualine =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkraw;
+    in
     {
       # see: <https://nix-community.github.io/nixvim/plugins/lualine/index.html>
       plugins = {
-
-        lualine = {
+        ${plugin_name} = {
           enable = true;
 
           # settings = {}; # TODO: <https://nix-community.github.io/nixvim/plugins/lualine/settings/index.html>
         };
-
       };
     };
 }

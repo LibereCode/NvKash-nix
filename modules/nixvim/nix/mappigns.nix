@@ -1,6 +1,6 @@
 { self, inputs, ... }@top:
 {
-  flake.homeModules.nixvim_mappings =
+  flake.nixvimModules.mappings =
     { pkgs, ... }@a:
     let
       # mkLua = programs.nixvim.lib.nixvim.mkRaw;

@@ -1,14 +1,14 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "bufferline";
+in
 {
-
-  # flake.homeModules.nixvim_plug_bufferline =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, ... }@a:
     {
       # see: <https://nix-community.github.io/nixvim/plugins/bufferline/index.html>
       plugins = {
-
-        bufferline = {
+        ${plugin_name} = {
           enable = true;
 
           # settings = {}; # TODO: <https://nix-community.github.io/nixvim/plugins/bufferline/settings/index.html>

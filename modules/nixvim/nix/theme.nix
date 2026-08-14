@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.homeModules.nixvim_theme =
+  flake.nixvimModules.theme =
     { pkgs, ... }@args:
     {
       colorscheme = "kanagawa-dragon";

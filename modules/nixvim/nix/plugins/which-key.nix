@@ -1,13 +1,16 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "which-key";
+in
 {
-
-  # flake.homeModules.nixvim_plug_which-key =
-  flake.homeModules.nixvim_plugins =
-    { pkgs, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
+    let
+      inherit (lib.nixvim) mkraw;
+    in
     {
       plugins = {
-
-        which-key = {
+        ${plugin_name} = {
           enable = true;
           # TODO: somehow add mappings. via luaConfig?
           # luaConfig = ''

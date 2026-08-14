@@ -1,13 +1,13 @@
 { self, inputs, ... }@top:
+let
+  plugin_name = "comment";
+in
 {
-
-  # flake.homeModules.nixvim_plug_comment =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, ... }@a:
     {
       plugins = {
-
-        comment = {
+        ${plugin_name} = {
           enable = true;
           # settings = { }; # TODO:
         };

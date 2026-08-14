@@ -1,18 +1,16 @@
+{ self, inputs, ... }@top:
+let
+  plugin_name = "conform-nvim";
+in
 {
-  self,
-  inputs,
-  ...
-}@top:
-{
-  # flake.homeModules.nixvim_plug_conform =
-  flake.homeModules.nixvim_plugins =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, ... }@a:
     let
       mkLua = a.lib.nixvim.mkRaw;
     in
     {
       plugins = {
-        conform-nvim = {
+        ${plugin_name} = {
           enable = true;
 
           autoInstall = {

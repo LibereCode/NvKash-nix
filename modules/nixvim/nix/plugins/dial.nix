@@ -1,17 +1,16 @@
 { self, inputs, ... }@top:
 let
-  # XXX: RENAME TO PLUGIN'S NAME
-  pluginName = "dial";
+  plugin_name = "dial";
 in
 {
-  flake.homeModules.nixvim_plugins =
-    { pkgs, config, ... }@a:
+  flake.nixvimmodules.${plugin_name} =
+    { pkgs, lib, ... }@a:
     let
-      lua = a.lib.nixvim.mkRaw;
+      inherit (lib.nixvim) mkRaw;
     in
     {
       plugins = {
-        ${pluginName} = {
+        ${plugin_name} = {
           enable = true;
 
           # Docs: <https://github.com/monaqa/dial.nvim>
