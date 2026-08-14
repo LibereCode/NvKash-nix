@@ -94,6 +94,7 @@ o.foldtext = ""
 
 o.smarttab = true
 o.smartindent = true -- TODO: cindent for nix files
+o.expandtab = true
 
 o.mouse = "nvc"
 o.selectmode = "key" -- "mouse"
