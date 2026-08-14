@@ -1,0 +1,230 @@
+--[[
+|==============|
+|   MAPPINGS   |
+|==============|
+--]]
+---@alias mapmode
+---|"" - N _ _ V S O _ _
+---|"n" - N _ _ _ _ _ _ _
+---|"!" - _ I C _ _ _ _ _
+---|"i" - _ I _ _ _ _ _ _
+---|"c" - _ _ C _ _ _ _ _
+---|"v" - _ _ _ V S _ _ _
+---|"x" - _ _ _ V _ _ _ _
+---|"s" - _ _ _ _ S _ _ _
+---|"o" - _ _ _ _ _ O _ _
+---|"t" - _ _ _ _ _ _ T _
+---|"l" - _ I C _ _ _ _ L
+---|"ia" Insert  Abbr
+---|"ca" Command Abbr
+---|"!a" Ins+Cmd Abbr
+
+---@param key string -- _|string[]_ `key-arr[]` not implemented yet in nvim 0.12
+---@param cmd string|function Either a **vim-cmd** _string_ OR a **lua-function**
+---@param opts? vim.keymap.set.Opts optional _table_ of **options**
+---@param mode? mapmode|mapmode[] See **:h nvim_set_keymap()**
+local function map(key, cmd, opts, mode)
+    mode = mode or ""
+    opts = opts or {}
+    vim.keymap.set(mode, key, cmd, opts)
+end
+
+--[[
+     Cmd
+--]]
+-- map("<leader>e", function()
+--     vim.cmd("Ex")
+--     map("<leader>e", ":Rex<CR>")
+-- end, { desc = "Ex" })
+
+map("<ESC>", ":nohl<CR>:<C-c>", { silent = true, remap = true }, "n")
+map("<C-;>", function()
+    if vim.fn.getcmdwintype() == ":" then
+        vim.cmd.q()
+    else
+        vim.api.nvim_input("q:") -- see :h 'cedit'
+    end
+end, { desc = "toggle [:]cmd-like window" })
+map("<C-;>", function()
+    vim.api.nvim_input(vim.o.cedit)
+end, { desc = "enter [:]cmd-window" }, "c")
+map("<C-a>", "<HOME>", { silent = true }, "c")
+map("<C-b>", "<S-Left>", {}, "c")
+map("<C-f>", "<S-Right>", {}, "c")
+
+-- map("<C-s>", ":write<CR>", { remap = true }, "n") -- see **conform-nvim** mapping
+map("<C-q>", ":quit<CR>", {}, "n")
+map("<leader>qr", ":restart<CR>", {}, "n")
+map("<leader>qs", ':w <BAR> so | echo "written & sauced"<CR>', { desc = "save & sauce" }) -- figure out why I can't sauce this file
+map("<leader>qw", ":wa<CR>", { desc = "[w]rite all" })
+map("<leader>qq", ":qa<CR>", { desc = "[q]uit all" })
+map("<C-A-s>", ':write<CR> :source<CR> :echo("written & sauced")<CR>', { desc = "Save&sauce" }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
+
+--[[
+    Ui toggles
+--]]
+map("<leader>uw", "<CMD>set wrap!<CR>", { desc = "toggles [w]rap" })
+map("<leader>ul", "<CMD>set nu!<CR>", { desc = "toggle [l]ine-nr" })
+map("<leader>ur", "<CMD>set rnu!<CR>", { desc = "toggle [r]elative-line-nr" })
+map("<leader>uL", "<CMD>set cul!<CR>", { desc = "toggle cursor-[L]ine" })
+map("<leader>uc", function()
+    vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
+end, { desc = "toggle [c]ursorColumn" })
+map("<leader>uC", function()
+    vim.opt_local.cursorline = not vim.o.cursorline
+    vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
+end, { desc = "toggle [C]ursor{Line+Column}" })
+
+--[[
+    Buffer
+--]]
+map("<C-H>", ":bp<CR>", {}, "n")
+map("<C-L>", ":bn<CR>", {}, "n")
+
+-- TODO: move to buffers.nvim plugin
+map("<leader>bb", ":e #<CR>", { desc = "switch to other", noremap = true, silent = true }, "n")
+map("<leader>bl", ":buffers<CR>", { desc = "[l]list buffers", noremap = true, silent = true }, "n")
+map("<leader>bn", ":enew<CR>", { desc = "new buffer", noremap = true, silent = true }, "n")
+map("<leader>bd", ":bn<BAR>bd #<CR>", { desc = "[d]delete", noremap = true, silent = true }, "n")
+map("<leader>x", ":bn<BAR>bd #<CR>", { desc = "delete[x]buffer", noremap = true, silent = true }, "n")
+map("H", ":bp<CR>", { desc = "prev buf", noremap = true, silent = true }, "n")
+map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
+
+--[[
+    Window
+--]]
+map("<C-h>", "<C-w>h", {}, "n")
+map("<C-j>", "<C-w>j", {}, "n")
+map("<C-k>", "<C-w>k", {}, "n")
+map("<C-l>", "<C-w>l", {}, "n")
+
+map("<C-M-h>", "<C-w>H", {}, "n")
+map("<C-M-j>", "<C-w>J", {}, "n")
+map("<C-M-k>", "<C-w>K", {}, "n")
+map("<C-M-l>", "<C-w>L", {}, "n")
+
+map("<M-S-->", function()
+    vim.cmd.wincmd("2-")
+end, { desc = "[-] win-height" })
+map("<M-S-=>", function()
+    vim.cmd("wincmd 2+")
+end, { desc = "[+] win-height" })
+map("<M-S-,>", function()
+    vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - 2)
+end, { desc = "width less [<]" })
+map("<M-S-.>", "<C-w>2>", { desc = "width more [>]" })
+
+map("<C-TAB>", "<C-w>w", { desc = "next window" }, "n")
+map("<C-S-TAB>", "<C-w>W", { desc = "prev window" }, "n")
+--?TODO: <XX-TAB> for vim-tabs instead?
+
+map("<leader>|", ":vsplit<CR>", { desc = "vert[|]split" }, "n")
+map("<leader>_", ":split<CR>", { desc = "hor[_]split" }, "n")
+
+--?TODO:
+-- map("<leader>T", function()
+--     local getConf = vim.api.nvim_win_get_config(0)
+--     if getConf.relative ~= "" then
+--         vim.api.nvim_win_set_config(0, { split = "above", win = vim.fn.win_getid(1) })
+--     else
+--         vim.api.nvim_win_set_config(0, {
+--             relative = "editor",
+--             width = math.floor(vim.o.columns * 0.8),
+--             height = math.floor(vim.o.lines * 0.8),
+--             col = math.floor(vim.o.columns * 0.1),
+--             row = math.floor(vim.o.lines * 0.1),
+--         })
+--     end
+-- end, { desc = "[T]uuggle float" }, "n")
+
+--[[
+    Tabs
+--]]
+map("<leader><TAB>l", ":tabs<CR>", { desc = "tab list" }, "n")
+map("<leader><TAB><TAB>", ":tabnew<CR>", { desc = "new" }, "n")
+map("<leader><TAB>d", ":tabclose<CR>", { desc = "delete" }, "n")
+map("<leader><TAB>p", ":tabprev<CR>", { desc = "prev" }, "n")
+map("<leader><TAB>n", ":tabnext<CR>", { desc = "next" }, "n")
+map("<leader><TAB>t", "<C-W>T", { desc = "window->newtab" }, "n")
+
+--[[
+    QoL
+--]]
+map("<C-c>", "gcc", { remap = true }, "n")
+map("<C-c>", "gc", { remap = true }, "x")
+
+map("j", "gj", { silent = true }, { "n", "x" }) --function() vim.api.nvim_input("gj") end
+map("k", "gk", { silent = true }, { "n", "x" })
+
+map("U", "<C-r>", { desc = "[U]UN-undo (=redo)" }, "n") -- default "U" is shit
+
+map("<M-i>", "^", { desc = "Left<-most" }, "n") -- remap = true
+map("<M-a>", "$", { desc = "Right->most" }, "n") -- remap = true
+
+map("<M-f>", "zA", { desc = "[f]fold" }, "n")
+
+map("<leader>m", ":mes<CR>", { desc = "[m]messages", silent = true }, "n")
+
+-- Selection-mode
+map("<C-v>", "<C-o>P", { desc = "Paste in S-mode", remap = true }, "s")
+map("<C-c>", "<C-o>y", { desc = "Copy in S-mode", remap = true }, "s")
+map("<C-x>", "<C-o>d", { desc = "Cut in S-mode", remap = true }, "s")
+
+-- Visual-mode
+map("<leader>y", '"yy', { desc = '[y]yank 2 "y' }, "x")
+map("<leader>p", '"yp', { desc = '[p]paste from "y' }, "x")
+map("<C-y>", '"yy', { desc = '[y]yank 2 "y' }, "x")
+map("<C-p>", '"yp', { desc = '[p]paste from "y' }, "x")
+map("<leader>d", '"yd', { desc = '[d]delete 2 "y' }, "x")
+map("<leader>p", '"yp', { desc = '[p]paste from "y' }, "n")
+
+map("<leader>P", '"_dd<ESC>P', { desc = "delete->[p]aste, no yank" }, { "x", "n" })
+
+-- Insert-mode
+map("<C-v>", "<ESC>pa", { desc = "I-mode paste", remap = true }, "i") --  "<C-o>p"
+map("#", " <C-h>#", { desc = "see :smartindent" }, "i") -- why isnt this deafult?
+
+map("<M-h>", "<Left>", { desc = "<-", silent = false }, { "i", "s", "c" })
+map("<M-j>", "<Down>", { desc = "v", silent = false }, { "i", "s", "c" })
+map("<M-k>", "<Up>", { desc = "^", silent = false }, { "i", "s", "c" })
+map("<M-l>", "<Right>", { desc = "->", silent = false }, { "i", "s", "c" })
+
+--[[
+    Terminal
+--]]
+-- map({ "<C-ESC>", "<ESC><ESC>" }, "<C-\\><C-n>", { remap = true }, "t") -- available in nvim 0.13
+map("<C-ESC>", "<C-\\><C-n>", { remap = true }, "t")
+map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
+
+map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")
+map("<leader>th", ":hor te<CR>", { desc = "[h]hor terminal" }, "n")
+map("<leader>tT", function()
+    vim.cmd.terminal()
+end, { desc = "[T]Terminal buffer" }, "n")
+
+-- TODO: <M-t> = toggle-term (plugin)
+
+--[[
+    Diagnostics
+--]]
+map("<leader>do", function()
+    vim.diagnostic.setloclist()
+end, { desc = "l[o]clist" }, "n")
+map("<leader>dc", function()
+    vim.diagnostic.open_float({ scope = "b" })
+end, { desc = "[c]ursor diagnostic" }, "n")
+map("<leader>dd", function()
+    vim.diagnostic.open_float()
+end, { desc = "line [d]diagnostic" }, "n")
+map("<leader>db", function()
+    vim.diagnostic.open_float({ scope = "b" })
+end, { desc = "[b]uffer diagnostic" }, "n")
+map("<leader>dl", function()
+    vim.cmd("tabnew " .. vim.fn.stdpath("log")) -- vim.cmd('tabnew ' .. vim.lsp.log.get_filename()) end
+end, { desc = "open [l]logs" }, "n")
+map("<leader>dt", function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "[t]toggle diagnostic (global)" }, "n")
+map("<leader>ud", function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+end, { desc = "[d]diagnostic" }, "n")
