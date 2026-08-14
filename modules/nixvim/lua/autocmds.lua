@@ -41,3 +41,4 @@ autocmd("CmdwinEnter", "CmdwinEnter-syntaxHL", {
         vim.o.filetype = "lua"
     end,
 })
+ 

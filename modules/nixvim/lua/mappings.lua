@@ -228,3 +228,4 @@ end, { desc = "[t]toggle diagnostic (global)" }, "n")
 map("<leader>ud", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end, { desc = "[d]diagnostic" }, "n")
+ 

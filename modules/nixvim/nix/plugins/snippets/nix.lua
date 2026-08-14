@@ -23,3 +23,4 @@ ls.add_snippets("lua", { -- NOTE: MY FIRST LuaSnippet !!!
 
     -- TODO: some core and generic flake/module setup-templates
 })
+ 
