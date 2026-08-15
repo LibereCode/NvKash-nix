@@ -5,6 +5,6 @@
   perSystem =
     { system, ... }:
     {
-      checks.${system}.default = self.nixvimConfigurations.default.config.build.test;
+      packages.${system}.default = self.nixvimConfigurations.default.config.build.package;
     };
 }
