@@ -161,7 +161,7 @@ map("U", "<C-r>", { desc = "[U]UN-undo (=redo)" }, "n") -- default "U" is shit
 map("<M-i>", "^", { desc = "Left<-most" }, "n") -- remap = true
 map("<M-a>", "$", { desc = "Right->most" }, "n") -- remap = true
 
-map("<M-f>", "zA", { desc = "[f]fold" }, "n")
+map("<C-f>", "zA", { desc = "[f]fold" }, "n")
 
 map("<leader>m", ":mes<CR>", { desc = "[m]messages", silent = true }, "n")
 
@@ -228,4 +228,3 @@ end, { desc = "[t]toggle diagnostic (global)" }, "n")
 map("<leader>ud", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end, { desc = "[d]diagnostic" }, "n")
- 
