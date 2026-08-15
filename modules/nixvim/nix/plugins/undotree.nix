@@ -1,9 +1,9 @@
 { self, inputs, ... }@top:
 let
-  pluginName = "undotree";
+  plugin_name = "undotree";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${plugin_name} =
     {
       pkgs,
       config,

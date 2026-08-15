@@ -1,17 +1,16 @@
 { self, inputs, ... }@top:
 let
-  pluginName = "toggleterm";
+  plugin_name = "toggleterm";
 in
 {
-  # flake.homeModules."nixvim_plug_${pluginName}" =
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, config, ... }@a:
     let
       lua = a.lib.nixvim.mkRaw;
     in
     {
       plugins = {
-        ${pluginName} = {
+        ${plugin_name} = {
           enable = true;
 
           settings = {

@@ -1,9 +1,9 @@
 { self, inputs, ... }@top:
 let
-  pluginName = "markdown";
+  plugin_name = "markdown";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${plugin_name} =
     {
       pkgs,
       config,
@@ -16,7 +16,7 @@ in
     {
       plugins = {
         ## [See `render-markdown` docs](https://github.com/MeanderingProgrammer/render-markdown.nvim/tree/main#setup)
-        "render-${pluginName}" = {
+        "render-${plugin_name}" = {
           enable = true;
           settings = {
             completions = {
@@ -31,7 +31,7 @@ in
         };
 
         ## [See `markdown-preview` docs](https://github.com/iamcco/markdown-preview.nvim/#markdownpreview-config)
-        "${pluginName}-preview" = {
+        "${plugin_name}-preview" = {
           enable = true;
           settings = {
             auto_close = 1;

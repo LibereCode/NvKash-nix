@@ -3,7 +3,7 @@ let
   plugin_name = "dap";
 in
 {
-  flake.nixvimmodules.${plugin_name} =
+  flake.nixvimModules.${plugin_name} =
     { pkgs, lib, ... }@a:
     let
       inherit (lib.nixvim) mkRaw;
