@@ -86,7 +86,7 @@ in
           luaConfig.post = # lua
             ''
               local conform = require("conform")
-              vim.keymap.set({"n", "v"}, "<leader>f", function() conform.format({async = true}) end, { desc = "[f]format buffer" })
+              vim.keymap.set({"n", "v"}, "<C-f>", function() conform.format({async = true}) end, { desc = "[f]format buffer" })
               vim.keymap.set({"n"}, "<C-s>", function()
                 conform.format({async = false})
                 vim.cmd.write()
