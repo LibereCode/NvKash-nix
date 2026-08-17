@@ -161,7 +161,7 @@ map("U", "<C-r>", { desc = "[U]UN-undo (=redo)" }, "n") -- default "U" is shit
 map("<M-i>", "^", { desc = "Left<-most" }, "n") -- remap = true
 map("<M-a>", "$", { desc = "Right->most" }, "n") -- remap = true
 
-map("<M-f>", "zA", { desc = "[f]fold" }, "n")
+map("<M-f>", "za", { desc = "[f]fold" }, "n")
 
 map("<leader>m", ":mes<CR>", { desc = "[m]messages", silent = true }, "n")
 
