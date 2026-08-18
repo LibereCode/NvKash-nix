@@ -68,7 +68,7 @@
                 end
 
                 return {
-                  String = { italic = true },
+                  -- String = { italic = true },
 
                   -- dark completion-popup
                   Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1, blend = vim.o.pumblend },

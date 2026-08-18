@@ -22,7 +22,7 @@
           settings = {
             notification = {
               window = {
-                winblend = 0;
+                winblend = 72;
               };
             };
             progress = {
@@ -95,6 +95,7 @@
           onAttach = /* lua */ "";
 
           # inlayHints.enable = true; # BUG causes many errors
+          inlayHints.enable = true; # no?
 
           ## keymaps on LspAttach
           ## TODO:
