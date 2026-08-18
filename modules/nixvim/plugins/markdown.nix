@@ -42,7 +42,7 @@ in
             page_title = mkRaw ''
               "MD-preview: " .. vim.fn.pathshorten(os.getenv("PWD"), 2) .. "/''${name}"
             '';
-            port = "8080";
+            port = "8765";
             preview_options = {
               disable_filename = 1;
               disable_sync_scroll = 1;
