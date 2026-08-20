@@ -41,6 +41,18 @@ in
         =====================================================================
       */
 
+      options =
+        let
+          inherit (lib) mkOption types;
+        in
+        {
+          extraConfigLuaList = mkOption {
+            default = [ ];
+            type = types.listOf types.str;
+            description = "A list of strings that will be merged to `extraConfigLua`";
+          };
+        };
+
       config = {
         # ## platforms -- HM-options
         # inherit enable;
@@ -51,6 +63,7 @@ in
         # options -- neovim
         viAlias = true;
         vimAlias = true;
+        extraConfigLua = (builtins.concatStringsSep "\n" config.extraConfigLuaList);
         extraConfigLuaPost =
           # lua
           ''

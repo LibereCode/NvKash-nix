@@ -101,6 +101,7 @@ o.selectmode = "key" -- "mouse"
 
 o.updatetime = 250
 o.timeoutlen = 222
+o.ttimeoutlen = 10
 
 o.splitright = true
 o.splitbelow = true

@@ -196,13 +196,11 @@ map("<M-l>", "<Right>", { desc = "->", silent = false }, { "i", "s", "c" })
 map("<C-ESC>", "<C-\\><C-n>", { remap = true }, "t")
 map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
 
-map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")
-map("<leader>th", ":hor te<CR>", { desc = "[h]hor terminal" }, "n")
-map("<leader>tT", function()
-    vim.cmd.terminal()
-end, { desc = "[T]Terminal buffer" }, "n")
-
--- TODO: <M-t> = toggle-term (plugin)
+-- map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")
+-- map("<leader>th", ":hor te<CR>", { desc = "[h]hor terminal" }, "n")
+-- map("<leader>tT", function()
+--     vim.cmd.terminal()
+-- end, { desc = "[T]Terminal buffer" }, "n")
 
 --[[
     Diagnostics
