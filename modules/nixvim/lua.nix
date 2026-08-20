@@ -31,6 +31,7 @@
         "lua/options.lua".source = ./options.lua;
 
         "lua/autocmds.lua".source = ./autocmds.lua;
+
       };
     };
 }

@@ -55,7 +55,7 @@ in
                   -- cycles to opposite pane while navigating into the border
                   cycle_navigation = true,
                   -- enables default keybindings (C-hjkl) for normal mode
-                  enable_default_keybindings = false, -- true,
+                  enable_default_keybindings = true, -- true,
                   -- prevents unzoom tmux when navigating beyond vim border
                   persist_zoom = false,
               },
@@ -74,25 +74,6 @@ in
                   enable_default_keybindings = true,
               }
           })
-
-          -- TODO: replace the entire plugin with this:
-          local vim_tmux_pairs = {
-            h = "-L",
-            j = "-D",
-            k = "-U",
-            l = "-R",
-          }
-          local win_to = {}
-          for k, v in pairs(vim_tmux_pairs) do
-            vim.keymap.set("n", "<C-" .. k .. ">", function()
-              win_to[k] = vim.fn.winnr(k) ~= vim.fn.winnr()
-              if win_to[k] then
-                vim.cmd.wincmd(k)
-              else
-                os.execute("tmux select-pane " .. v)
-              end
-            end, { desc = "vim/tmux: " .. k .. "/" .. v })
-          end
         ''
       ];
     };
