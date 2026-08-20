@@ -93,15 +93,47 @@ map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
 --[[
     Window
 --]]
-map("<C-h>", "<C-w>h", {}, "n")
-map("<C-j>", "<C-w>j", {}, "n")
-map("<C-k>", "<C-w>k", {}, "n")
-map("<C-l>", "<C-w>l", {}, "n")
 
-map("<C-M-h>", "<C-w>H", {}, "n")
-map("<C-M-j>", "<C-w>J", {}, "n")
-map("<C-M-k>", "<C-w>K", {}, "n")
-map("<C-M-l>", "<C-w>L", {}, "n")
+---If furthest nvim window, switch tmux-pane instead
+---@param vim_key "h"|"j"|"k"|"l" vim-key used (ie: direction)
+---@param tmux_key "-L"|"-D"|"-U"|"-R" tmux equivalent for same direction
+local function tmux_move(vim_key, tmux_key)
+    local is_furthest = vim.fn.winnr(vim_key) == vim.fn.winnr()
+    if is_furthest then
+        os.execute("tmux select-pane " .. tmux_key)
+    else
+        vim.cmd.wincmd(vim_key)
+    end
+end
+
+-- map("<C-h>", "<C-w>h", {}, "n")
+-- map("<C-j>", "<C-w>j", {}, "n")
+-- map("<C-k>", "<C-w>k", {}, "n")
+-- map("<C-l>", "<C-w>l", {}, "n")
+for k, v in pairs({ h = "-L", j = "-D", k = "-U", l = "-R" }) do
+    map("<C-" .. k .. ">", function()
+        tmux_move(k, v)
+    end, {}, "n")
+
+    map("<C-M-" .. k .. ">", "<C-w>" .. k:upper(), {}, "n")
+end
+-- map("<C-h>", function()
+--     tmux_move("h", "-L")
+-- end, {}, "n")
+-- map("<C-j>", function()
+--     tmux_move("j", "-D")
+-- end, {}, "n")
+-- map("<C-k>", function()
+--     tmux_move("k", "-U")
+-- end, {}, "n")
+-- map("<C-l>", function()
+--     tmux_move("l", "-R")
+-- end, {}, "n")
+
+-- map("<C-M-h>", "<C-w>H", {}, "n")
+-- map("<C-M-j>", "<C-w>J", {}, "n")
+-- map("<C-M-k>", "<C-w>K", {}, "n")
+-- map("<C-M-l>", "<C-w>L", {}, "n")
 
 map("<M-S-->", function()
     vim.cmd.wincmd("2-")
