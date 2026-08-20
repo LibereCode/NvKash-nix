@@ -1,0 +1,24 @@
+{ self, inputs, ... }@top:
+let
+  pluginName = "tmux-navigator";
+in
+{
+  flake.nixvimModules.plugins =
+    {
+      pkgs,
+      config,
+      lib,
+      ...
+    }@a:
+    let
+      inherit (lib.nixvim) mkRaw;
+    in
+    {
+      plugins = {
+        ${pluginName} = {
+          enable = true;
+          ## also edit tmux config in nixos/homemanager
+        };
+      };
+    };
+}
