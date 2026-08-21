@@ -4,7 +4,8 @@
 |=============|
 --]]
 -- NOTE: see ../nix/options.nix
-local o = vim.opt
+local o = vim.o -- has lsp integration
+local opt = vim.opt -- allows usings {tables} to define some options.
 
 --[[
     ==========
@@ -44,7 +45,7 @@ o.showmatch = true
 o.showmode = false
 
 o.list = true
-o.listchars = {
+opt.listchars = {
     eol = " ", --  ␤ 󰌑 
     tab = "⇥ ", -- ↣ ↪ ⇢ ⇛ ⇒ ⇨ ⇥ 󰌒 »
     multispace = " ", -- string.rep(" ", (vim.o.ts - 1)) .. "␣", -- mark "shiftwidth" tabs
@@ -56,7 +57,7 @@ o.listchars = {
     precedes = "󰶺", --  ←
 }
 
-o.fillchars = {
+opt.fillchars = {
     foldopen = "",
     foldclose = "", -- "",
     fold = "·", -- · " "
@@ -72,7 +73,8 @@ o.signcolumn = "yes"
 
 o.termguicolors = true
 
-o.winborder = "·,¯,·,¦,·,ˍ,·,¦" -- ¦·.ˍߺ˙¯‾ ".,-,.,¦,˙,-,˙,¦"
+-- o.winborder = ".,-,.,¦,˙,-,˙,¦" -- ¦·.ˍߺ˙¯‾
+opt.winborder = { "·", "¯", "·", "¦", "·", "ˍ", "·", "¦" }
 
 --[[
   ==========
@@ -109,11 +111,11 @@ o.splitbelow = true
 o.splitkeep = "cursor"
 o.lazyredraw = true
 
-o.wildmode = { longest = "full" }
-o.wildoptions = { "fuzzy", "pum", "tagfile" }
+opt.wildmode = { longest = "full" }
+opt.wildoptions = { "fuzzy", "pum", "tagfile" }
 
-o.whichwrap:append("<>[]hl")
-o.shortmess:append("as")
+opt.whichwrap:append("<>[]hl")
+opt.shortmess:append("as")
 
 --[[
     globals
@@ -157,4 +159,5 @@ require("vim._core.ui2").enable({
         },
     },
 })
- 
+
+o.exrc = true -- loads ./{.nvim.lua|.nvimrc|.exrc} -- See `:h exrc`
