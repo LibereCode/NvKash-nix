@@ -37,7 +37,7 @@ o.number = true
 o.relativenumber = true
 
 o.cursorline = true
-o.colorcolumn = { "80", "-1" }
+opt.colorcolumn = { "80", "-1" }
 -- o.textwidth = 100
 
 o.wrap = false
