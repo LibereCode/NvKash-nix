@@ -132,6 +132,10 @@ in
             # fuzzy = { };
 
             keymap = {
+              #TEST:
+              #NOTE: using many of the default keybinds (just want to have it here)
+              preset = "none";
+
               "<C-c>" = [
                 "cancel"
                 "fallback"
@@ -151,9 +155,21 @@ in
               ];
               "<C-u>" = [
                 "scroll_documentation_up"
+                "scroll_signature_up"
                 "fallback"
               ];
               "<C-d>" = [
+                "scroll_documentation_down"
+                "scroll_signature_down"
+                "fallback"
+              ];
+              "<C-b>" = [
+                "scroll_signature_up"
+                "scroll_documentation_up"
+                "fallback"
+              ];
+              "<C-f>" = [
+                "scroll_signature_down"
                 "scroll_documentation_down"
                 "fallback"
               ];
@@ -176,7 +192,14 @@ in
                 "show"
                 "show_documentation"
                 "hide_documentation"
+                # "fallback" # ?
               ];
+              "<C-k>" = [
+                "show_signature"
+                "hide_signature"
+                "fallback"
+              ];
+              # <C-j> = See ../lsp.nix
               "<Down>" = [
                 "select_next"
                 "fallback"

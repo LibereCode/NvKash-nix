@@ -57,34 +57,44 @@
         let
           map_lspBuf =
             key: lspBufAction:
-            { ... }@opt:
+            {
+              mode ? "n",
+              ...
+            }@opt:
             let
-              options = opt // {
+              options = (removeAttrs opt [ "mode" ]) // {
                 desc = "[lsp] " + (opt.desc or lspBufAction);
               };
             in
             {
-              inherit key;
-              inherit lspBufAction;
-              inherit options;
-              mode = "n";
+              inherit
+                key
+                lspBufAction
+                options
+                mode
+                ;
             };
           map_func =
             key: funcBody:
-            { ... }@opt:
+            {
+              mode ? "n",
+              ...
+            }@opt:
             let
-              options = opt // {
-                desc = "[lsp] " + (opt.desc or "TODO: ${key}");
+              options = (removeAttrs opt [ "mode" ]) // {
+                desc = "[lsp] " + (opt.desc or funcBody);
               };
               action = {
                 __raw = "function() ${funcBody} end";
               };
             in
             {
-              inherit key;
-              inherit action;
-              inherit options;
-              mode = "n";
+              inherit
+                key
+                action
+                options
+                mode
+                ;
             };
         in
         {
@@ -98,9 +108,8 @@
           inlayHints.enable = true; # no?
 
           ## keymaps on LspAttach
-          ## TODO:
           keymaps = [
-            # (map_lspBuf "gd" "definition" {})
+            # (map_lspBuf "gd" "definition" {}) # See: ./plugins/telescope.nix
             (map_lspBuf "gD" "references" { })
             (map_lspBuf "gt" "type_definition" { })
             (map_lspBuf "gi" "implementation" { })
@@ -114,11 +123,12 @@
             (map_func "<leader>ls" /* lua */ "vim.cmd('LspStart') " { desc = "start"; })
             (map_func "<leader>ls" /* lua */ "vim.cmd('LspRestart') " { desc = "restart"; })
 
+            (map_func "<C-j>" /* lua */ "vim.lsp.buf.hover()" { mode = "i"; })
+
             (map_func "gd" # "<leader>sld"
               /* lua */ "require('telescope.builtin').lsp_definitions()"
               { desc = "telescope definitions"; }
             )
-            # (map_func "K" /* lua */ "vim.cmd('Lspsaga hover_doc')" {}) # ??
           ];
 
           servers = {
@@ -179,15 +189,16 @@
               enable = true;
               config = {
                 settings = {
-                  formatting = [ "nixfmt" ]; # "alejandra" #?TEST:
+                  formatting = [ "nixfmt" ]; # "alejandra"
                   nix.flake = {
                     autoArchive = true;
                     autoEvalInputs = true;
                   };
+                  #TODO: disable lsp-function: goto definition
+                  ## nixd also has it
                 };
               };
             };
-            # TEST:
             nixd = {
               enable = true;
               config = {
@@ -196,6 +207,7 @@
                     nixpkgs = {
                       expr = "import <nixpkgs> { }";
                     };
+                    #TODO:
                     # options = {
                     #   nixos = {
                     #     expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.<hostname>.options";

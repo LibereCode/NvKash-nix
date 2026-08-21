@@ -7,12 +7,13 @@
   flake.nixvimModules.lua =
     { pkgs, lib, ... }@a:
     let
-      extraFiles = lib.mergeAttrsList (
-        map (file: { "after/ftplugin/${file}".source = ./. + "/${file}"; }) (
-          builtins.filter (file: (builtins.match ".*(lua)$" "${file}") != null) (
-            builtins.attrNames (builtins.readDir ./.)
-          )
-        )
+      #INFO: These 2 will produce (only with ./*.lua):
+      ## extraFiles = { "after/ftplugin/foo.lua".source = ./foo.lua; ... }
+      lua_files =
+        with builtins;
+        (filter (file: (match ".*(lua)$" "${file}") != null) (attrNames (readDir ./.)));
+      extraFiles = lib.genAttrs' lua_files (
+        file: lib.nameValuePair "after/ftplugin/${file}" { source = ./. + "/${file}"; }
       );
     in
     {

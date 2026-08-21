@@ -48,10 +48,17 @@
     git --version | grep --color=auto "${pkgs.git.version}"
   '';
 
+  treefmt = {
+    enable = true;
+    config.programs = {
+      nixfmt.enable = true;
+      shellcheck.enable = true;
+      stylua.enable = true;
+    };
+  };
   # https://devenv.sh/git-hooks/
   git-hooks.hooks = {
-    nixfmt.enable = true;
-    shellcheck.enable = true;
+    treefmt.enable = true;
   };
 
   # See full reference at https://devenv.sh/reference/options/

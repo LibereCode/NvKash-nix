@@ -15,12 +15,11 @@ local r = ls.restore_node
 ---@param args string[]
 ---@return string
 local function copy(args)
-    return args[1]
+  return args[1]
 end
 
 ls.add_snippets("lua", { -- NOTE: MY FIRST LuaSnippet !!!
-    -- stylua: ignore
+  -- stylua: ignore
 
-    -- TODO: some core and generic flake/module setup-templates
+  -- TODO: some core and generic flake/module setup-templates
 })
- 

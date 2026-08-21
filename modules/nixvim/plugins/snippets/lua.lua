@@ -13,7 +13,7 @@ local r = ls.restore_node
 -- args is a table, where 1 is the text in Placeholder 1, 2 the text in
 -- placeholder 2,...
 local function copy(args)
-    return args[1]
+  return args[1]
 end
 
 ls.add_snippets("lua", { -- NOTE: MY FIRST LuaSnippet !!!
@@ -30,4 +30,3 @@ ls.add_snippets("lua", { -- NOTE: MY FIRST LuaSnippet !!!
     -- end
   }),
 })
- 

@@ -27,4 +27,3 @@ ls.add_snippets("sh", { -- 'bash'
     -- printf '\e[38;2;R;G;Bm%s\e[0m\n' "Hello RGB_World!"
   }),
 })
- 

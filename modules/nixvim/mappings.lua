@@ -24,9 +24,9 @@
 ---@param opts? vim.keymap.set.Opts optional _table_ of **options**
 ---@param mode? mapmode|mapmode[] See **:h nvim_set_keymap()**
 local function map(key, cmd, opts, mode)
-    mode = mode or ""
-    opts = opts or {}
-    vim.keymap.set(mode, key, cmd, opts)
+  mode = mode or ""
+  opts = opts or {}
+  vim.keymap.set(mode, key, cmd, opts)
 end
 
 --[[
@@ -39,14 +39,14 @@ end
 
 map("<ESC>", ":nohl<CR>:<C-c>", { silent = true, remap = true }, "n")
 map("<C-;>", function()
-    if vim.fn.getcmdwintype() == ":" then
-        vim.cmd.q()
-    else
-        vim.api.nvim_input("q:") -- see :h 'cedit'
-    end
+  if vim.fn.getcmdwintype() == ":" then
+    vim.cmd.q()
+  else
+    vim.api.nvim_input("q:") -- see :h 'cedit'
+  end
 end, { desc = "toggle [:]cmd-like window" })
 map("<C-;>", function()
-    vim.api.nvim_input(vim.o.cedit)
+  vim.api.nvim_input(vim.o.cedit)
 end, { desc = "enter [:]cmd-window" }, "c")
 map("<C-a>", "<HOME>", { silent = true }, "c")
 map("<C-b>", "<S-Left>", {}, "c")
@@ -68,11 +68,11 @@ map("<leader>ul", "<CMD>set nu!<CR>", { desc = "toggle [l]ine-nr" })
 map("<leader>ur", "<CMD>set rnu!<CR>", { desc = "toggle [r]elative-line-nr" })
 map("<leader>uL", "<CMD>set cul!<CR>", { desc = "toggle cursor-[L]ine" })
 map("<leader>uc", function()
-    vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
+  vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
 end, { desc = "toggle [c]ursorColumn" })
 map("<leader>uC", function()
-    vim.opt_local.cursorline = not vim.o.cursorline
-    vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
+  vim.opt_local.cursorline = not vim.o.cursorline
+  vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
 end, { desc = "toggle [C]ursor{Line+Column}" })
 
 --[[
@@ -98,12 +98,12 @@ map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
 ---@param vim_key "h"|"j"|"k"|"l" vim-key used (ie: direction)
 ---@param tmux_key "-L"|"-D"|"-U"|"-R" tmux equivalent for same direction
 local function tmux_move(vim_key, tmux_key)
-    local is_furthest = vim.fn.winnr(vim_key) == vim.fn.winnr()
-    if is_furthest then
-        os.execute("tmux select-pane " .. tmux_key .. " 2>/dev/null")
-    else
-        vim.cmd.wincmd(vim_key)
-    end
+  local is_furthest = vim.fn.winnr(vim_key) == vim.fn.winnr()
+  if is_furthest then
+    os.execute("tmux select-pane " .. tmux_key .. " 2>/dev/null")
+  else
+    vim.cmd.wincmd(vim_key)
+  end
 end
 
 -- map("<C-h>", "<C-w>h", {}, "n")
@@ -111,11 +111,11 @@ end
 -- map("<C-k>", "<C-w>k", {}, "n")
 -- map("<C-l>", "<C-w>l", {}, "n")
 for k, v in pairs({ h = "-L", j = "-D", k = "-U", l = "-R" }) do
-    map("<C-" .. k .. ">", function()
-        tmux_move(k, v)
-    end, {}, "n")
+  map("<C-" .. k .. ">", function()
+    tmux_move(k, v)
+  end, {}, "n")
 
-    map("<C-M-" .. k .. ">", "<C-w>" .. k:upper(), {}, "n")
+  map("<C-M-" .. k .. ">", "<C-w>" .. k:upper(), {}, "n")
 end
 -- map("<C-h>", function()
 --     tmux_move("h", "-L")
@@ -136,13 +136,13 @@ end
 -- map("<C-M-l>", "<C-w>L", {}, "n")
 
 map("<M-S-->", function()
-    vim.cmd.wincmd("2-")
+  vim.cmd.wincmd("2-")
 end, { desc = "[-] win-height" })
 map("<M-S-=>", function()
-    vim.cmd("wincmd 2+")
+  vim.cmd("wincmd 2+")
 end, { desc = "[+] win-height" })
 map("<M-S-,>", function()
-    vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - 2)
+  vim.api.nvim_win_set_width(0, vim.api.nvim_win_get_width(0) - 2)
 end, { desc = "width less [<]" })
 map("<M-S-.>", "<C-w>2>", { desc = "width more [>]" })
 
@@ -238,26 +238,26 @@ map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
     Diagnostics
 --]]
 map("<leader>do", function()
-    vim.diagnostic.setloclist()
+  vim.diagnostic.setloclist()
 end, { desc = "l[o]clist" }, "n")
 map("<leader>dc", function()
-    vim.diagnostic.open_float({ scope = "b" })
+  vim.diagnostic.open_float({ scope = "b" })
 end, { desc = "[c]ursor diagnostic" }, "n")
 map("<leader>dd", function()
-    vim.diagnostic.open_float()
+  vim.diagnostic.open_float()
 end, { desc = "line [d]diagnostic" }, "n")
 map("<leader>db", function()
-    vim.diagnostic.open_float({ scope = "b" })
+  vim.diagnostic.open_float({ scope = "b" })
 end, { desc = "[b]uffer diagnostic" }, "n")
 map("<leader>dl", function()
-    vim.cmd("tabnew " .. vim.fn.stdpath("log")) -- vim.cmd('tabnew ' .. vim.lsp.log.get_filename()) end
+  vim.cmd("tabnew " .. vim.fn.stdpath("log")) -- vim.cmd('tabnew ' .. vim.lsp.log.get_filename()) end
 end, { desc = "open [l]logs" }, "n")
 map("<leader>dt", function()
-    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "[t]toggle diagnostic (global)" }, "n")
 map("<leader>ud", function()
-    vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end, { desc = "[d]diagnostic" }, "n")
 map("<leader>uh", function()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "toggle inlay[h]hints" }, "n")
