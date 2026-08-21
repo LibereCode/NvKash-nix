@@ -100,7 +100,7 @@ map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
 local function tmux_move(vim_key, tmux_key)
     local is_furthest = vim.fn.winnr(vim_key) == vim.fn.winnr()
     if is_furthest then
-        os.execute("tmux select-pane " .. tmux_key)
+        os.execute("tmux select-pane " .. tmux_key .. " >/dev/null")
     else
         vim.cmd.wincmd(vim_key)
     end
