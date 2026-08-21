@@ -97,11 +97,11 @@ in
         luaLoader.enable = true;
         performance = {
           byteCompileLua = {
-            enable = false; # Barely any differnce (~1ms ?)
+            enable = true; # Roughly (on vs off): (ms) 90+-3 vs 96+-5
 
             luaLib = true;
-            # nvimRuntime = true;
-            # plugins = true;
+            nvimRuntime = true;
+            plugins = true;
           };
           # combinePlugins = {enable = true;};
         };

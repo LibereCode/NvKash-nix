@@ -20,23 +20,19 @@
             light = "lotus";
           };
 
-          compile = true;
+          ## only enable if you have a autocmd that auto-detect config-changes
+          ## ... or better, just: `config.nixvim.performance.byteCompileLua.enable = true`
+          # compile = true;
 
           dimInactive = true;
           undercurl = true;
           transparent = false;
 
-          commentStyle = {
-            italic = false;
-          };
-          functionStyle = {
-            bold = true;
-          };
+          commentStyle.italic = false;
+          functionStyle.bold = true;
           keywordStyle = { };
           statementStyle = { };
-          typeStyle = {
-            italic = true;
-          };
+          typeStyle.italic = true;
 
           terminalColors = true;
           colors = {
