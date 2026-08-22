@@ -77,7 +77,7 @@ in
         luaLoader.enable = true;
         performance = {
           byteCompileLua = {
-            enable = false; # Roughly (on vs off): (ms) 90+-2 vs 97+-4
+            enable = true; # Roughly (on vs off): (ms) 90+-2 vs 97+-4
 
             luaLib = true;
             nvimRuntime = true;
