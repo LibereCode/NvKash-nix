@@ -79,9 +79,11 @@ in
           byteCompileLua = {
             enable = true; # Roughly (on vs off): (ms) 90+-2 vs 97+-4
 
-            luaLib = true;
-            nvimRuntime = true;
-            plugins = true;
+            #XXX: These screw up lua_ls
+            ## (Solution would be to figure out how to source pre-compiled src ...)
+            luaLib = false;
+            nvimRuntime = false;
+            plugins = false;
           };
           # combinePlugins = {enable = true;};
         };

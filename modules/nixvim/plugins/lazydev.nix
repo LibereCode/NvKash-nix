@@ -23,13 +23,13 @@ in
               function(root_dir)
                 -- always enable unless `vim.g.lazydev_enabled = false`
                 if vim.g.lazydev_enabled ~= nil then
-                  -- print('lazydev enabled == false (uv: vim.f.lazydev_enabled == false)')
+                  print('lazydev enabled == false (uv: vim.f.lazydev_enabled == false)')
                   return vim.g.lazydev_enabled
                 end
 
                 -- disable when a .luarc.json{,c} file is found
                 if vim.uv.fs_stat(root_dir .. "/.luarc.json") ~= nil or vim.uv.fs_stat(root_dir .. "/.luarc.jsonc") ~= nil then
-                  -- print('lazydev enabled == false (uv: luarc exist)')
+                  print('lazydev enabled == false (uv: luarc exist)')
                   return false
                 end
 
