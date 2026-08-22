@@ -52,20 +52,12 @@ in
         viAlias = true;
         vimAlias = true;
 
-        globals = {
-          mapleader = " ";
-          localmapleader = "  ";
-        };
-        keymaps = [
-          {
-            key = "<localleader><leader>";
-            action = "";
-            options = {
-              desc = "reset <leader>";
-            };
-          }
-        ];
-
+        extraConfigLuaPre = ''
+          -- Leader (+ local + reset)
+          vim.g.mapleader = " "
+          vim.g.maplocalleader = vim.keycode("<leader>") .. " "
+          vim.keymap.set("", "<localleader><leader>", "", { desc = "reset <leader>" })
+        '';
         clipboard = {
           register = "unnamedplus";
           providers.wl-copy = {

@@ -41,3 +41,28 @@ autocmd("CmdwinEnter", "CmdwinEnter-syntaxHL", {
     vim.o.filetype = "lua"
   end,
 })
+
+-- NOTE set filetypes
+
+autocmd("BufEnter", "BufEnter_todotxt_set_ft", {
+  desc = "Set ft=todotxt when entering that kind of file...",
+  pattern = { "*.todo.txt", "todo.txt" },
+  callback = function(ev)
+    vim.bo[ev.buf].ft = "todotxt"
+  end,
+})
+--TODO:
+-- autocmd("BufEnter", "BufEnter_todotxt_set_ft", {
+--   desc = "Set ft=2do ; oh btw, 2DO this new filetype (better todo.txt)",
+--   pattern = { "*.2do", *2do.txt },
+--   callback = function(ev)
+--     vim.bo[ev.buf].ft = "todotxt"
+--   end,
+-- })
+autocmd("BufEnter", "BufEnter_log_set_ft", {
+  desc = "Set ft=log when entering that kind of file...",
+  pattern = { "*.log" },
+  callback = function(ev)
+    vim.bo[ev.buf].ft = "log"
+  end,
+})

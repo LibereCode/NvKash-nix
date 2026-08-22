@@ -13,7 +13,7 @@
         with builtins;
         (filter (file: (match ".*(lua)$" "${file}") != null) (attrNames (readDir ./.)));
       extraFiles = lib.genAttrs' lua_files (
-        file: lib.nameValuePair "after/ftplugin/${file}" { source = ./. + "/${file}"; }
+        file: lib.nameValuePair "ftplugin/${file}" { source = ./. + "/${file}"; }
       );
     in
     {

@@ -1,0 +1,3 @@
+-- log
+-- NOTE: see like you cant set ft in ftplugin...
+-- vim.o.ft = "log"
