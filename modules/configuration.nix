@@ -1,6 +1,6 @@
 { inputs, self, ... }: {
 
-  # # You can define your reusable Nixvim modules here
+  ## You can define your reusable Nixvim modules here
   # flake.nixvimModules = {
   #   default = ./config;
   # };
@@ -8,7 +8,7 @@
   perSystem =
     { system, ... }:
     {
-      # You can define actual Nixvim configurations here
+      ## You can define actual Nixvim configurations here
       nixvimConfigurations = {
         default = inputs.nixvim.lib.evalNixvim {
           inherit system;
