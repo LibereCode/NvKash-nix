@@ -54,7 +54,7 @@ in
 
         globals = {
           mapleader = " ";
-          localmapleader = "<leader><leader>";
+          localmapleader = "  ";
         };
         keymaps = [
           {
@@ -72,6 +72,11 @@ in
             enable = true;
             # package = pkgs.wl-clipboard-rs; # overlayed
           };
+        };
+
+        # ## enable lazy loading
+        plugins.lz-n = {
+          enable = true;
         };
 
         luaLoader.enable = true;

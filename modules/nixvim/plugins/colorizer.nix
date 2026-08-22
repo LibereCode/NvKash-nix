@@ -10,6 +10,8 @@ in
         ${plugin_name} = {
           enable = true;
           # settings = {}; # TODO:
+
+          # lazyLoad ???
         };
 
       };

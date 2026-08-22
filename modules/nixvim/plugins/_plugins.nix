@@ -7,17 +7,36 @@ in
   flake.nixvimModules.plugins =
     {
       pkgs,
-      config,
       lib,
+      config,
       ...
     }@a:
-    let
-      inherit (lib.nixvim) mkRaw;
-    in
+    # let
+    #   inherit (lib.nixvim) mkRaw;
+    # in
     {
       plugins = {
         ${pluginName} = {
           enable = true;
+
+          # lazyLoad.settings = {
+          #   cmd = "Foobar";
+          #   keys = [
+          #     {
+          #       __unkeyed-1 = "<leader>idk";
+          #       __unkeyed-3 = "<CMD>Foobar sub<CR>";
+          #       desc = "Foo bar";
+          #     }
+          #   ];
+          # };
+
+          # settings = {
+          #
+          # };
+
+          # luaConfig.post = ''
+          #
+          # ''
         };
       };
     };

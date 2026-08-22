@@ -35,7 +35,7 @@ in
           enable = true;
           settings = {
             auto_close = 1;
-            auto_start = 1;
+            auto_start = 0;
             browser = config.my.apps.browser.name or "${lib.getExe pkgs.librewolf}";
             echo_preview_url = 1;
             # highlight_css = mkRaw "vim.fn.expand('~/highlight.css')";

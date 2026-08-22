@@ -29,6 +29,7 @@ in
         })
       ];
       extraConfigLuaList = [
+        # lua
         ''
           require("atone").setup({
               layout = {
@@ -69,7 +70,7 @@ in
                   persist = true,
                   persist_path = vim.fn.stdpath("data") .. "/atone_marks.json",
                   --- finders are tried in order. "builtin" is always available.
-                  finders = { "fzf-lua", "telescope", "builtin" },
+                  finders = { "telescope", "builtin" }, -- "fzf-lua",
               },
               keymaps = {
                   tree = {
@@ -128,7 +129,18 @@ in
                   },
               },
           })
+
           vim.keymap.set("n", "<leader>U", ":Atone toggle<CR>", { desc = "[U]Undotree" })
+          -- TEST:
+          local function atone_toggler()
+            local atone_is_closed = vim.bo.ft ~= "atone"
+            if atone_is_closed then
+              vim.cmd("Atone open")
+            else
+              vim.cmd("Atone close")
+            end
+          end
+          vim.keymap.set("n", "<leader>t", function() atone_toggler() end, { desc = "Atone[t]toggle" })
         ''
       ];
     };

@@ -16,7 +16,29 @@ in
           #XXX: (source) { ... action = "<cmd>Telescope ${actionStr}<cr>"; ... } (no lua !!)
           # keymaps = { };
 
-          # extensions = {}; # TODO:
+          extensions = {
+            fzf-native = {
+              enable = true;
+            };
+            manix = {
+              enable = true; # settings = { cword = true; };
+            };
+            zoxide = {
+              enable = true;
+              settings = {
+                mappings."<leader>fz" = {
+                  action.__raw = ''
+                    function(selection)
+                      file_browser.file_browser({ cwd = selection.path })
+                    end
+                  '';
+                  keepinsert = true;
+                };
+                prompt_title = "Zoxide Folder List";
+              };
+            };
+          };
+
           # settings = {}; # TODO:
 
           luaConfig.post = ''
