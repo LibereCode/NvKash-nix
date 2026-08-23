@@ -80,7 +80,7 @@ in
                   prompt_title = "LiveGrep open Buffers",
               }, { desc = "live_grep open_[b]ufs" })
               teleMap("sd", "diagnostics", {}, { desc = "diagnostics" })
-              vim.keymap.set("n", "sm", function() tb.marks(teleThemes.get_dropdown()) end, { desc = "[m]arks" })
+              vim.keymap.set("n", "<leader>sm", function() tb.marks(teleThemes.get_dropdown()) end, { desc = "[m]arks" })
               teleMap("sp", "live_grep", {
                   cwd = vim.fn.expand("%:p:h"), -- %:p = full-path ; %:h = directory name
                   prompt_title = "LiveGrep PWD",
