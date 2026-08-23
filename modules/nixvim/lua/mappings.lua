@@ -78,17 +78,17 @@ end, { desc = "toggle [C]ursor{Line+Column}" })
 --[[
     Buffer
 --]]
-map("<C-H>", ":bp<CR>", {}, "n")
-map("<C-L>", ":bn<CR>", {}, "n")
 
--- TODO: move to buffers.nvim plugin
 map("<leader>bb", ":e #<CR>", { desc = "switch to other", noremap = true, silent = true }, "n")
 map("<leader>bl", ":buffers<CR>", { desc = "[l]list buffers", noremap = true, silent = true }, "n")
 map("<leader>bn", ":enew<CR>", { desc = "new buffer", noremap = true, silent = true }, "n")
-map("<leader>bd", ":bn<BAR>bd #<CR>", { desc = "[d]delete", noremap = true, silent = true }, "n")
-map("<leader>x", ":bn<BAR>bd #<CR>", { desc = "delete[x]buffer", noremap = true, silent = true }, "n")
-map("H", ":bp<CR>", { desc = "prev buf", noremap = true, silent = true }, "n")
-map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
+
+-- -- Moved to bufferline
+-- map("H", ":bp<CR>", { desc = "prev buf", noremap = true, silent = true }, "n")
+-- map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
+-- local bufdel = ":enew|bd # |bn| bd #<CR>"
+-- map("<leader>bd", bufdel, { desc = "[d]delete", noremap = true, silent = true }, "n")
+-- map("<leader>x", bufdel, { desc = "delete[x]buffer", noremap = true, silent = true }, "n")
 
 --[[
     Window
