@@ -59,13 +59,16 @@ in
             };
 
             formatters_by_ft = {
+              ## Some where very big.
+              ## enable them per project instead
+
               nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
               lua = [ "stylua" ];
 
               c = [ "clang-format" ];
               cpp = [ "clang-format" ];
-              go = [ "gofmt" ];
-              rust = [ "rustfmt" ];
+              # go = [ "gofmt" ];
+              # rust = [ "rustfmt" ];
 
               fish = [ "fish_indent" ];
               python = [

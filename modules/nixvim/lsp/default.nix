@@ -146,7 +146,7 @@
             };
           };
 
-          ast_grep.enable = true; # c-like *
+          # ast_grep.enable = true; # c-like *
 
           bashls.enable = true; # bash / shell
 
@@ -186,7 +186,7 @@
 
           fish_lsp.enable = true; # fish
 
-          gopls.enable = true; # go
+          # gopls.enable = true; # go
 
           jdtls.enable = true; # java
 
@@ -252,7 +252,7 @@
 
           # shuck.enable = true; # ba/z/sh # Doesent exist yet for nixos D:
 
-          rust_analyzer.enable = true; # rust
+          # rust_analyzer.enable = true; # rust
 
           # stylua.enable = true; # lua
 
