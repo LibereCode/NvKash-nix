@@ -158,18 +158,19 @@
             };
           };
 
-          # See also: lua_ls and ./lazydev.nix
-          emmylua_ls = {
-            enable = true;
-            config = {
-              # NOTE more restrictive root_markers
-              root_markers = [
-                ".emmyrc.lua"
-                ".emmyrc.json"
-              ];
-              workspace_required = true;
-            };
-          };
+          # XXX It started either way ...
+          # # See also: lua_ls and ./lazydev.nix
+          # emmylua_ls = {
+          #   enable = true;
+          #   config = {
+          #     # NOTE more restrictive root_markers
+          #     root_markers = [
+          #       ".emmyrc.lua"
+          #       ".emmyrc.json"
+          #     ];
+          #     workspace_required = true;
+          #   };
+          # };
 
           fish_lsp.enable = true; # fish
 
@@ -214,7 +215,22 @@
               };
             };
           };
-          # nixd = {}; # NOTE: See below, I will use luaConfig.post = '' ... '';
+          # NOTE: See below, I will use luaConfig.post = '' ... '';
+          nixd = {
+            enable = true;
+            config = {
+              settings = {
+                nixd = {
+                  nixpkgs = {
+                    expr = "import <nixpkgs> { }";
+                  };
+                  formatting = {
+                    command = [ "${pkgs.nixfmt-rs}/bin/nixfmt" ];
+                  };
+                };
+              };
+            };
+          };
 
           qmlls.enable = true; # qml
 
@@ -242,62 +258,62 @@
           zls.enable = true; # zig
         };
         luaConfig.post = ''
-          -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
-          -- See <https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md#where-to-place-the-configuration>
-          do
-            local function iopopen_val(cmd)
-                local cmd_res = io.popen(cmd) or ""
-                if cmd_res then
-                    local cmd_res_read = cmd_res:read("l")
-                    cmd_res:close()
-                    return cmd_res_read
-                end
-            end
-            -- DECLARATIVE    
-            local host = iopopen_val([[${pkgs.hostname}/bin/hostname]])
-            local user = iopopen_val([[${pkgs.coreutils}/bin/whoami]])
-
-            local root_markers = { "flake.nix", ".git" }
-            local root_path = vim.fs.root(0, root_markers) or vim.env.PWD
-
-            -- local get_flake_base = '(builtins.getFlake (builtins.toString ./.)).'
-            local get_flake_base = '(builtins.getFlake ' .. root_path .. ').'
-
-            ---TEST path to $HOME/nixos
-            local nixos_opts = get_flake_base .. 'nixosConfigurations.' .. host .. '.options'
-            local hm_opts
-            hm_opts = nixos_opts .. '.home-manager.users.type.getSubOptions []'
-            if not vim.uv.fs_stat("/etc/NIXOS") then
-              hm_opts = get_flake_base .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
-            end
-
-            local flake_parts_opts = get_flake_base .. 'debug.options'
-            local flake_parts_perSys_opts = get_flake_base .. 'currentSystem.options'
-
-            vim.lsp.config("nixd", {
-              cmd = { [[${pkgs.nixd}/bin/nixd]] },
-              filetypes = { "nix" },
-              root_markers = root_markers,
-              settings = {
-                nixd = {
-                  nixpkgs = {
-                    expr = "import <nixpkgs> { }",
-                  },
-                  formatting = {
-                    command = { [[${pkgs.nixfmt-rs}/bin/nixfmt]] },
-                  },
-                  options = {
-                    nixos = { expr = nixos_opts },
-                    home_manager = { expr = hm_opts },
-                    ["flake-parts"] = { expr = flake_parts_opts },
-                    ["flake-parts2"] = { expr = flake_parts_perSys_opts },
-                  },
-                  -- diagnostic = {},
-                },
-              },
-            })
-            vim.lsp.enable("nixd")
-          end
+          -- -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
+          -- -- See <https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md#where-to-place-the-configuration>
+          -- do
+          --   local function iopopen_val(cmd)
+          --       local cmd_res = io.popen(cmd) or ""
+          --       if cmd_res then
+          --           local cmd_res_read = cmd_res:read("l")
+          --           cmd_res:close()
+          --           return cmd_res_read
+          --       end
+          --   end
+          --   -- DECLARATIVE    
+          --   local host = iopopen_val([[{$pkgs.hostname}/bin/hostname]])
+          --   local user = iopopen_val([[{$pkgs.coreutils}/bin/whoami]])
+          -- 
+          --   local root_markers = { "flake.nix", ".git" }
+          --   local root_path = vim.fs.root(0, root_markers) or vim.env.PWD
+          -- 
+          --   -- local get_flake_base = '(builtins.getFlake (builtins.toString ./.)).'
+          --   local get_flake_base = '(builtins.getFlake ' .. root_path .. ').'
+          -- 
+          --   ---TEST path to $HOME/nixos
+          --   local nixos_opts = get_flake_base .. 'nixosConfigurations.' .. host .. '.options'
+          --   local hm_opts
+          --   hm_opts = nixos_opts .. '.home-manager.users.type.getSubOptions []'
+          --   if not vim.uv.fs_stat("/etc/NIXOS") then
+          --     hm_opts = get_flake_base .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
+          --   end
+          -- 
+          --   local flake_parts_opts = get_flake_base .. 'debug.options'
+          --   local flake_parts_perSys_opts = get_flake_base .. 'currentSystem.options'
+          -- 
+          --   vim.lsp.config("nixd", {
+          --     -- cmd = { [[{$pkgs.nixd}/bin/nixd]] },
+          --     -- filetypes = { "nix" },
+          --     -- root_markers = root_markers,
+          --     settings = {
+          --       nixd = {
+          --         nixpkgs = {
+          --           expr = "import <nixpkgs> { }",
+          --         },
+          --         formatting = {
+          --           command = { [[{$pkgs.nixfmt-rs}/bin/nixfmt]] },
+          --         },
+          --         --TODO: try again some time, didnt work well this time
+          --         -- options = {
+          --         --   nixos = { expr = nixos_opts },
+          --         --   home_manager = { expr = hm_opts },
+          --         --   ["flake-parts"] = { expr = flake_parts_opts },
+          --         --   ["flake-parts2"] = { expr = flake_parts_perSys_opts },
+          --         -- },
+          --         -- diagnostic = {},
+          --       },
+          --     },
+          --   })
+          -- end
 
           do
             ---TODO: This can replace some plugins
