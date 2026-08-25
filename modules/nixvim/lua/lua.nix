@@ -7,18 +7,6 @@
   flake.nixvimModules.lua =
     { lib, config, ... }@a:
     {
-      options =
-        let
-          inherit (lib) mkOption;
-          inherit (lib.types) listOf str attrs;
-        in
-        {
-          extraConfigLuaList = mkOption {
-            default = [ ];
-            type = listOf str;
-            description = "A list of strings that will be merged to `extraConfigLua`";
-          };
-        };
 
       config =
         let
@@ -34,7 +22,6 @@
         in
         with builtins;
         {
-          extraConfigLua = (concatStringsSep "\n" config.extraConfigLuaList);
           extraConfigLuaPost = ''
             -- extraConfigLuaPost (nixvim):
             --[[

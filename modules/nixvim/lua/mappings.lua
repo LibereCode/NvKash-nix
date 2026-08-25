@@ -235,29 +235,36 @@ map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
 -- end, { desc = "[T]Terminal buffer" }, "n")
 
 --[[
-    Diagnostics
+    toggle map
 --]]
-map("<leader>do", function()
-  vim.diagnostic.setloclist()
-end, { desc = "l[o]clist" }, "n")
-map("<leader>dc", function()
-  vim.diagnostic.open_float({ scope = "b" })
-end, { desc = "[c]ursor diagnostic" }, "n")
-map("<leader>dd", function()
-  vim.diagnostic.open_float()
-end, { desc = "line [d]diagnostic" }, "n")
-map("<leader>db", function()
-  vim.diagnostic.open_float({ scope = "b" })
-end, { desc = "[b]uffer diagnostic" }, "n")
-map("<leader>dl", function()
-  vim.cmd("tabnew " .. vim.fn.stdpath("log")) -- vim.cmd('tabnew ' .. vim.lsp.log.get_filename()) end
-end, { desc = "open [l]logs" }, "n")
-map("<leader>dt", function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "[t]toggle diagnostic (global)" }, "n")
-map("<leader>ud", function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled({ bufnr = 0 }), { bufnr = 0 })
-end, { desc = "[d]diagnostic" }, "n")
-map("<leader>uh", function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "toggle inlay[h]hints" }, "n")
+-- ---@alias mode string|string[]
+-- ---@alias key string
+-- ---@alias cmd fun()
+-- ---@alias opts vim.keymap.set.Opts
+-- ---@alias func_opts [mode, key, cmd, opts]
+-- ---Curesed way of making a toggleable mapping (by recursively re-declare it)
+-- ---@param now func_opts
+-- ---@param after func_opts
+-- local function toggleMap(now, after)
+--   local mode, key, cmd, opts = now[1], now[2], now[3], now[4]
+--   vim.keymap.set(mode, key, function()
+--     cmd()
+--     toggleMap(after, now)
+--   end, opts)
+-- end
+-- -- fml
+-- toggleMap({
+--   "n",
+--   "<leader>ud",
+--   function()
+--     vim.diagnostic.enable(false, { bufnr = 0 })
+--   end,
+--   { desc = "toggle off diagnostics filly" },
+-- }, {
+--   "n",
+--   "<leader>ud",
+--   function()
+--     vim.diagnostic.enable(true, { bufnr = 0 })
+--   end,
+--   { desc = "toggle on [D]Diagnostic FULLY" },
+-- })

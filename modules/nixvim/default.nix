@@ -41,6 +41,22 @@ in
         =====================================================================
       */
 
+      options =
+        let
+          inherit (lib) mkOption;
+          inherit (lib.types) listOf str;
+        in
+        {
+          extraConfigLuaList = mkOption {
+            default = [ ];
+            type = listOf str;
+            description = ''
+              A list of strings that will be merged to `extraConfigLua`
+              See its use in
+            '';
+          };
+        };
+
       config = {
         # ## platforms -- HM-options
         # inherit enable;
@@ -58,6 +74,9 @@ in
           vim.g.maplocalleader = vim.keycode("<leader>") .. " "
           vim.keymap.set("", "<localleader><leader>", "", { desc = "reset <leader>" })
         '';
+        extraConfigLua = (builtins.concatStringsSep "\n" config.extraConfigLuaList);
+        # extraConfigLuaPost = ""; # See ./lua/lua.nix
+
         clipboard = {
           register = "unnamedplus";
           providers.wl-copy = {

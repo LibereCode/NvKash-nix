@@ -23,17 +23,22 @@ in
               function(root_dir)
                 -- always enable unless `vim.g.lazydev_enabled = false`
                 if vim.g.lazydev_enabled ~= nil then
-                  print('lazydev enabled == false (uv: vim.f.lazydev_enabled == false)')
+                  -- print('lazydev enabled == false (uv: vim.f.lazydev_enabled == false)')
                   return vim.g.lazydev_enabled
                 end
 
+                local block_files = { ".luarc.json", ".luarc.jsonc", ".emmyrc.json", ".emmyrc.lua" }
+                local block_files_exist = false
+                for _, file in ipairs(block_files) do
+                  block_files_exist = vim.uv.fs_stat(root_dir .. "/" .. file) ~= nil
+                end
                 -- disable when a .luarc.json{,c} file is found
-                if vim.uv.fs_stat(root_dir .. "/.luarc.json") ~= nil or vim.uv.fs_stat(root_dir .. "/.luarc.jsonc") ~= nil then
-                  print('lazydev enabled == false (uv: luarc exist)')
+                if block_files_exist then
+                  -- print('lazydev enabled == false (uv: luarc exist)')
                   return false
                 end
 
-                print('lazydev enabled == true')
+                -- print('lazydev enabled == true')
                 return true
               end
             '';
