@@ -262,14 +262,13 @@
 
             -- local get_flake_base = '(builtins.getFlake (builtins.toString ./.)).'
             local get_flake_base = '(builtins.getFlake ' .. root_path .. ').'
-            local get_flake_base_home = '(builtins.getFlake ' .. vim.env.HOME .. '/nixos' .. ').'
 
             ---TEST path to $HOME/nixos
-            local nixos_opts = get_flake_base_home .. 'nixosConfigurations.' .. host .. '.options'
+            local nixos_opts = get_flake_base .. 'nixosConfigurations.' .. host .. '.options'
             local hm_opts
             hm_opts = nixos_opts .. '.home-manager.users.type.getSubOptions []'
             if not vim.uv.fs_stat("/etc/NIXOS") then
-              hm_opts = get_flake_base_home .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
+              hm_opts = get_flake_base .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
             end
 
             local flake_parts_opts = get_flake_base .. 'debug.options'
