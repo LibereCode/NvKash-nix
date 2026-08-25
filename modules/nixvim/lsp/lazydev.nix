@@ -27,7 +27,10 @@ in
                   return vim.g.lazydev_enabled
                 end
 
-                local block_files = { ".luarc.json", ".luarc.jsonc", ".emmyrc.json", ".emmyrc.lua" }
+                local block_files = {
+                  ".luarc.json", ".luarc.jsonc",
+                  -- ".emmyrc.json", ".emmyrc.lua",
+                }
                 local block_files_exist = false
                 for _, file in ipairs(block_files) do
                   block_files_exist = vim.uv.fs_stat(root_dir .. "/" .. file) ~= nil
