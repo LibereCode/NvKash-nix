@@ -52,7 +52,13 @@
 
       # extraPackages = with pkgs; [ alejandra ]; # nixfmt
 
-      #INFO: https://nix-community.github.io/nixvim/lsp/index.html
+      #INFO: According to docs, `config.plugins.lsp = {};` is deprecated,
+      ## lspconfig (small) will move to `config.plugins.lspconfig = {};`, and
+      ## server settings moved to here: `config.lsp = {};`
+      ## <https://nix-community.github.io/nixvim/plugins/lspconfig/index.html>
+      ## <https://nix-community.github.io/nixvim/lsp/index.html>
+      ## best sauce (because it include lspconfig comment and URL):
+      ## <https://nix-community.github.io/nixvim/plugins/lsp/index.html> <--
       lsp = {
         #TODO:
         # onAttach = /* lua */ ''
@@ -140,7 +146,11 @@
             };
           };
 
+          ast_grep.enable = true; # c-like *
+
           bashls.enable = true; # bash / shell
+
+          biome.enable = true; # js/ts/html/...
 
           # c / c++
           clangd = {
@@ -158,6 +168,8 @@
             };
           };
 
+          cssls.enable = true;
+
           # XXX It started either way ...
           # # See also: lua_ls and ./lazydev.nix
           # emmylua_ls = {
@@ -173,8 +185,6 @@
           # };
 
           fish_lsp.enable = true; # fish
-
-          html.enable = true; # html
 
           gopls.enable = true; # go
 
@@ -232,9 +242,21 @@
             };
           };
 
+          # prettierd.enable = true; # yml/json/toml/...
+
           qmlls.enable = true; # qml
 
+          # ruff.enable = true; # python
+
+          rumdl.enable = true; # markdown
+
+          # shuck.enable = true; # ba/z/sh # Doesent exist yet for nixos D:
+
           rust_analyzer.enable = true; # rust
+
+          # stylua.enable = true; # lua
+
+          superhtml.enable = true; # html
 
           tombi.enable = true; # toml
 
@@ -315,75 +337,8 @@
           --   })
           -- end
 
-          do
-            ---TODO: This can replace some plugins
-            vim.api.nvim_create_autocmd('LspAttach', {
-              group = vim.api.nvim_create_augroup('LspAttach_custom', {}),
-
-              callback = function(ev)
-                local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-
-                if client:supports_method('textDocument/implementation') then
-                  -- Create a keymap for vim.lsp.buf.implementation ...
-                end
-                -- TODO ... etc for other supports_method
-
-                -- -- Auto-format ("lint") on save.
-                -- -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
-                -- if not client:supports_method('textDocument/willSaveWaitUntil')
-                --   and client:supports_method('textDocument/formatting') then
-                --   vim.api.nvim_create_autocmd('BufWritePre', {
-                --     group = vim.api.nvim_create_augroup('my.lsp', {clear=false}),
-                --     buffer = ev.buf,
-                --     callback = function()
-                --       vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
-                --     end,
-                --   })
-                -- end
-                -- TODO Instead make it like I have it now.
-              end,
-            })
-          end
         '';
 
-        #   --[[ ========================
-        #       LspProgress in statusbar
-        #   -- ======================== ]]
-        #
-        #   ---@param events string|string[]
-        #   ---@param augroupName string
-        #   ---@param autoOpts vim.api.keyset.create_autocmd
-        #   local function lsp_autocmd(events, augroupName, opts)
-        #     local group = vim.api.nvim_create_augroup(augroupName, {clear = true})
-        #     local autoOpts = vim.tbl_extend('force', {group = group}, opts)
-        #     vim.api.nvim_create_autocmd(events, autoOpts)
-        #   end
-        #   lsp_autocmd({ "LspProgress" }, "LspProgress-nvim_echo", { -- best
-        #     desc = [[
-        #       LspProgress autocmd.
-        #       Declared in: {file}`nixvim/nix/lsp.nix`.
-        #     ]],
-        #     callback = function(ev)
-        #         local val = ev.data.params.value
-        #         local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        #         if client then
-        #           local message = val.message
-        #           if message then
-        #             message = "  " .. message
-        #           else
-        #             message = " ✔ DONE"
-        #           end
-        #           vim.api.nvim_echo({ { message } }, false, {
-        #             id = "lsp." .. ev.data.client_id,
-        #             kind = "progress",
-        #             source = "vim.lsp",
-        #             title = "[" .. client.name .. "] " .. val.title,
-        #             status = val.kind ~= "end" and "running" or "success",
-        #             percent = val.percentage,
-        #           })
-        #         end
-        #     end,
-        #   })
       };
     };
 }

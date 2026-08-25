@@ -22,24 +22,26 @@ in
           folding.enable = true;
           indent = {
             enable = true;
-            # disable = [
-            #   ## disable treesitter folding for these ft:
-            #   "nix" # it works kinda shit for nix
-            # ];
-            ## Either a list of a lua-function.
+            ## Disable is either:
+            ## ... a list of a lua-function.
             ## See: <https://nix-community.github.io/nixvim/plugins/treesitter/indent.html#pluginstreesitterindentdisable>
+            ## ... or a function:
+            # --- key=true => disable TS indent expr for key
+            # ---Values recieved from nixvim? Via tree-sitter?
+            # ---@param lang string tree-sitter language name
+            # ---@param buf integer `bufnr` of target
+            # ---@param ft string `filetype` of target
+            # ---@return boolean Disable when returning `true`
             disable.__raw = ''
-              ---Values recieved from nixvim? Via tree-sitter?
-              ---@param lang string tree-sitter language name
-              ---@param buf integer `bufnr` of target
-              ---@param ft string `filetype` of target
-              ---@return boolean Disable when returning `true`
               function(lang, buf, ft)
-                if lang == "nix" then
+                local disabled_ft = {
+                  nix = true,
+                }
+                if disabled_ft[lang] then
                   vim.bo[buf].cindent = true
-                  vim.cmd([[setlocal cinwords+=let]]) -- why? sucks ass
-                  -- vim.bo[buf].cinkeys = ""                  return true
+                  vim.opt_local.cinwords:append("let")
                 end
+                return disabled_ft[lang]
               end
             '';
           };

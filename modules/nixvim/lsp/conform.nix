@@ -4,9 +4,10 @@ let
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { pkgs, ... }@a:
+    { pkgs, lib, ... }@a:
     let
-      mkLua = a.lib.nixvim.mkRaw;
+      mkLua = lib.nixvim.mkRaw;
+      inherit (lib.nixvim.utils) listToUnkeyedAttrs;
     in
     {
       plugins = {
@@ -43,14 +44,11 @@ in
             #       if disable_filetypes[vim.bo[bufnr].filetype] then return nil end
             #       -- end
             #
-            #       -- INFO: Disable formatter if 2nd line reads: "# fmt:off" (where "#" is commentstring)
+            #       -- INFO Disable formatter if 2nd line reads: "# fmt:off" (where "#" is commentstring)
             #       local line2 = va.nvim_buf_get_lines(bufnr, 1, 2, false)[1] or ""
             #       if line2:match(vim.o.commentstring:gsub('%%s', 'fmt:off')) then return nil end
             #
-            #       return {
-            #         timeout_ms = 345,
-            #         lsp_format = "fallback",
-            #       }, on_format
+            #       return { timeout_ms = 345, lsp_format = "fallback", }, on_format
             #     end
             #   '';
 
@@ -64,22 +62,42 @@ in
               nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
               lua = [ "stylua" ];
 
-              fish = [ "fish_indent" ];
-              python = [ "ruff_format" ];
+              c = [ "clangd-format" ];
+              cpp = [ "clangd-format" ];
+              go = [ "gofmt" ];
+              rust = listToUnkeyedAttrs [ "rustfmt" ] // {
+                lsp_format = "fallback";
+              };
 
-              # TODO: prettierrc.json
+              fish = [ "fish_indent" ];
+              python = [
+                "ruff_format"
+                "ruff_fix"
+                "ruff_organize_imports"
+              ];
+
               css = [ "prettierd" ];
               markdown = [ "prettierd" ];
               yaml = [ "prettierd" ];
               json = [ "prettierd" ];
               jsonc = [ "prettierd" ];
 
+              html = [ "superhtml" ];
+              kdl = [ "kdlfmt" ];
               xml = [ "xmlformatter" ];
+
+              ## For all filetypes
+              # "*" = [ "foobar" ];
+
+              ## For filestypes with no other formatters:
+              "_" = [ "trim_whitespace" ];
+
             };
 
             formatters = {
               prettierd = {
-                args = mkLua /* lua */ "{ '--trailing-comma=es5', '--no-semi', '--single-quote' }";
+                "inherit" = true;
+                prepend_args = mkLua /* lua */ ''{ "--trailing-comma=es5", "--no-semi", "--single-quote" }'';
               };
             };
           };

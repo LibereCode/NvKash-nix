@@ -47,8 +47,8 @@ in
             '';
             library = [
               # ~/.local/lib/foobar # absolute library path
-              # lazy.nvim # relative from plugin dir (~/.local/share/nvim ???)
 
+              # lazy.nvim # relative from plugin dir (~/.local/share/nvim ???)
               {
                 # It can also be a table with trigger words / mods
                 path = "$" + "{3rd}/luv/library"; # Only load luvit types when ...
