@@ -62,12 +62,10 @@ in
               nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
               lua = [ "stylua" ];
 
-              c = [ "clangd-format" ];
-              cpp = [ "clangd-format" ];
+              c = [ "clang-format" ];
+              cpp = [ "clang-format" ];
               go = [ "gofmt" ];
-              rust = listToUnkeyedAttrs [ "rustfmt" ] // {
-                lsp_format = "fallback";
-              };
+              rust = [ "rustfmt" ];
 
               fish = [ "fish_indent" ];
               python = [
