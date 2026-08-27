@@ -200,11 +200,11 @@ in
               blmap("<M-S-H>", function() bl.move(-1) end, { desc = "move buf pos left" })
               blmap("<M-S-L>", function() bl.move(1) end, { desc = "move buf pos right" })
 
-              for i=1, 9, 1 do
-                local i_str = tostring(i)
-                blmap("<leader>" .. i_str, function() bl.go_to(i) end, { desc = "goto buf " .. i_str})
-              end
-              blmap("<leader>0", function() bl.go_to(-1) end, { desc = "goto last buf"})
+              -- for i=1, 9, 1 do
+              --   local i_str = tostring(i)
+              --   blmap("<leader>" .. i_str, function() bl.go_to(i) end, { desc = "goto buf " .. i_str})
+              -- end
+              -- blmap("<leader>0", function() bl.go_to(-1) end, { desc = "goto last buf"})
 
               blmap("<leader>bd", function() bl.unpin_and_close() end, { desc = "buf unpin_and_close" })
               blmap("<leader>x", function() bl.unpin_and_close() end, { desc = "buf unpin_and_close" })

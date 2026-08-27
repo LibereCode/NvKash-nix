@@ -136,6 +136,9 @@
             (map_func "gd" "require('telescope.builtin').lsp_definitions()" { desc = "telescope definitions"; })
           ];
 
+        #TODO: disable most ; instead use:
+        ## + devenv (get lsp)
+        ## + .nvim.lua (to enable them)
         servers = {
           "*" = {
             config = {
@@ -150,7 +153,7 @@
 
           bashls.enable = true; # bash / shell
 
-          biome.enable = true; # js/ts/html/...
+          # biome.enable = true; # js/ts/html/...
 
           # c / c++
           clangd = {
