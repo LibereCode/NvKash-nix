@@ -205,7 +205,7 @@ in
                       local line, col = vim.fn.line, vim.fn.col
                       local line_delta = math.abs(line 'v' - vim.fn.line '.') + 1
                       local col_delta = math.abs(col 'v' - vim.fn.col '.') + 1
-                      if mode:match("[vVi]") then -- no = normal operator (like d or c)
+                      if mode:match("[vVi]") or mode:match("n[oi]") then -- no = normal operator (like d or c)
                         local col = '%c→' .. tostring(vim.fn.col('$') - 1) .. "|"
                         local line = "|" .. '%l↓%L'
                         local left, middle, right = col, " ", line
