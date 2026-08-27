@@ -4,10 +4,9 @@ let
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { pkgs, lib, ... }@a:
+    { pkgs, ... }@a:
     let
-      mkLua = lib.nixvim.mkRaw;
-      inherit (lib.nixvim.utils) listToUnkeyedAttrs;
+      mkLua = a.lib.nixvim.mkRaw;
     in
     {
       plugins = {
@@ -44,11 +43,14 @@ in
             #       if disable_filetypes[vim.bo[bufnr].filetype] then return nil end
             #       -- end
             #
-            #       -- INFO Disable formatter if 2nd line reads: "# fmt:off" (where "#" is commentstring)
+            #       -- INFO: Disable formatter if 2nd line reads: "# fmt:off" (where "#" is commentstring)
             #       local line2 = va.nvim_buf_get_lines(bufnr, 1, 2, false)[1] or ""
             #       if line2:match(vim.o.commentstring:gsub('%%s', 'fmt:off')) then return nil end
             #
-            #       return { timeout_ms = 345, lsp_format = "fallback", }, on_format
+            #       return {
+            #         timeout_ms = 345,
+            #         lsp_format = "fallback",
+            #       }, on_format
             #     end
             #   '';
 
@@ -57,25 +59,13 @@ in
               lsp_format = "fallback";
               stop_after_first = true;
             };
-
+            # Some where very big.
             formatters_by_ft = {
-              ## Some where very big.
-              ## enable them per project instead
-
               nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
               lua = [ "stylua" ];
 
-              c = [ "clang-format" ];
-              cpp = [ "clang-format" ];
-              # go = [ "gofmt" ];
-              # rust = [ "rustfmt" ];
-
               fish = [ "fish_indent" ];
-              python = [
-                "ruff_format"
-                "ruff_fix"
-                "ruff_organize_imports"
-              ];
+              python = [ "ruff_format" ];
 
               css = [ "prettierd" ];
               markdown = [ "prettierd" ];
@@ -83,16 +73,9 @@ in
               json = [ "prettierd" ];
               jsonc = [ "prettierd" ];
 
-              html = [ "superhtml" ];
-              kdl = [ "kdlfmt" ];
               xml = [ "xmlformatter" ];
 
-              ## For all filetypes
-              # "*" = [ "foobar" ];
-
-              ## For filestypes with no other formatters:
-              "_" = [ "trim_whitespace" ];
-
+              #NOTE: Enable more per project with devenv->treefmt
             };
 
             formatters = {

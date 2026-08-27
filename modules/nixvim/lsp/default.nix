@@ -155,23 +155,23 @@
 
           # biome.enable = true; # js/ts/html/...
 
-          # c / c++
-          clangd = {
-            enable = true;
-            config = {
-              cmd = [
-                "clangd"
-                "--background-index"
-              ];
-              filetypes = [
-                "c"
-                "cpp"
-              ];
-              # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
-            };
-          };
+          # # c / c++
+          # clangd = {
+          #   enable = true;
+          #   config = {
+          #     cmd = [
+          #       "clangd"
+          #       "--background-index"
+          #     ];
+          #     filetypes = [
+          #       "c"
+          #       "cpp"
+          #     ];
+          #     # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
+          #   };
+          # };
 
-          cssls.enable = true;
+          cssls.enable = true; # css
 
           # XXX It started either way ...
           # # See also: lua_ls and ./lazydev.nix
@@ -191,7 +191,9 @@
 
           # gopls.enable = true; # go
 
-          jdtls.enable = true; # java
+          html.enable = true; # html
+
+          # jdtls.enable = true; # java
 
           # json*
           jsonls = {
@@ -245,10 +247,12 @@
             };
           };
 
+          ## enable in treefmt (devenv)
           # prettierd.enable = true; # yml/json/toml/...
 
-          qmlls.enable = true; # qml
+          # qmlls.enable = true; # qml
 
+          ## enable in treefmt (devenv)
           # ruff.enable = true; # python
 
           rumdl.enable = true; # markdown
@@ -257,13 +261,14 @@
 
           # rust_analyzer.enable = true; # rust
 
+          ## enable in treefmt (devenv)
           # stylua.enable = true; # lua
 
           superhtml.enable = true; # html
 
           tombi.enable = true; # toml
 
-          ts_ls.enable = true; # typescript
+          # ts_ls.enable = true; # typescript
 
           ty.enable = true; # python
 
@@ -280,7 +285,7 @@
 
           yamlls.enable = true; # yaml
 
-          zls.enable = true; # zig
+          # zls.enable = true; # zig
         };
         luaConfig.post = ''
           -- -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
@@ -293,7 +298,7 @@
           --           cmd_res:close()
           --           return cmd_res_read
           --       end
-          --   end
+          --   eANNER (right) nd
           --   -- DECLARATIVE    
           --   local host = iopopen_val([[{$pkgs.hostname}/bin/hostname]])
           --   local user = iopopen_val([[{$pkgs.coreutils}/bin/whoami]])
