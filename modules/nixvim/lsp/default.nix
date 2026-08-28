@@ -288,6 +288,44 @@
           # zls.enable = true; # zig
         };
         luaConfig.post = ''
+          do
+            local augroup = vim.api.nvim_create_augroup
+            local autocmd = vim.api.nvim_create_autocmd
+
+            -- INFO: From Kickstart-nvim
+            autocmd('LspAttach', {
+              group = augroup('LspAttach_Nested_autocmd', { clear = true }),
+
+              callback = function(event)
+                  -- Nice highlight on lsp sysmbols
+                  local client = vim.lsp.get_client_by_id(event.data.client_id)
+                  if client and client:supports_method('textDocument/documentHighlight', event.buf) then
+
+                  local highlight_augroup = augroup('Lsp_Nested_CursorHold', { clear = false })
+                  autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                    buffer = event.buf,
+                    group = highlight_augroup,
+                    callback = vim.lsp.buf.document_highlight,
+                  })
+
+                  autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                    buffer = event.buf,
+                    group = highlight_augroup,
+                    callback = vim.lsp.buf.clear_references,
+                  })
+
+                  autocmd('LspDetach', {
+                    group = augroup('Lsp_Nested_LspDetach', { clear = true }),
+                    callback = function(event2)
+                      vim.lsp.buf.clear_references()
+                      vim.api.nvim_clear_autocmds { group = 'LspAttach_Nested_autocmd', buffer = event2.buf }
+                    end,
+                  })
+                end
+              end,
+            })
+          end
+
           -- -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
           -- -- See <https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md#where-to-place-the-configuration>
           -- do

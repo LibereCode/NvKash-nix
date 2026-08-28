@@ -22,6 +22,37 @@ in
             notify_on_error = false;
             notify_no_formatters = false;
 
+            default_format_opts = {
+              timeout_ms = 500;
+              lsp_format = "fallback";
+              stop_after_first = true;
+            };
+            # Some where very big.
+            formatters_by_ft = {
+              nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
+              lua = [ "stylua" ];
+
+              fish = [ "fish_indent" ];
+              python = [ "ruff_format" ];
+
+              css = [ "prettierd" ];
+              markdown = [ "prettierd" ];
+              yaml = [ "prettierd" ];
+              json = [ "prettierd" ];
+              jsonc = [ "prettierd" ];
+
+              xml = [ "xmlformatter" ];
+
+              #NOTE: Enable more per project with devenv->treefmt
+            };
+
+            formatters = {
+              prettierd = {
+                "inherit" = true;
+                prepend_args = mkLua /* lua */ ''{ "--trailing-comma=es5", "--no-semi", "--single-quote" }'';
+              };
+            };
+
             # format_on_save =
             #   # lua
             #   ''
@@ -54,36 +85,6 @@ in
             #     end
             #   '';
 
-            default_format_opts = {
-              timeout_ms = 500;
-              lsp_format = "fallback";
-              stop_after_first = true;
-            };
-            # Some where very big.
-            formatters_by_ft = {
-              nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
-              lua = [ "stylua" ];
-
-              fish = [ "fish_indent" ];
-              python = [ "ruff_format" ];
-
-              css = [ "prettierd" ];
-              markdown = [ "prettierd" ];
-              yaml = [ "prettierd" ];
-              json = [ "prettierd" ];
-              jsonc = [ "prettierd" ];
-
-              xml = [ "xmlformatter" ];
-
-              #NOTE: Enable more per project with devenv->treefmt
-            };
-
-            formatters = {
-              prettierd = {
-                "inherit" = true;
-                prepend_args = mkLua /* lua */ ''{ "--trailing-comma=es5", "--no-semi", "--single-quote" }'';
-              };
-            };
           };
           luaConfig.post = # lua
             ''

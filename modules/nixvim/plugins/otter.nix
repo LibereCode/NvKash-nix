@@ -16,7 +16,9 @@ in
     {
       plugins = {
         ${plugin_name} = {
-          enable = false; # FIXME: need better lsp use
+          enable = true;
+
+          autoActivate = true;
 
           # settings = {};
         };
