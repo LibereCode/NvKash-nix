@@ -1,6 +1,6 @@
 # New Nixvim template
 
-This template gives you a good starting point for configuring Nixvim as a standalone module configuration.
+This template gives you a good starting point for configuring NixVim as a standalone module configuration.
 
 ## Configuring
 
@@ -17,7 +17,7 @@ nix run
 
 ## Configurations and packages
 
-Your Nixvim configuration is created using `evalNixvim`.
+Your NixVim configuration is created using `evalNixvim`.
 This is outputted as the `nixvimConfigurations.<system>.default` flake output.
 
 You can access your configuration's package outputs `<configuration>.config.build.package`.
@@ -27,5 +27,10 @@ This package can be run using `nix run`.
 A test is also available as `<configuration>.config.build.test`.
 This is exported as the flake output `checks.<system>.default`.
 This test can be run using `nix flake check`.
+
+## DEV
+
+See an AWSOME nvim-lsp-devenv integration at [./.nvim.lua].
+You will get lsp-completions for **NixVim** via `nixd`.
 
 <!-- TODO: figure out how to _wrap_ an existing configuration as a nixos/hm module -->
