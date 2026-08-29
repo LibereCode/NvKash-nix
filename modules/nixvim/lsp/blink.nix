@@ -119,11 +119,11 @@ in
                     )
                   ];
                 };
-                # order = {}; #WARN: Not yet implemented
+                # order = {}; # WARN Not yet implemented
               };
               trigger = {
                 # <https://nix-community.github.io/nixvim/plugins/blink-cmp/settings/completion/trigger.html>
-                # prefetch_on_insert = true; #WARN: Dont
+                # prefetch_on_insert = true; # WARN Just do not
                 show_on_insert_on_trigger_character = true;
                 show_on_trigger_character = true;
               };
@@ -136,7 +136,8 @@ in
               #NOTE: using many of the default keybinds (just want to have it here)
               preset = "none";
 
-              "<C-c>" = [
+              "<C-e>" = [
+                "show"
                 "cancel"
                 "fallback"
               ];
@@ -149,7 +150,12 @@ in
                 "show"
                 "fallback"
               ];
-              "<C-l>" = [
+              # "<C-l>" = [
+              #   "select_and_accept"
+              #   "fallback"
+              # ];
+              #TEST: Figure out what to do with <C-l>
+              "<C-;>" = [
                 "select_and_accept"
                 "fallback"
               ];
@@ -173,19 +179,16 @@ in
                 "scroll_documentation_down"
                 "fallback"
               ];
-              "<C-e>" = [
-                "show"
-                "hide"
-                "fallback"
-              ];
               "<C-n>" = [
                 "select_next"
                 "snippet_forward"
+                "show" # TEST
                 "fallback"
               ];
               "<C-p>" = [
                 "select_prev"
                 "snippet_backward"
+                "show" # TEST
                 "fallback"
               ];
               "<C-space>" = [
@@ -243,7 +246,36 @@ in
                     return cmd_type == ":" or cmd_type == "@"
                   end
                 '';
-                ghost_text.enabled = true;
+                # ghost_text.enabled = true; # XXX Does not work for cmdline?
+                list.selection = {
+                  auto_insert = true; # false;
+                  preselect = false;
+                };
+              };
+              keymap = {
+                preset = "inherit"; # "cmdline"|"none"|"inherit"
+                "<Tab>" = [
+                  "show"
+                  "select_and_accept"
+                  "fallback"
+                ];
+                "<C-n>" = [
+                  "select_next"
+                  "fallback"
+                ];
+                "<C-p>" = [
+                  "select_prev"
+                  "fallback"
+                ];
+                "<C-space>" = [
+                  "show"
+                  "hide"
+                  "fallback"
+                ];
+                "<C-Cr>" = [
+                  "select_accept_and_enter"
+                  "fallback"
+                ];
               };
             };
 
