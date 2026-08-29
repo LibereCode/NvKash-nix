@@ -140,23 +140,27 @@ in
                 # -- "progress"
                 {
                   __unkeyed-1.__raw = ''
-                    -- NOTE: combination of 'selectioncount' and 'progress'
-                    -- (I don't know how to `require()` them, fml😀... at least made it compact)
                     function()
                       -- Copyright (c) 2020-2021 hoob3rt
                       -- MIT license, see lualine LICENSE for more details.
                       local mode = vim.fn.mode(true)
-                      local lineDelta = math.abs(vim.fn.line 'v' - vim.fn.line '.') + 1
-                      local colDelta = math.abs(vim.fn.col 'v' - vim.fn.col '.') + 1
-                      -- if mode:match '' then
-                      --   return string.format('%dx%d', colDelta, lineDelta)
-                      -- elseif mode:match 'V' or lineDelta ~= 1 then
-                      --   return lineDelta
-                      -- elseif mode:match 'v' then
-                      --   return colDelta -- string.format('%d,%d', lineDelta, colDelta)
-                      -- else
-                      if mode:match("[^vVi]") then
-                        return string.format('%2d%%%%', math.floor(vim.fn.line '.' / vim.fn.line '$' * 100))
+                      local line, col = vim.fn.line, vim.fn.col
+                      local line_delta = math.abs(line 'v' - vim.fn.line '.') + 1
+                      local col_delta = math.abs(col 'v' - vim.fn.col '.') + 1
+                      -- if mode:match("[vVi]") or mode:match("n[oi]") then -- no = normal operator (like d or c)
+                      -- local col = '%c→' .. tostring(vim.fn.col('$') - 1) .. "|"
+                      -- local line = "|" .. '%l↓%L'
+                      -- local left, middle, right = col, " ", line
+                      if mode:match '' then
+                        return string.format('%02dx%02d', col_delta, line_delta)
+                      elseif mode:match 'V' or line_delta ~= 1 then
+                        -- middle = line_delta
+                        return string.format("__x%02d", line_delta)
+                      elseif mode:match 'v' then
+                        -- middle = col_delta -- string.format('%d,%d', line_delta, col_delta)
+                        return string.format("%02dx__", col_delta)
+                      else
+                        return " " .. os.date "%R"
                       end
                     end,
                   '';
@@ -196,35 +200,15 @@ in
                 # }
                 {
                   __unkeyed-1.__raw = ''
-                    -- NOTE: combination of 'selectioncount' and 'progress'
-                    -- (I don't know how to `require()` them, fml😀... at least made it compact)
                     function()
-                      -- Copyright (c) 2020-2021 hoob3rt
-                      -- MIT license, see lualine LICENSE for more details.
                       local mode = vim.fn.mode(true)
                       local line, col = vim.fn.line, vim.fn.col
                       local line_delta = math.abs(line 'v' - vim.fn.line '.') + 1
                       local col_delta = math.abs(col 'v' - vim.fn.col '.') + 1
-                      if mode:match("[vVi]") or mode:match("n[oi]") then -- no = normal operator (like d or c)
-                        local col = '%c→' .. tostring(vim.fn.col('$') - 1) .. "|"
-                        local line = "|" .. '%l↓%L'
-                        local left, middle, right = col, " ", line
-                        if mode:match '' then
-                          middle = string.format('%02dx%02d', col_delta, line_delta)
-                        elseif mode:match 'V' or line_delta ~= 1 then
-                          -- middle = line_delta
-                          middle = string.format("__x%02d", line_delta)
-                        elseif mode:match 'v' then
-                          -- middle = col_delta -- string.format('%d,%d', line_delta, col_delta)
-                          middle = string.format("%02dx__", col_delta)
-                        else
-                          middle = string.format("x")
-                        end
-                        return left .. middle .. right
-                      else
-                        local clock = " " .. os.date "%R"
-                        return clock
-                      end
+
+                      local col = '%c→' .. tostring(vim.fn.col('$') - 1)
+                      local line = '%l↓%L'
+                      return col .. " " .. line
                     end,
                   '';
                   # function()
