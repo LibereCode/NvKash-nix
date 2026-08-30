@@ -23,6 +23,9 @@
   # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
   processes.on_file_change = {
     exec = "nix flake check";
+    restart = {
+      on = "never";
+    };
     watch = {
       paths = [ ./modules ];
       extensions = [

@@ -31,7 +31,7 @@ do
     vim.cmd("tabnew " .. vim.fn.stdpath("log"))
   end, { desc = "open [l]logs" })
 
-  diagMap("dt", function()
+  diagMap("dT", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   end, { desc = "[t]toggle diagnostic (FULL global)" })
 

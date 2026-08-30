@@ -86,7 +86,6 @@ in
                   prompt_title = "LiveGrep PWD",
               }, { desc = "live_grep [p]PWD" })
               teleMap("ss", "live_grep", {}, { desc = "[s]earch (live_grep)" })
-              teleMap("st", "builtin", {}, { desc = "[t]elescope-builtins" }) -- TODO: builtins->todo
               teleMap("sw", "grep_string", {}, { desc = "[w]word" }, { "n", "x" }) -- 'v'
               teleMap("s:", "command_history", {}, { desc = "[:]cmd_history" }) -- maybe in find instead?
               teleMap('s"', "registers", {}, { desc = '["]registers' })
@@ -107,6 +106,7 @@ in
               teleMap("fk", "keymaps", {}, { desc = "[k]keymaps" })
               teleMap("fm", "man_pages", {}, { desc = "[m]men" })
               teleMap("fr", "oldfiles", {}, { desc = "[r]recent Files" })
+              teleMap("ft", "builtin", {}, { desc = "[t]elescope-builtins" })
               teleMap("f:", "commands", {}, { desc = "[:]commands" })
 
               -- other groups

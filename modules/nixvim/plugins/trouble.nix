@@ -15,10 +15,6 @@ in
         ${pluginName} = {
           enable = true;
 
-          lazyLoad.settings = {
-            cmd = "Trouble";
-          };
-
           settings = {
             # auto_close = false; # when 0 diagnostics
             # auto_jump = false; # when there's only 1
@@ -50,15 +46,38 @@ in
             do
               local map = vim.keymap.set
 
-              map('n', '<leader>dx', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Buffer Diagnostics (Trouble)' })
-              map('n', '<leader>dX', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Diagnostics (Trouble)' })
+              local a = require("trouble.async")
+              map('n', '<leader>T', function()
+                require("trouble").toggle({
+                  {
+                    modes = {
+                      preview_float = {
+                        mode = "diagnostics",
+                        preview = {
+                          type = "float",
+                          relative = "editor",
+                          border = "rounded",
+                          title = "Preview",
+                          title_pos = "center",
+                          position = { 0, -2 },
+                          size = { width = 0.3, height = 0.3 },
+                          zindex = 200,
+                        },
+                      },
+                    },
+                  }
+                })
+              end, { desc = 'Trouble: Buffer Diagnostics' })
+
+              map('n', '<leader>dx', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', { desc = 'Trouble: Buffer Diagnostics' })
+              map('n', '<leader>dX', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Trouble: Diagnostics' })
               map('n', '<leader>cs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'Trouble: [s]ymbols' })
               map('n', '<leader>cS', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', { desc = 'Trouble: [l]sp' }) -- 'LSP Definitions / references / ... (Trouble)'
               map('n', '<leader>dO', function()
                 vim.diagnostic.setloclist { open = false }
                 vim.cmd [[Trouble loclist toggle]]
-              end, { desc = 'L[O]Clist (Trouble)' })
-              map('n', '<leader>dq', '<cmd>Trouble qflist toggle<cr>', { desc = '[q]uickfix (Trouble)' })
+              end, { desc = 'Trouble: L[O]Clist' })
+              map('n', '<leader>dq', '<cmd>Trouble qflist toggle<cr>', { desc = 'Trouble: [q]uickfix' })
             end
           '';
         };
