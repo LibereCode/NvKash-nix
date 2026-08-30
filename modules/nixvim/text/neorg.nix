@@ -4,7 +4,10 @@ let
 in
 {
   flake.nixvimModules.plugins =
-    { lib, ... }@a:
+    {
+      lib,
+      ...
+    }@a:
     {
       plugins = {
         ${pluginName} = {
@@ -29,8 +32,9 @@ in
               "core.concealer".config.icon_preset = "varied";
               "core.defaults".__empty = null;
               "core.dirman".config.workspaces = {
-                home = "~/notes/home";
-                work = "~/notes/work";
+                # work = "~/Documents/Notes/Work/noerg";
+                # home = "~/Documents/Notes/Home/noerg";
+                main = "~/Documents/Notes/noerg/";
               };
             };
             # logger = { };

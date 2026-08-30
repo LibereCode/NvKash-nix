@@ -1,11 +1,6 @@
 {
-  self,
-  inputs,
   ...
 }:
-let
-  tabLen = 4;
-in
 {
   flake.nixvimModules.options =
     { pkgs, ... }@a:

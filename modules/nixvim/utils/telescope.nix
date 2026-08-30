@@ -1,13 +1,16 @@
-{ self, inputs, ... }@top:
+{
+  ...
+}:
 let
   plugin_name = "telescope";
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { pkgs, lib, ... }@a:
-    let
-      inherit (lib.nixvim) mkRaw;
-    in
+    {
+      lib,
+      config,
+      ...
+    }:
     {
       config.plugins = {
         ${plugin_name} = {
@@ -15,6 +18,9 @@ in
 
           #XXX: (source) { ... action = "<cmd>Telescope ${actionStr}<cr>"; ... } (no lua !!)
           # keymaps = { };
+
+          # # INFO <https://nix-community.github.io/nixvim/plugins/telescope/index.html#pluginstelescopeenabledextensions>
+          # enabledExtensions = [ "aerial" ];
 
           extensions = {
             fzf-native = {

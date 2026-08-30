@@ -1,19 +1,15 @@
-{ self, inputs, ... }@top:
+{
+  ...
+}:
 let
   #XXX: RENAME TO PLUGIN'S NAME
   pluginName = "FOOBAR";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${pluginName} =
     {
-      pkgs,
-      lib,
-      config,
       ...
-    }@a:
-    # let
-    #   inherit (lib.nixvim) mkRaw;
-    # in
+    }:
     {
       plugins = {
         ${pluginName} = {

@@ -66,8 +66,11 @@ in
                 path = "xmake-luals-addon/library"; # Load the xmake types when ...
                 files = [ "xmake-luals-addon/library" ]; # ... when opening file named `xmake.lua`
               }
-            ];
-            runtime = lib.nixvim.mkRaw "vim.env.VIMRUNTIME";
+
+            ]
+            ++ lib.optional config.plugins.dap-ui.enable "nvim-dap-ui";
+
+            runtime.__raw = "vim.env.VIMRUNTIME";
           };
         };
 

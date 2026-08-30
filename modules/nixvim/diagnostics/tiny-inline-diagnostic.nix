@@ -39,7 +39,7 @@ in
 
             virt_texts.priority = 2048;
 
-            show_source.if_many = true;
+            # show_source.if_many = true;
 
             show_related.enabled = false; # TEST:
           };

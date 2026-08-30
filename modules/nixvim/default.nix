@@ -1,22 +1,16 @@
 {
-  self,
-  inputs,
   ...
-}@top:
+}:
 let
   moduleName = "default";
 in
 {
   flake.nixvimModules.${moduleName} =
     {
-      pkgs,
       config,
       lib,
       ...
-    }@a:
-    let
-      lua = a.lib.nixvim.mkRaw;
-    in
+    }:
     {
 
       /*
