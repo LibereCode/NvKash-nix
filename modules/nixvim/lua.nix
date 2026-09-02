@@ -11,7 +11,9 @@
       config =
         let
           lua_dir_files = builtins.attrNames (
-            lib.filterAttrs (n: v: lib.hasSuffix ".lua" n && v == "regular") (builtins.readDir ./.)
+            lib.filterAttrs (n: v: lib.hasSuffix ".lua" n && !lib.hasPrefix "_" n && v == "regular") (
+              builtins.readDir ./.
+            )
           );
           files = lib.genAttrs' lua_dir_files (
             name: lib.nameValuePair ("lua/" + name) { extraConfigLua = builtins.readFile (./. + "/${name}"); }

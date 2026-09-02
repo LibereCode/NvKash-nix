@@ -11,7 +11,7 @@ If you add new modules, remember to import them in [`./config/default.nix`](./co
 
 To use your configuration simply run the following command
 
-```
+```sh
 nix run
 ```
 
@@ -30,7 +30,7 @@ This test can be run using `nix flake check`.
 
 ## DEV
 
-See an AWSOME nvim-lsp-devenv integration at [./.nvim.lua].
+See an AWESOME nvim-lsp-devenv integration at [./.nvim.lua].
 You will get lsp-completions for **NixVim** via `nixd`.
 
 <!-- TODO: figure out how to _wrap_ an existing configuration as a nixos/hm module -->

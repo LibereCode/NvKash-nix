@@ -1,16 +1,11 @@
-{
-  self,
-  inputs,
-  ...
-}@top:
+{ ... }:
 {
   flake.nixvimModules.lsp =
     {
       pkgs,
       lib,
-      config,
       ...
-    }@a:
+    }:
     let
       inherit (lib.nixvim) mkRaw;
     in
@@ -171,6 +166,8 @@
           #   };
           # };
 
+          codebook.enable = true; # C, Go, Java, JavaScript, Lua, Markdown, Odin, Plain Text, Python, Ruby, Rust, TOML, TypeScript, Zig
+
           cssls.enable = true; # css
 
           # XXX It started either way ...
@@ -273,15 +270,7 @@
           ty.enable = true; # python
 
           # text / markdown (spellcheck)
-          vale_ls = {
-            enable = true;
-            config = {
-              filetypes = [
-                "text"
-                "markdown"
-              ];
-            };
-          };
+          # vale_ls = { enable = true; config = { filetypes = [ "text" "markdown" ]; }; }; # See codebook
 
           yamlls.enable = true; # yaml
 

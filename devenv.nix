@@ -11,7 +11,9 @@
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [ git ];
+  packages = with pkgs; [
+    git
+  ];
 
   # https://devenv.sh/languages/
   languages = {
@@ -40,15 +42,13 @@
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo hello from $GREET
-  '';
+  scripts.nv.exec = /* sh */ ''nix run . -- "$@" '';
 
-  # https://devenv.sh/basics/
-  enterShell = ''
-    hello         # Run scripts directly
-    git --version # Use packages
-  '';
+  # # https://devenv.sh/basics/
+  # enterShell = ''
+  #   hello         # Run scripts directly
+  #   git --version # Use packages
+  # '';
 
   # https://devenv.sh/tasks/
   # tasks = {

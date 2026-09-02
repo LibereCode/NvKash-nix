@@ -58,23 +58,23 @@ map("<C-q>", ":quit<CR>", {}, "n")
 map("<leader>qr", ":restart<CR>", {}, "n")
 map("<leader>qs", ':w <BAR> so | echo "written & sauced"<CR>', { desc = "save & sauce" }) -- figure out why I can't sauce this file
 map("<leader>qw", ":wa<CR>", { desc = "[w]rite all" })
-map("<leader>qq", ":qa<CR>", { desc = "[q]uit all" })
+map("<leader>qq", ":qa<CR>", { desc = "[q]quit all" })
 map("<C-A-s>", ':write<CR> :source<CR> :echo("written & sauced")<CR>', { desc = "Save&sauce" }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
 
 --[[
     Ui toggles
 --]]
 map("<leader>uw", "<CMD>set wrap!<CR>", { desc = "toggles [w]rap" })
-map("<leader>ul", "<CMD>set nu!<CR>", { desc = "toggle [l]ine-nr" })
+map("<leader>ul", "<CMD>set nu!<CR>", { desc = "toggle [l]line-nr" })
 map("<leader>ur", "<CMD>set rnu!<CR>", { desc = "toggle [r]elative-line-nr" })
-map("<leader>uL", "<CMD>set cul!<CR>", { desc = "toggle cursor-[L]ine" })
+map("<leader>uL", "<CMD>set cul!<CR>", { desc = "toggle cursor-[L]line" })
 map("<leader>uc", function()
   vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
-end, { desc = "toggle [c]ursorColumn" })
+end, { desc = "toggle [c]cursorColumn" })
 map("<leader>uC", function()
   vim.opt_local.cursorline = not vim.o.cursorline
   vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
-end, { desc = "toggle [C]ursor{Line+Column}" })
+end, { desc = "toggle [C]cursor{Line+Column}" })
 
 --[[
     Buffer
@@ -168,7 +168,7 @@ map("<leader>_", ":split<CR>", { desc = "hor[_]split" }, "n")
 --             row = math.floor(vim.o.lines * 0.1),
 --         })
 --     end
--- end, { desc = "[T]uuggle float" }, "n")
+-- end, { desc = "[T]Toggle float" }, "n")
 
 --[[
     Tabs
@@ -178,7 +178,7 @@ map("<leader><TAB><TAB>", ":tabnew<CR>", { desc = "new" }, "n")
 map("<leader><TAB>d", ":tabclose<CR>", { desc = "delete" }, "n")
 map("<leader><TAB>p", ":tabprev<CR>", { desc = "prev" }, "n")
 map("<leader><TAB>n", ":tabnext<CR>", { desc = "next" }, "n")
-map("<leader><TAB>t", "<C-W>T", { desc = "window->newtab" }, "n")
+map("<leader><TAB>t", "<C-W>T", { desc = "window->new tab" }, "n")
 
 --[[
     QoL
@@ -211,11 +211,11 @@ map("<C-p>", '"yp', { desc = '[p]paste from "y' }, "x")
 map("<leader>d", '"yd', { desc = '[d]delete 2 "y' }, "x")
 map("<leader>p", '"yp', { desc = '[p]paste from "y' }, "n")
 
-map("<leader>P", '"_dd<ESC>P', { desc = "delete->[p]aste, no yank" }, { "x", "n" })
+map("<leader>P", '"_dd<ESC>P', { desc = "delete->[p]paste, no yank" }, { "x", "n" })
 
 -- Insert-mode
 map("<C-v>", "<ESC>pa", { desc = "I-mode paste", remap = true }, "i") --  "<C-o>p"
-map("#", " <C-h>#", { desc = "see :smartindent" }, "i") -- why isnt this deafult?
+map("#", " <C-h>#", { desc = "see :smartindent" }, "i") -- why isn't this default?
 
 map("<M-h>", "<Left>", { desc = "<-", silent = false }, { "i", "s", "c" })
 map("<M-j>", "<Down>", { desc = "v", silent = false }, { "i", "s", "c" })
@@ -254,7 +254,7 @@ map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
 -- ---@alias cmd fun()
 -- ---@alias opts vim.keymap.set.Opts
 -- ---@alias func_opts [mode, key, cmd, opts]
--- ---Curesed way of making a toggleable mapping (by recursively re-declare it)
+-- ---Cursed way of making a toggle mapping (by recursively re-declare it)
 -- ---@param now func_opts
 -- ---@param after func_opts
 -- local function toggleMap(now, after)

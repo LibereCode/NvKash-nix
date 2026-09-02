@@ -7,11 +7,9 @@
 local o = vim.o -- has lsp integration
 local opt = vim.opt -- allows usings {tables} to define some options.
 
---[[
-    ==========
-    * format
-    ==========
---]]
+-- --------
+-- # format
+-- --------
 
 local tabLen = 4
 o.tabstop = tabLen
@@ -27,11 +25,9 @@ o.undofile = true
 o.undolevels = 1723
 o.confirm = true
 
---[[
-    ==========
-    *  look
-    ==========
---]]
+-- ------
+-- # look
+-- ------
 
 o.number = true
 o.relativenumber = true
@@ -76,11 +72,10 @@ o.termguicolors = true
 -- o.winborder = ".,-,.,¦,˙,-,˙,¦" -- ¦·.ˍߺ˙¯‾
 opt.winborder = { "·", "¯", "·", "¦", "·", "ˍ", "·", "¦" }
 
---[[
-  ==========
-  *  feel
-  ==========
---]]
+-- ------
+-- # feel
+-- ------
+
 o.ignorecase = true
 o.smartcase = true
 
@@ -117,9 +112,9 @@ opt.wildoptions = { "fuzzy", "pum", "tagfile" }
 opt.whichwrap:append("<>[]hl")
 opt.shortmess:append("as")
 
---[[
-    globals
---]]
+-- ---------
+-- # globals
+-- ---------
 local g = vim.g
 
 g.have_nerd_font = true
@@ -131,9 +126,9 @@ g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0
 
---[[
-    special
---]]
+-- ---------
+-- # special
+-- ---------
 
 require("vim._core.ui2").enable({
   msg = { -- Options related to the message module.
@@ -161,3 +156,16 @@ require("vim._core.ui2").enable({
 })
 
 o.exrc = true -- loads ./{.nvim.lua|.nvimrc|.exrc} -- See `:h exrc`
+
+-- ---------------
+-- # "Lazy" loaded
+-- ---------------
+-- See `$VIMRUNTIME/example_init.lua`
+
+vim.api.nvim_create_autocmd("UIEnter", {
+  desc = "Lazy load options until UIEnter. Could fix startup time for some options.",
+  group = vim.api.nvim_create_augroup("UIEnter_lazy_options", { clear = true }),
+  callback = function()
+    -- vim.o.clipboard = 'unnamedplus' -- managed by nixvim
+  end,
+})

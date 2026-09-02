@@ -276,6 +276,10 @@ in
                   "select_accept_and_enter"
                   "fallback"
                 ];
+                ## disabled
+                "<C-e>" = [
+                  "fallback"
+                ];
               };
             };
 
