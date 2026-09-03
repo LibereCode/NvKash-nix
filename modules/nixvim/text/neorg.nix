@@ -1,13 +1,10 @@
-{ self, inputs, ... }@top:
+{ ... }:
 let
   pluginName = "neorg";
 in
 {
   flake.nixvimModules.plugins =
-    {
-      lib,
-      ...
-    }@a:
+    { ... }:
     {
       plugins = {
         ${pluginName} = {
@@ -29,13 +26,18 @@ in
             # hook.__raw = "";
             # lazy_loading 40
             load = {
-              "core.concealer".config.icon_preset = "varied";
               "core.defaults".__raw = "{}"; # __empty = null;
-              "core.dirman".config.workspaces = {
-                # work = "~/Notes/Work/noerg";
-                # home = "~/Notes/Home/noerg";
-                main = "~/Notes/noerg";
+              "core.dirman".config = {
+                workspaces = {
+                  # work = "~/Notes/Work/noerg";
+                  # home = "~/Notes/Home/noerg";
+                  notes = "~/Notes/noerg";
+                };
+                default_workspace = "notes";
+                index = "index.norg";
               };
+              "core.concealer".config.icon_preset = "varied";
+              "core.journal".config.workspace = "notes";
             };
             # logger = { };
           };
@@ -45,5 +47,6 @@ in
           # ''
         };
       };
+      extraFiles."ftplugin/norg.lua".source = ./norg.lua;
     };
 }

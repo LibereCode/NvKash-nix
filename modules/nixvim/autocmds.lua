@@ -43,25 +43,24 @@ autocmd("CmdwinEnter", "CmdwinEnter-syntaxHL", {
 
 -- NOTE set filetypes
 
-autocmd("BufEnter", "BufEnter_todotxt_set_ft", {
-  desc = "Set ft=todotxt when entering that kind of file...",
-  pattern = { "*.todo.txt", "todo.txt" },
-  callback = function(ev)
-    vim.bo[ev.buf].ft = "todotxt"
-  end,
-})
---TODO:
+local function autoSetFt(ft, pattern)
+  autocmd("BufEnter", "BufEnter_set_ft_" .. ft, {
+    desc = "Set ft=" .. ft .. " when matching patterns: " .. table.concat(pattern, ", "),
+    pattern = pattern,
+    callback = function(ev)
+      vim.bo[ev.buf].ft = ft
+    end,
+  })
+end
+
 -- autocmd("BufEnter", "BufEnter_todotxt_set_ft", {
---   desc = "Set ft=2do ; oh btw, 2DO this new filetype (better todo.txt)",
---   pattern = { "*.2do", *2do.txt },
+--   desc = "Set ft=todotxt when entering that kind of file...",
+--   pattern = { "*.todo.txt", "todo.txt" },
 --   callback = function(ev)
 --     vim.bo[ev.buf].ft = "todotxt"
 --   end,
 -- })
-autocmd("BufEnter", "BufEnter_log_set_ft", {
-  desc = "Set ft=log when entering that kind of file...",
-  pattern = { "*.log" },
-  callback = function(ev)
-    vim.bo[ev.buf].ft = "log"
-  end,
-})
+autoSetFt("todotxt", { "*.todo.txt", "todo.txt" })
+autoSetFt("todotxt", { "*.2do", "*.2do.txt", "2do.txt" }) -- TODO replace ft: todotxt -> 2do
+autoSetFt("dosini", { "*config", "config" })
+autoSetFt("log", { "*.log" })

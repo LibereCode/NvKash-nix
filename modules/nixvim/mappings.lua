@@ -237,8 +237,9 @@ map("vp", "vim.print()<left>", { desc = "vp -> vim.print(|)" }, "ca")
     Terminal
 --]]
 -- map({ "<C-ESC>", "<ESC><ESC>" }, "<C-\\><C-n>", { remap = true }, "t") -- available in nvim 0.13
-map("<C-ESC>", "<C-\\><C-n>", { remap = true }, "t")
-map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
+-- map("<C-ESC>", "<C-\\><C-n>", { remap = true }, "t")
+-- map("<ESC><ESC>", "<C-\\><C-n>", { remap = true }, "t")
+map("<ESC>", "<C-\\><C-n>", { remap = true }, "t") -- TEST. Also disable vi-mode in shell when in $NVIM
 
 -- map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")
 -- map("<leader>th", ":hor te<CR>", { desc = "[h]hor terminal" }, "n")
