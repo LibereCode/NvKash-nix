@@ -10,7 +10,8 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
 
-ls.add_snippets("sh", { -- 'bash'
+-- ls.add_snippets("sh", { -- 'bash'
+return { -- 'bash'
 	-- stylua: ignore
   s('printf', {
     t { [[printf '\e[]] }, i(1, '32'), t { [[m%s\e[0m\n' "]] },
@@ -26,4 +27,5 @@ ls.add_snippets("sh", { -- 'bash'
     -- -- Looks like:
     -- printf '\e[38;2;R;G;Bm%s\e[0m\n' "Hello RGB_World!"
   }),
-})
+  -- })
+}

@@ -16,19 +16,23 @@ local function copy(args)
   return args[1]
 end
 
-ls.add_snippets("zig", { -- NOTE: MY FIRST LuaSnippet !!!
+-- ls.add_snippets("zig", {
+return {
 	-- stylua: ignore
   s('stdMain', {
-    t { 'const std = @import("std");' }, t { '', '', '' },
-    t { 'const err = error{' }, i(1, 'errName'), t { '};', '', '' },
+    t { 'const std = @import("std");' }, t { '', '' },
+    t { 'const err = error{' }, i(1, 'errName'), t { '};', '' },
     t { 'pub fn main(init: std.process.Init) !void {', '' },
     t { '\t' }, i(2, 'std.debug.print("PLACEHOLDER");'), t { '', '' },
+    t { '\t' }, i(0), t{'',''},
     t { '};' },
     -- -- Looks like:
     -- const std = @import("std");
-    -- const err = error{errName};
+    -- const err = error{${1:- errName}};
     -- pub fn main(init: std.process.Init) !void {
-    --    std.debug.print("PLACEHOLDER");
+    --    ${2:- std.debug.print("PLACEHOLDER");}
+    --    ${0}
     -- }
   }),
-})
+  -- })
+}

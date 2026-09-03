@@ -11,10 +11,11 @@ in
       ...
     }:
     {
-      plugins = {
-        ${pluginName} = {
-          enable = true;
-
+      plugins
+        # .CHANGE_ME # XXX: RENAME ME (I don't use the variable, because of nixd completions)
+        = {
+          # enable = true;
+          #
           # lazyLoad.settings = {
           #   cmd = "Foobar";
           #   keys = [
@@ -25,15 +26,14 @@ in
           #     }
           #   ];
           # };
-
+          #
           # settings = {
           #
           # };
-
+          #
           # luaConfig.post = ''
           #
-          # ''
+          # '';
         };
-      };
     };
 }

@@ -16,7 +16,8 @@ local function copy(args)
   return args[1]
 end
 
-ls.add_snippets("all", {
+-- ls.add_snippets("all", {
+return {
   s("testHello", { t("Hello, "), i(1, "world?"), t("!") }),
   -- cool!
   s("testFn", {
@@ -42,4 +43,5 @@ ls.add_snippets("all", {
     --  	[i3]
     --  }
   }),
-})
+  -- })
+}

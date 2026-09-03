@@ -189,7 +189,7 @@ in
               local bl = require("bufferline")
               local map = vim.keymap.set
               local function blmap(lhs, rhs, opts, mode)
-                mode = mode or ""
+                mode = mode or "n"
                 opts = vim.tbl_extend("force", { desc = "TODO: bufferline-key: " .. lhs , silent = true }, opts)
                 map(mode, lhs, rhs, opts)
               end
