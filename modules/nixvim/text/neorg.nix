@@ -30,11 +30,11 @@ in
             # lazy_loading 40
             load = {
               "core.concealer".config.icon_preset = "varied";
-              "core.defaults".__empty = null;
+              "core.defaults".__raw = "{}"; # __empty = null;
               "core.dirman".config.workspaces = {
-                # work = "~/Documents/Notes/Work/noerg";
-                # home = "~/Documents/Notes/Home/noerg";
-                main = "~/Documents/Notes/noerg/";
+                # work = "~/Notes/Work/noerg";
+                # home = "~/Notes/Home/noerg";
+                main = "~/Notes/noerg";
               };
             };
             # logger = { };
