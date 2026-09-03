@@ -1,16 +1,13 @@
-{ self, inputs, ... }@top:
+{ ... }:
 let
   plugin_name = "which-key";
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { pkgs, lib, ... }@a:
-    let
-      inherit (lib.nixvim) mkraw;
-    in
+    { ... }:
     {
       plugins = {
-        ${plugin_name} = {
+        which-key = {
           enable = true;
           # TODO: somehow add mappings. via luaConfig?
           # luaConfig = ''
@@ -19,7 +16,8 @@ in
             delay = 200;
             expand = 1;
             notify = false;
-            preset = false;
+            preset = "modern"; # false | "classic" | "modern" | "helix"
+
             replace = {
               desc = [
                 [
@@ -124,7 +122,14 @@ in
 
             ];
             win = {
-              border = "single";
+              border = "none"; # "single"
+              no_overlap = true;
+              wo = {
+                winblend = 21; # 0-100 ; 100 fully transparent
+              };
+              # TEST
+              # col.__raw = "math.floor(vim.o.columns * 0.2) ";
+              # width.__raw = "math.floor(vim.o.columns * 0.6) ";
             };
           };
         };

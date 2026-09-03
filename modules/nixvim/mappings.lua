@@ -215,7 +215,7 @@ map("<leader>P", '"_dd<ESC>P', { desc = "delete->[p]paste, no yank" }, { "x", "n
 
 -- Insert-mode
 map("<C-v>", "<ESC>pa", { desc = "I-mode paste", remap = true }, "i") --  "<C-o>p"
-map("#", " <C-h>#", { desc = "see :smartindent" }, "i") -- why isn't this default?
+-- map("#", " <C-h>#", { desc = "see :smartindent" }, "i") -- TEST See cindent:remove("#0")
 
 map("<M-h>", "<Left>", { desc = "<-", silent = false }, { "i", "s", "c" })
 map("<M-j>", "<Down>", { desc = "v", silent = false }, { "i", "s", "c" })

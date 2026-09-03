@@ -1,0 +1,6 @@
+* CUSTOM PLUGINS
+  These are plugins I have written on my own.
+  They will:
+  ~ Follow /standard nvim-plugin structure/
+  ~ I will host them on /some git-host/ (prolly {https://github.com/LibereCode}[github])
+  ~ I will put their config here.

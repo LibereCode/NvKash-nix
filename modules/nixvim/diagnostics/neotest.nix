@@ -5,13 +5,13 @@ let
   pluginName = "neotest";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${pluginName} =
     {
       ...
     }:
     {
       plugins = {
-        ${pluginName} = {
+        neotest = {
           enable = true;
           adapters = {
             bash.enable = true;
@@ -42,6 +42,20 @@ in
               # };
             };
           };
+
+          luaConfig.post = ''
+            ---neotest.nvim ; See <https://github.com/nvim-neotest/neotest#usage>
+            do
+              local nt = require("neotest")
+              local map = vim.keymap.set
+              map("n", "<leader>tr", nt.run.run, {desc = "[NeoTest] [r]run nearest"})
+              map("n", "<leader>ts", nt.run.stop, {desc = "[NeoTest] [s]stop nearest"})
+              map("n", "<leader>ta", nt.run.attach, {desc = "[NeoTest] [a]attach nearest"})
+              map("n", "<leader>tw", function() nt.watch.toggle(vim.fn.expand("%")) end, {desc = "[NeoTest] [w]atch file"})
+              map("n", "<leader>ts", "<cmd>Neotest summary<CR>", {desc = "[NeoTest] [s]summary"})
+              map("n", "<leader>td", function() nt.run.run({strategy = "dap"}) end, {desc = "[NeoTest] [d]ap"})
+            end
+          '';
         };
       };
     };

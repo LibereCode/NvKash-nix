@@ -23,7 +23,7 @@ in
               local ott = require("otter")
               local ott_is_on = false
 
-              vim.keymap.set("n", "<leader>lo", function()
+              vim.keymap.set("n", "<leader>O", function()
                   local langs =  {
                     "lua", "python", "bash",
                     "sh", "fish","zsh", "c"
@@ -34,7 +34,7 @@ in
                     ott.deactivate (false,false)
                   end
                   ott_is_on = not ott_is_on
-              end, {desc = "toggle [o]otter"})
+              end, {desc = "toggle [O]Otter"})
 
             end
           '';

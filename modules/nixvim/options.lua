@@ -90,8 +90,12 @@ o.foldmethod = "indent"
 o.foldtext = ""
 
 o.smarttab = true
-o.smartindent = true -- TODO: cindent for nix files
 o.expandtab = true
+-- o.smartindent = true -- TODO cindent for ~nix~ ALL files
+o.autoindent = true
+o.cindent = true
+opt.cinkeys:remove("0#") -- remove stupid tab de-indent
+opt.indentkeys:remove("0#") -- remove stupid tab de-indent
 
 o.mouse = "nvc"
 o.selectmode = "key" -- "mouse"

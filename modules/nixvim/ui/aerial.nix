@@ -84,9 +84,13 @@ in
               },
             })
           ''
-          + ''
-            end
-          '';
+          +
+            # lua
+            ''
+                vim.keymap.set("n","<leader>a", "<cmd>AerialToggle<CR>", { desc = "toggle [a]aerial" })
+                vim.keymap.set("n","<leader>A", "<cmd>AerialNavToggle<CR>", { desc = "toggle [A]Aerial Nav" })
+              end
+            '';
         };
       };
     };

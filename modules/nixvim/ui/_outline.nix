@@ -11,7 +11,8 @@ in
       ...
     }:
     {
-      # # INFO Outline.nvim is alternative to **Aerial.nvim** (I think...)
+      # ## INFO Outline.nvim is alternative to **Aerial.nvim** (I think...)
+      # ## WARN Cant install because "norg treesitter" dependency fails?
       # extraPlugins = [
       #   (pkgs.vimUtils.buildVimPlugin {
       #     name = "outline";
@@ -30,6 +31,9 @@ in
       #           priority = { 'lsp',  'markdown', 'coc', 'man' }, -- 'norg',
       #         },
       #       })
+      #
+      #       local opts = {}
+      #       vim.keymap.set("n", "<leader>T", function() ol.toggle(opts) end, { desc = "toggle [T]ouTline" })
       #     end
       #   ''
       # ];
