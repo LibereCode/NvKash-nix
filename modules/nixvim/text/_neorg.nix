@@ -29,9 +29,9 @@ in
               "core.defaults".__raw = "{}"; # __empty = null;
               "core.dirman".config = {
                 workspaces = {
-                  # work = "~/Notes/Work/noerg";
-                  # home = "~/Notes/Home/noerg";
-                  notes = "~/Notes/noerg";
+                  # work = "~/Notes/Work/neorg";
+                  # home = "~/Notes/Home/neorg";
+                  notes = "~/Notes/neorg";
                 };
                 default_workspace = "notes";
                 index = "index.norg";
