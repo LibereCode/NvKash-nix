@@ -3,12 +3,12 @@ let
   pluginName = "neorg";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${pluginName} =
     { ... }:
     {
       plugins = {
-        ${pluginName} = {
-          enable = true;
+        neorg = {
+          enable = false; # true; # XXX DISABLED
           telescopeIntegration.enable = true;
 
           # lazyLoad.settings = {
