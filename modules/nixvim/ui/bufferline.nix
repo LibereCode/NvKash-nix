@@ -197,8 +197,9 @@ in
               blmap("H", function() bl.cycle(-1) end, { desc = "cycle prev buf" })
               blmap("L", function() bl.cycle(1) end, { desc = "cycle next buf" })
 
-              blmap("<M-S-H>", function() bl.move(-1) end, { desc = "move buf pos left" })
-              blmap("<M-S-L>", function() bl.move(1) end, { desc = "move buf pos right" })
+
+              blmap("<M-S-,>", function() bl.move(-1) end, { desc = "move buf pos left" }) -- h -> ,
+              blmap("<M-S-.>", function() bl.move(1) end, { desc = "move buf pos right" }) -- l -> .
 
               -- for i=1, 9, 1 do
               --   local i_str = tostring(i)

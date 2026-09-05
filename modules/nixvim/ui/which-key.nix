@@ -125,7 +125,7 @@ in
               border = "none"; # "single"
               no_overlap = true;
               wo = {
-                winblend = 21; # 0-100 ; 100 fully transparent
+                winblend = 12; # 0-100 ; 100 fully transparent
               };
               # TEST
               # col.__raw = "math.floor(vim.o.columns * 0.2) ";

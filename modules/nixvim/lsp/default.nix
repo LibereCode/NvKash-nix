@@ -231,6 +231,7 @@
           nixd = {
             enable = true;
             config = {
+              # cmd.__raw = ''vim.env.DEVENV_ROOT and { "devenv", "lsp" } or { "nixd" }'';
               settings = {
                 nixd = {
                   nixpkgs = {
@@ -315,62 +316,49 @@
             })
           end
 
-          -- -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
-          -- -- See <https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md#where-to-place-the-configuration>
-          -- do
-          --   local function iopopen_val(cmd)
-          --       local cmd_res = io.popen(cmd) or ""
-          --       if cmd_res then
-          --           local cmd_res_read = cmd_res:read("l")
-          --           cmd_res:close()
-          --           return cmd_res_read
-          --       end
-          --   eANNER (right) nd
-          --   -- DECLARATIVE    
-          --   local host = iopopen_val([[{$pkgs.hostname}/bin/hostname]])
-          --   local user = iopopen_val([[{$pkgs.coreutils}/bin/whoami]])
-          -- 
-          --   local root_markers = { "flake.nix", ".git" }
-          --   local root_path = vim.fs.root(0, root_markers) or vim.env.PWD
-          -- 
-          --   -- local get_flake_base = '(builtins.getFlake (builtins.toString ./.)).'
-          --   local get_flake_base = '(builtins.getFlake ' .. root_path .. ').'
-          -- 
-          --   ---TEST path to $HOME/nixos
-          --   local nixos_opts = get_flake_base .. 'nixosConfigurations.' .. host .. '.options'
-          --   local hm_opts
-          --   hm_opts = nixos_opts .. '.home-manager.users.type.getSubOptions []'
-          --   if not vim.uv.fs_stat("/etc/NIXOS") then
-          --     hm_opts = get_flake_base .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
-          --   end
-          -- 
-          --   local flake_parts_opts = get_flake_base .. 'debug.options'
-          --   local flake_parts_perSys_opts = get_flake_base .. 'currentSystem.options'
-          -- 
-          --   vim.lsp.config("nixd", {
-          --     -- cmd = { [[{$pkgs.nixd}/bin/nixd]] },
-          --     -- filetypes = { "nix" },
-          --     -- root_markers = root_markers,
-          --     settings = {
-          --       nixd = {
-          --         nixpkgs = {
-          --           expr = "import <nixpkgs> { }",
-          --         },
-          --         formatting = {
-          --           command = { [[{$pkgs.nixfmt-rs}/bin/nixfmt]] },
-          --         },
-          --         --TODO: try again some time, didnt work well this time
-          --         -- options = {
-          --         --   nixos = { expr = nixos_opts },
-          --         --   home_manager = { expr = hm_opts },
-          --         --   ["flake-parts"] = { expr = flake_parts_opts },
-          --         --   ["flake-parts2"] = { expr = flake_parts_perSys_opts },
-          --         -- },
-          --         -- diagnostic = {},
-          --       },
-          --     },
-          --   })
-          -- end
+          -- Setting nixd lsp-config with basically Lua+Nix voodoo magic...
+          -- See <https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md#where-to-place-the-configuration>
+          do
+            local root_markers = { "flake.nix", ".git" }
+            local is_devenv = vim.env.DEVENV_ROOT and true
+            local root_path = vim.env.DEVENV_ROOT or vim.fs.root(0, root_markers) or vim.env.PWD
+            local get_flake_base = '(builtins.getFlake ' .. root_path .. ').'
+
+            -- local f = assert(io.popen("hostname"))
+            -- local host = f:read("*l") or "ThinkIce"
+            -- f:close()
+            -- local user = vim.env.USER or "LibereCode"
+            --
+            -- ---TEST path to $HOME/nixos
+            -- local nixos_opts = get_flake_base .. 'nixosConfigurations.' .. host .. '.options'
+            -- local hm_opts
+            -- hm_opts = nixos_opts .. '.home-manager.users.type.getSubOptions []'
+            -- if not vim.uv.fs_stat("/etc/NIXOS") then
+            --   hm_opts = get_flake_base .. 'homeConfigurations.' .. user .. '@' .. host .. '.options'
+            -- end
+
+            -- local flake_parts_opts = get_flake_base .. 'debug.options'
+            -- local flake_parts_perSys_opts = get_flake_base .. 'currentSystem.options'
+
+            vim.lsp.config("nixd", vim.tbl_deep_extend( "force", vim.lsp.config.nixd, {
+              cmd = is_devenv and { "devenv", "lsp" } or { "nixd" },
+              -- filetypes = { "nix" },
+              -- root_markers = root_markers,
+              settings =  {
+                nixd = {
+                -- diagnostic = {}, -- <- ???
+                  -- TODO: SET THESE PER PROJECT (in {root}/.nvim/lsp/nixd.lua)
+                  -- options = {
+                  --   nixos = { expr = nixos_opts },
+                  --   home_manager = { expr = hm_opts },
+                  --   -- ["flake-parts"] = { expr = flake_parts_opts },
+                  --   -- ["flake-parts2"] = { expr = flake_parts_perSys_opts },
+                  -- },
+                },
+              },
+            }))
+
+          end
 
         '';
 

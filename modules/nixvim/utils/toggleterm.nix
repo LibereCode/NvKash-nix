@@ -10,7 +10,7 @@ in
     in
     {
       plugins = {
-        ${plugin_name} = {
+        toggleterm = {
           enable = true;
 
           settings = {
@@ -42,7 +42,7 @@ in
               local function termToggle() term_base:toggle() end
 
               -- vim.keymap.set({"n", "t"}, "<M-t>", "<CMD>ToggleTerm<CR>", {})
-              vim.keymap.set({"n", "t"}, "<M-t>", termToggle, {})
+              vim.keymap.set({"n", "t"}, "<M-t>", termToggle, { desc = "toggle [t]terminal" })
 
               -- see ./git.nix for a use of toggleterm with lazygit
             '';
