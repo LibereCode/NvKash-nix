@@ -10,13 +10,13 @@ in
       ...
     }:
     let
-      org_dir = "~/Notes/org";
+      org_dir = "~/Notes";
     in
     {
       plugins = {
         ## INFO GUIDE <https://nvim-orgmode.github.io/tutorial>
         orgmode = {
-          enable = true;
+          enable = false; # true; # see ./neorg.nix
 
           ## DOCS <https://nvim-orgmode.github.io/configuration>
           settings = {

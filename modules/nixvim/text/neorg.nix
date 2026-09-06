@@ -8,7 +8,7 @@ in
     {
       plugins = {
         neorg = {
-          enable = false; # true; # XXX DISABLED
+          enable = true;
           telescopeIntegration.enable = true;
 
           # lazyLoad.settings = {
@@ -31,7 +31,7 @@ in
                 workspaces = {
                   # work = "~/Notes/Work/neorg";
                   # home = "~/Notes/Home/neorg";
-                  notes = "~/Notes/neorg";
+                  notes = "~/Notes";
                 };
                 default_workspace = "notes";
                 index = "index.norg";
