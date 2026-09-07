@@ -219,6 +219,11 @@ map("vp", "vim.print()<left>", { desc = "vp -> vim.print(|)" }, "ca")
 map("<M-ESC>", "<C-\\><C-n>", { desc = "Escape t-mode", remap = true }, "t") -- A little unreliable
 map("<ESC><ESC>", "<C-\\><C-n>", { desc = "Escape t-mode", remap = true }, "t")
 -- map("<ESC>", "<C-\\><C-n>", { remap = true }, "t") -- couldn't use esc in t-mode == bad
+---TEST
+map("<C-w>", "<C-\\><C-n>", { desc = "Escape t-mode", remap = true }, "t") -- So I can spam CTRL-w. Also kinda not used in terminal
+for _, key in ipairs({ "h", "j", "k", "l" }) do
+  map("<C-" .. key .. ">", "<C-\\><C-n><C-w>" .. key, { desc = "Move to window " .. key, remap = true }, "t")
+end
 
 -- map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")
 -- map("<leader>th", ":hor te<CR>", { desc = "[h]hor terminal" }, "n")
