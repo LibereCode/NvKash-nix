@@ -43,7 +43,7 @@ o.showmode = false
 o.list = true
 opt.listchars = {
   eol = " ", --  ␤ 󰌑 
-  tab = "⇥ ", -- ↣ ↪ ⇢ ⇛ ⇒ ⇨ ⇥ 󰌒 »
+  tab = "➧ ", -- ↣ ↪ ⇢ ⇛ ⇒ ⇨ ⇥ 󰌒 »➧
   multispace = " ", -- string.rep(" ", (vim.o.ts - 1)) .. "␣", -- mark "shiftwidth" tabs
 
   trail = "·", -- ␣ 󱁐 · ␠
