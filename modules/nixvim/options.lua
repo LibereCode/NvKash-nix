@@ -99,6 +99,7 @@ opt.indentkeys:remove("0#") -- remove stupid tab de-indent
 
 o.mouse = "nvc"
 o.selectmode = "key" -- "mouse"
+o.mousemodel = "extend"
 
 o.updatetime = 250
 o.timeoutlen = 222
