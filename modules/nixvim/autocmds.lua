@@ -26,11 +26,12 @@ autocmd("BufReadPost", "BufReadPost-restore-cursor", {
   end,
 })
 
-autocmd("TermEnter", "TermEnter-startinsert", {
-  desc = "Insert-mode on TermEnter",
-  callback = function()
-    vim.cmd("startinsert")
-    vim.api.nvim_win_set_config(0, { style = "minimal" })
+autocmd({ "WinEnter" }, "BufWinEnter_ToggleTerm_start_insert", {
+  pattern = { "term://*" },
+  desc = "Enter insert-mode when focusing terminal-buffers.",
+  callback = function(ev)
+    vim.cmd.startinsert()
+    -- vim.api.nvim_win_set_config(0, { style = "minimal" }) -- 0 == vim.api.nvim_get_current_win()
   end,
 })
 
