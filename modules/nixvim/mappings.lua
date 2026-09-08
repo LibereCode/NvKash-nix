@@ -222,7 +222,7 @@ map("<ESC><ESC>", "<C-\\><C-n>", { desc = "Escape t-mode", remap = true }, "t")
 ---TEST
 map("<C-w>", "<C-\\><C-n>", { desc = "Escape t-mode", remap = true }, "t") -- So I can spam CTRL-w. Also kinda not used in terminal
 for _, key in ipairs({ "h", "j", "k", "l" }) do
-  map("<C-" .. key .. ">", "<C-\\><C-n><C-w>" .. key, { desc = "Move to window " .. key, remap = true }, "t")
+  map("<C-" .. key .. ">", "<C-\\><C-n><C-w>" .. key, { desc = "Focus window to the: " .. key, remap = true }, "t")
 end
 
 -- map("<leader>tv", ":vert te<CR>", { desc = "[v]vert terminal" }, "n")

@@ -26,7 +26,30 @@ in
               preview_method = "scratch";
             };
 
+            use_default_keymaps = false;
             keymaps = {
+
+              ## DEFAULT
+
+              "g?".__raw = ''{ "actions.show_help", mode = "n" }'';
+              "<CR>".__raw = ''"actions.select"'';
+              # "<C-s>".__raw = ''{ "actions.select", opts = { vertical = true } }''; # XXX Dumb ass default
+              # "<C-h>".__raw = ''{ "actions.select", opts = { horizontal = true } }''; # XXX Dumb ass default
+              "<C-t>".__raw = ''{ "actions.select", opts = { tab = true } }'';
+              "<C-p>" = "actions.preview";
+              "<C-c>".__raw = ''{ "actions.close", mode = "n" }'';
+              # "<C-l>".__raw = ''"actions.refresh"''; # XXX Dumb ass default
+              "-".__raw = ''{ "actions.parent", mode = "n" }'';
+              "_".__raw = ''{ "actions.open_cwd", mode = "n" }'';
+              "`".__raw = ''{ "actions.cd", mode = "n" }'';
+              "g~".__raw = ''{ "actions.cd", opts = { scope = "tab" }, mode = "n" }'';
+              "gs".__raw = ''{ "actions.change_sort", mode = "n" }'';
+              "gx".__raw = ''"actions.open_external"'';
+              "g.".__raw = ''{ "actions.toggle_hidden", mode = "n" }'';
+              "g\\".__raw = ''{ "actions.toggle_trash", mode = "n" }'';
+
+              ## CUSTOM
+
               "q" = "actions.close";
               "<C-q>" = {
                 __unkeyed-1.__raw = ''function() require("oil").close() end '';
@@ -63,6 +86,9 @@ in
               "<C-d>" = "actions.preview_scroll_down";
               "<C-u>" = "actions.preview_scroll_up";
               "<C-f>" = "actions.preview_scroll_right";
+
+              "<M-v>".__raw = ''{ "actions.select", opts = { vertical = true } }'';
+              "<M-s>".__raw = ''{ "actions.select", opts = { horizontal = true } }'';
 
               "H" = "actions.parent";
               "L" = "actions.select";
