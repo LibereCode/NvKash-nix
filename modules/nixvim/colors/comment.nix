@@ -24,7 +24,7 @@ in
                 vim.keymap.set('n', '<leader>dt', '<cmd>Trouble todo toggle<CR>', { desc = "Trouble: [t]todo"})
               end
             ''}
-            ${lib.optionalString (config.plugins.trouble.enable) /* lua */ ''
+            ${lib.optionalString (config.plugins.telescope.enable) /* lua */ ''
               do
                 ---TodoTelescope (telescope.nvim and todo-comments.nvim)
                 vim.keymap.set('n', '<leader>st', '<cmd>Telescope todo-comments<CR>', { desc = "[t]todo-comments"})

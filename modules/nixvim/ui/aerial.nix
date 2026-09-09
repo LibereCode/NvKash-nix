@@ -17,7 +17,7 @@ in
       # - [ ] [LuaLine](https://github.com/stevearc/aerial.nvim/#lualine)
 
       plugins = {
-        ${plugin_name} = {
+        aerial = {
           enable = true;
           # INFO <https://github.com/stevearc/aerial.nvim/#options>
           settings = {
@@ -87,8 +87,8 @@ in
           +
             # lua
             ''
-                vim.keymap.set("n","<leader>a", "<cmd>AerialToggle<CR>", { desc = "toggle [a]aerial" })
-                vim.keymap.set("n","<leader>A", "<cmd>AerialNavToggle<CR>", { desc = "toggle [A]Aerial Nav" })
+                vim.keymap.set("n","<leader>aa", "<cmd>AerialToggle<CR>", { desc = "toggle [a]aerial" })
+                vim.keymap.set("n","<leader>an", "<cmd>AerialNavToggle<CR>", { desc = "toggle aerial [n]nav" })
               end
             '';
         };

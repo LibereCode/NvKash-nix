@@ -13,7 +13,7 @@ in
     }:
     {
       config.plugins = {
-        ${plugin_name} = {
+        telescope = {
           enable = true;
 
           #XXX: (source) { ... action = "<cmd>Telescope ${actionStr}<cr>"; ... } (no lua !!)
@@ -67,6 +67,7 @@ in
 
               -- Quick access
               teleMap("r", "resume", {}, { desc = "[r]esume Telescope" })
+              teleMap("T", "builtin", {}, { desc = "[T]Telescope builtins" })
 
               teleMap("/", "current_buffer_fuzzy_find", {
                   layout_strategy = "bottom_pane",

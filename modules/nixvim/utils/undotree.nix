@@ -140,7 +140,7 @@ in
               vim.cmd("Atone close")
             end
           end
-          vim.keymap.set("n", "<leader>T", function() atone_toggler() end, { desc = "aTone[T]Toggle" })
+          vim.keymap.set("n", "<leader>A", function() atone_toggler() end, { desc = "[A]Atone Toggle" })
         ''
       ];
     };

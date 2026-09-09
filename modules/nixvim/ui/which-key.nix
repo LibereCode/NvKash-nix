@@ -4,7 +4,11 @@ let
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { ... }:
+    {
+      lib,
+      config,
+      ...
+    }:
     {
       plugins = {
         which-key = {
@@ -43,6 +47,7 @@ in
               ];
             };
             spec = [
+
               {
                 __unkeyed-1 = "<leader>b";
                 group = "[b]Buffers";
@@ -120,7 +125,12 @@ in
               #   __unkeyed-2.__raw = '' function() require("dap").toggle_breakpoint() end '';
               #   desc = "Breakpoint toggle"; mode = "n"; silent = true; }
 
-            ];
+            ]
+            ++ lib.optional (config.plugins.aerial.enable) {
+              __unkeyed-1 = "<leader>a";
+              group = "aerial";
+              icon = " ";
+            };
             win = {
               border = "none"; # "single"
               no_overlap = true;
