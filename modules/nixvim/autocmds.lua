@@ -61,7 +61,7 @@ end
 --     vim.bo[ev.buf].ft = "todotxt"
 --   end,
 -- })
-autoSetFt("todotxt", { "*.todo.txt", "todo.txt", "*.2do", "*.2do.txt", "2do.txt" })
+autoSetFt("todotxt", { "*.todo.txt", "todo.txt", "*.done.txt", "done.txt", "*.2do", "*.2do.txt", "2do.txt", "*.done" })
 -- autoSetFt("2do", { "*.2do", "*.2do.txt", "2do.txt" }) -- TODO replace ft: todotxt -> 2do
 autoSetFt("dosini", { "*config", "config" })
 autoSetFt("log", { "*.log" })
