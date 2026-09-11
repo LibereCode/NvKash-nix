@@ -262,7 +262,7 @@
           ## enable in treefmt (devenv)
           # stylua.enable = true; # lua
 
-          superhtml.enable = true; # html
+          # superhtml.enable = true; # html
 
           tombi.enable = true; # toml
 
