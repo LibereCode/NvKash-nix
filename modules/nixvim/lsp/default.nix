@@ -150,18 +150,14 @@
 
           # biome.enable = true; # js/ts/html/...
 
+          ccls.enable = true; # c / c++
+
           # # c / c++
           # clangd = {
           #   enable = true;
           #   config = {
-          #     cmd = [
-          #       "clangd"
-          #       "--background-index"
-          #     ];
-          #     filetypes = [
-          #       "c"
-          #       "cpp"
-          #     ];
+          #     cmd = [ "clangd" "--background-index" ];
+          #     filetypes = [ "c" "cpp" ];
           #     # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
           #   };
           # };
@@ -217,7 +213,7 @@
             enable = true;
             config = {
               settings = {
-                formatting = [ "nixfmt" ]; # "alejandra"
+                # formatting = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ]; # "alejandra"
                 nix.flake = {
                   autoArchive = true;
                   autoEvalInputs = true;
@@ -238,7 +234,7 @@
                     expr = "import <nixpkgs> { }";
                   };
                   formatting = {
-                    command = [ "${pkgs.nixfmt-rs}/bin/nixfmt" ];
+                    command = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ];
                   };
                 };
               };
@@ -246,7 +242,7 @@
           };
 
           ## enable in treefmt (devenv)
-          # prettierd.enable = true; # yml/json/toml/...
+          # prettierd.enable = true; # yml/json/toml/... # XXX does not exist in `config.lsp`
 
           # qmlls.enable = true; # qml
 
@@ -255,27 +251,37 @@
 
           rumdl.enable = true; # markdown
 
-          # shuck.enable = true; # ba/z/sh # Doesent exist yet for nixos D:
+          # shuck.enable = true; # ba/z/sh # XXX Doesent exist yet for nixos D:
 
-          # rust_analyzer.enable = true; # rust
+          # ## rust
+          # rust_analyzer = { # XXX Caused error because `rustc` was missing
+          #   enable = true;
+          #   settings = {
+          #     rust-analyzer = {
+          #       check = {
+          #         command = lib.getExe pkgs.clippy;
+          #       };
+          #     };
+          #   };
+          # };
 
           ## enable in treefmt (devenv)
           # stylua.enable = true; # lua
 
-          # superhtml.enable = true; # html
+          # superhtml.enable = true; # html # XXX use `lsp.html` instead
 
           tombi.enable = true; # toml
 
-          # ts_ls.enable = true; # typescript
+          ts_ls.enable = true; # typescript
 
           ty.enable = true; # python
 
-          # text / markdown (spellcheck)
-          # vale_ls = { enable = true; config = { filetypes = [ "text" "markdown" ]; }; }; # See codebook
+          ## text / markdown (spellcheck)
+          # vale_ls = { enable = true; config = { filetypes = [ "text" "markdown" ]; }; }; # XXX replaced with `codebook`
 
           yamlls.enable = true; # yaml
 
-          # zls.enable = true; # zig
+          zls.enable = true; # zig
         };
         luaConfig.post = ''
           do

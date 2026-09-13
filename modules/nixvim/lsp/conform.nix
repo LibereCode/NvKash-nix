@@ -1,20 +1,24 @@
-{ self, inputs, ... }@top:
+{ ... }:
 let
   plugin_name = "conform-nvim";
 in
 {
   flake.nixvimModules.${plugin_name} =
-    { pkgs, ... }@a:
+    {
+      pkgs,
+      lib,
+      ...
+    }:
     let
-      mkLua = a.lib.nixvim.mkRaw;
+      mkLua = lib.nixvim.mkRaw;
     in
     {
       plugins = {
-        ${plugin_name} = {
+        conform-nvim = {
           enable = true;
 
           autoInstall = {
-            enable = true;
+            enable = false; # XXX caused stupid errors (tried to install "prefer" in lsp_format = "prefer")
           };
 
           settings = {
@@ -29,11 +33,16 @@ in
             };
             # Some where very big.
             formatters_by_ft = {
-              nix = [ "nixfmt" ]; # "alejandra" "nixfmt"
+              nix = {
+                __unkeyed-1 = "nixfmt"; # "alejandra" "nixfmt"
+                lsp_format = "prefer";
+              };
+
               lua = [ "stylua" ];
 
               fish = [ "fish_indent" ];
               python = [ "ruff_format" ];
+              rust = [ "rustfmt" ];
 
               css = [ "prettierd" ];
               markdown = [ "prettierd" ];
@@ -48,9 +57,19 @@ in
 
             formatters = {
               prettierd = {
+                command = lib.getExe pkgs.prettierd;
                 "inherit" = true;
-                prepend_args = mkLua /* lua */ ''{ "--trailing-comma=es5", "--no-semi", "--single-quote" }'';
+                prepend_args.__raw = ''{ "--trailing-comma=es5", "--no-semi", "--single-quote" }'';
               };
+              nixfmt.command = lib.getExe' pkgs.nixfmt-rs "nixfmt";
+              stylua.command = lib.getExe pkgs.stylua;
+              fish_indent.command = lib.getExe' pkgs.fishMinimal "fish_indent";
+              ruff_format = {
+                command = lib.getExe pkgs.ruff;
+                prepend_args = [ "format" ];
+              };
+              rustfmt.command = lib.getExe pkgs.rustfmt;
+              xmlformatter.command = lib.getExe pkgs.xmlformat;
             };
 
             # format_on_save =
