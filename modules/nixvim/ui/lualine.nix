@@ -160,7 +160,11 @@ in
                         -- middle = col_delta -- string.format('%d,%d', line_delta, col_delta)
                         return string.format("%02dx__", col_delta)
                       else
-                        return " " .. os.date "%R"
+                        -- return " " .. os.date "%R"
+                        local line_cur, line_max = line("."), line("$")
+                        local progress_nr = (line_cur / line_max) * 100
+                        ---See `:h printf-f`
+                        return string.format("%02.0f", progress_nr) .. "%%"
                       end
                     end,
                   '';
