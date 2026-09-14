@@ -28,35 +28,36 @@ in
               nerd_font_variant = "normal";
               # use_nvim_cmp_as_default = true;
               kind_icons = {
-                Class = "";
+                Class = "󰋀"; # "";
                 Color = "󰏘";
                 Constant = "󰏿";
                 Constructor = "󰒓";
                 Enum = "";
                 EnumMember = "";
                 Event = "";
-                Field = "󰜢";
-                File = "󰈔";
-                Folder = "󰉋";
+                Field = ""; # "󰜢";
+                File = ""; # "󰈔";
+                Folder = "󰝰";
                 Function = "󰊕";
-                Interface = "";
+                Interface = ""; # "";
                 Keyword = "";
                 Method = "";
                 Module = "󰅩";
                 Operator = "";
                 Property = "󰖷";
-                Reference = "󰬲";
-                Snippet = "󱄽";
+                Reference = ""; # "󰬲";
+                Snippet = "󱄽"; # "";
                 Struct = "󱡠";
                 Text = "󰉿";
                 TypeParameter = "";
                 Unit = "󰪚";
                 Value = "󰦨";
-                Variable = "󰆦";
+                Variable = "󰫧"; # "󰆦";
               };
             };
 
             completion = {
+
               accept = {
                 auto_brackets = {
                   enabled = true;
