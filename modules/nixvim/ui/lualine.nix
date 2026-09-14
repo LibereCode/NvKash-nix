@@ -241,15 +241,31 @@ in
             #   ];
             # };
 
-            # winbar = {
-            #   lualine_x = [
-            #     {
-            #       __unkeyed-1 = "filename";
-            #       newfile_status = true;
-            #       path = 3;
-            #       shorting_target = 150; }
-            #   ];
-            # };
+            winbar = {
+              lualine_x = [
+                {
+                  ## See `:h lualine-filename-component-options`
+                  __unkeyed-1 = "filename";
+                  newfile_status = true;
+                  path = 3; # absolute-path, with ~/
+                  shorting_target.__raw = ''
+                    ---Dynamically calc the empty spaces target.
+                    ---@return integer empty_spaces_target
+                    function()
+                      return math.ceil(vim.api.nvim_win_get_width(0) / 2)
+                    end
+                  ''; # empty_spaces_target
+                }
+              ];
+            };
+            inactive_winbar = {
+              lualine_x = [
+                {
+                  __unkeyed-1 = "filename";
+                  path = 4; # parent-path, with ~/
+                }
+              ];
+            };
 
             # Source: <https://github.com/nvim-lualine/lualine.nvim/tree/master/lua/lualine/extensions>
             extensions = [
