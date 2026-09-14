@@ -20,7 +20,7 @@ in
       ];
 
       plugins = {
-        ${pluginName} = {
+        dap = {
           enable = true;
           configurations = {
             ## <https://nix-community.github.io/nixvim/plugins/dap/index.html#pluginsdapconfigurations>
@@ -32,8 +32,20 @@ in
             # signs = {}; # TODO
           };
         };
-        # dap-python = {}; #?TODO?
-        # dap-ui = {}; #?TODO?
+
+        dap-python = {
+          enable = true;
+          settings = {
+            ## ???
+          };
+        };
+
+        dap-virtual-text = {
+          enable = true;
+          settings = {
+            ## ??? many options...
+          };
+        };
 
         dap-ui = {
           enable = true;

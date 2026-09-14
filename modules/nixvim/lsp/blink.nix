@@ -28,28 +28,28 @@ in
               nerd_font_variant = "normal";
               # use_nvim_cmp_as_default = true;
               kind_icons = {
-                Class = "󱡠";
+                Class = "";
                 Color = "󰏘";
                 Constant = "󰏿";
                 Constructor = "󰒓";
-                Enum = "󰦨";
-                EnumMember = "󰦨";
-                Event = "󱐋";
+                Enum = "";
+                EnumMember = "";
+                Event = "";
                 Field = "󰜢";
                 File = "󰈔";
                 Folder = "󰉋";
                 Function = "󰊕";
-                Interface = "󱡠";
-                Keyword = "󰻾";
-                Method = "󰊕";
+                Interface = "";
+                Keyword = "";
+                Method = "";
                 Module = "󰅩";
-                Operator = "󰪚";
+                Operator = "";
                 Property = "󰖷";
                 Reference = "󰬲";
                 Snippet = "󱄽";
                 Struct = "󱡠";
                 Text = "󰉿";
-                TypeParameter = "󰬛";
+                TypeParameter = "";
                 Unit = "󰪚";
                 Value = "󰦨";
                 Variable = "󰆦";
@@ -150,12 +150,7 @@ in
                 "show"
                 "fallback"
               ];
-              # "<C-l>" = [
-              #   "select_and_accept"
-              #   "fallback"
-              # ];
-              #TEST: Figure out what to do with <C-l>
-              "<C-;>" = [
+              "<C-l>" = [
                 "select_and_accept"
                 "fallback"
               ];
@@ -255,8 +250,13 @@ in
               keymap = {
                 preset = "inherit"; # "cmdline"|"none"|"inherit"
                 "<Tab>" = [
-                  "show"
-                  "select_and_accept"
+                  "select_next"
+                  "show_and_insert_or_accept_single"
+                  "fallback"
+                ];
+                "<S-Tab>" = [
+                  "select_prev"
+                  "show_and_insert_or_accept_single"
                   "fallback"
                 ];
                 "<C-n>" = [

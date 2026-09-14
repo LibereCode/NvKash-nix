@@ -38,17 +38,16 @@ end
 -- end, { desc = "Ex" })
 
 map("<ESC>", ":nohl<CR>:<C-c>", { silent = true, remap = true }, "n")
-map("<C-;>", function()
+map("<M-:>", function()
   if vim.fn.getcmdwintype() == ":" then
     vim.cmd.q()
   else
     vim.api.nvim_input("q:") -- see :h 'cedit'
   end
 end, { desc = "toggle [:]cmd-like window" })
-map("<C-;>", function()
+map("<M-:>", function()
   vim.api.nvim_input(vim.o.cedit)
 end, { desc = "enter [:]cmd-window" }, "c")
-map("<M-;>", ":lua ", { desc = ":lua" }, "n")
 map("<C-a>", "<HOME>", { silent = true }, "c")
 map("<C-b>", "<S-Left>", {}, "c")
 map("<C-f>", "<S-Right>", {}, "c")
@@ -204,11 +203,11 @@ map("<M-l>", "<Right>", { desc = "->", silent = false }, { "i", "s", "c" })
     Abbreviations
 --]]
 ---(mode) { "ia" == "Ins abbr", "ca" == "Cmd abbr", "!a" == "Both abbr" }
-map("<C-l>", "<C-]>", { desc = "trigger abbrev" }, "!")
+map("<M-;>", "<C-]>", { desc = "trigger abbrev" }, "!")
 
 map("l", "lua", { desc = "l -> lua" }, "ca")
-map("v", "vim.", { desc = "v -> vim" }, "ca")
-map("nvim", "vim.api.nvim_", { desc = "nvim -> vim.api.nvim_" }, "ca")
+map("v", "lua vim.", { desc = "v -> vim" }, "ca")
+map("lvima", "lua vim.api.nvim_", { desc = "nvim -> vim.api.nvim_" }, "ca")
 map("vp", "vim.print()<left>", { desc = "vp -> vim.print(|)" }, "ca")
 
 --[[
