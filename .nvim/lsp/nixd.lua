@@ -9,7 +9,7 @@ local default_nixd_config = {
     },
     options = {
       nixvim = {
-        expr = "(builtins.getFlake (toString ./.)).nixvimConfigurations.x86_64-linux.default.options", -- works when you spell correctly...
+        expr = "(builtins.getFlake (toString ./.)).nixvimConfigurations.x86_64-linux.default.options",
       },
     },
   },

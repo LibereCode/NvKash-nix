@@ -1,4 +1,7 @@
-{ ... }:
+{
+  self,
+  ...
+}:
 {
   flake.nixvimModules.lsp =
     {
@@ -236,6 +239,12 @@
                   formatting = {
                     command = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ];
                   };
+
+                  ## WARN Prefer having config at: <repo>/.nvim/lsp/nixd.lua
+                  ##      (That way, it is local only. I don't want this to be global)
+                  # options = {
+                  #   nixvim.expr = ''(builtins.getFlake "${self}").packages.${pkgs.stdenv.hostPlatform.system}.default.options'';
+                  # };
                 };
               };
             };

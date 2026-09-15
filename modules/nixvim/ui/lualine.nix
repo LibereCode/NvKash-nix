@@ -252,7 +252,7 @@ in
                     ---Dynamically calc the empty spaces target.
                     ---@return integer empty_spaces_target
                     function()
-                      return math.ceil(vim.api.nvim_win_get_width(0) / 2)
+                      return math.ceil(vim.api.nvim_win_get_width(0) / 3)
                     end
                   ''; # empty_spaces_target
                 }

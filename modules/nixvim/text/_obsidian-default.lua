@@ -1,0 +1,452 @@
+---@type obsidian.config.Internal
+return {
+  -- TODO: remove these in 4.0.0
+  legacy_commands = true,
+
+  ---@class obsidian.config.StatuslineOpts
+  ---
+  ---@field format? string
+  ---@field enabled? boolean
+  statusline = {
+    format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
+    enabled = true,
+  },
+
+  notes_subdir = nil,
+  new_notes_location = "current_dir",
+
+  ---@class obsidian.config.LinkOpts
+  ---@field style? obsidian.link.LinkStyleOption
+  ---@field format? obsidian.link.LinkFormat
+  ---@field auto_update? boolean
+  link = {
+    style = "wiki",
+    format = "shortest",
+    auto_update = false,
+  },
+
+  workspaces = {},
+  log_level = vim.log.levels.INFO,
+  -- Default random zettel IDs. To use readable UTF-8 slug IDs, set:
+  -- note_id_func = require("obsidian.builtin").title_id
+  note_id_func = require("obsidian.builtin").zettel_id,
+  note_path_func = function(spec)
+    -- This is equivalent to the default behavior.
+    local path = spec.dir / tostring(spec.id)
+    return path:with_suffix(".md", true)
+  end,
+  open_notes_in = "current",
+
+  ---@class obsidian.config.NoteOpts
+  ---
+  ---Default template to use, relative to template.folder or an absolute path.
+  ---
+  ---@field template string|?
+  note = {
+    template = (function()
+      local root
+      for _, path in ipairs(vim.api.nvim_list_runtime_paths()) do
+        if vim.endswith(path, "obsidian.nvim") then
+          root = path
+          break
+        end
+      end
+      if not root then
+        return nil
+      end
+      return vim.fs.joinpath(root, "data/default_template.md")
+    end)(),
+  },
+
+  ---@class obsidian.config.FileOpts
+  ---
+  --- A list of gitignore-style glob patterns to ignore files and directories.
+  --- Users should use simple gitignore style globs without modifiers,
+  --- and ripgrep compatibility is not guaranteed.
+  ---@field ignore_filters? string[]
+  file = {
+    ignore_filters = {},
+  },
+
+  ---@class obsidian.config.FrontmatterOpts
+  ---
+  --- Whether to enable frontmatter, boolean for global on/off, or a function that takes filename and returns boolean.
+  ---@field enabled? (fun(fname: string?): boolean)|boolean
+  ---
+  --- Function to turn Note attributes into frontmatter.
+  ---@field func? fun(note: obsidian.Note): table<string, any>
+  --- Function that is passed to table.sort to sort the properties, or a fixed order of properties.
+  ---
+  --- List of string that sorts frontmatter properties, or a function that compares two values, set to vim.NIL/false to do no sorting
+  ---@field sort? string[] | (fun(a: any, b: any): boolean) | vim.NIL | boolean
+  frontmatter = {
+    enabled = true,
+    func = require("obsidian.builtin").frontmatter,
+    sort = { "id", "aliases", "tags" },
+  },
+
+  ---@class obsidian.config.TemplateOpts
+  ---
+  ---@field enabled boolean|?
+  ---Folder containing templates, either relative to the vault root or an absolute path.
+  ---@field folder string|obsidian.Path|?
+  ---@field date_format string
+  ---@field time_format string
+  --- A map for custom variables, the key should be the variable and the value a function.
+  --- Functions are called with obsidian.TemplateContext objects and optional suffix strings.
+  --- See: https://github.com/obsidian-nvim/obsidian.nvim/wiki/Template#substitutions
+  ---@field substitutions table<string, string|fun(ctx: obsidian.TemplateContext, suffix: string|?):string|?>
+  ---@field customizations table<string, obsidian.config.CustomTemplateOpts>|?
+  templates = {
+    enabled = true,
+    folder = nil,
+    date_format = "YYYY-MM-DD",
+    time_format = "HH:mm",
+    substitutions = {
+      date = function(_, suffix)
+        local format = suffix or Obsidian.opts.templates.date_format
+        return require("obsidian.date").format(os.time(), format)
+      end,
+      time = function(_, suffix)
+        local format = suffix or Obsidian.opts.templates.time_format
+        return require("obsidian.date").format(os.time(), format)
+      end,
+      title = function(ctx)
+        return ctx.partial_note and ctx.partial_note:display_name()
+      end,
+      id = function(ctx)
+        return ctx.partial_note and ctx.partial_note.id
+      end,
+      path = function(ctx)
+        return ctx.partial_note and tostring(ctx.partial_note.path)
+      end,
+    },
+
+    ---@class obsidian.config.CustomTemplateOpts
+    ---
+    ---@field notes_subdir? string
+    ---@field note_id_func? (fun(title: string|?, path: obsidian.Path|?): string)
+    customizations = {},
+  },
+
+  ---@class obsidian.config.BacklinkOpts
+  ---
+  ---@field parse_headers boolean
+  backlinks = {
+    parse_headers = true,
+  },
+
+  ---@class obsidian.config.CompletionOpts
+  ---
+  ---@field min_chars? integer
+  ---@field match_case? boolean
+  ---@field create_new? boolean
+  completion = {
+    min_chars = 2,
+    match_case = true,
+    create_new = true,
+  },
+
+  ---@class obsidian.config.PickerNoteMappingOpts
+  ---
+  ---@field new? string
+  ---@field insert_link? string
+  ---@field bookmark? string
+
+  ---@class obsidian.config.PickerTagMappingOpts
+  ---
+  ---@field tag_note? string
+  ---@field insert_tag? string
+
+  ---@class obsidian.config.PickerOpts
+  ---
+  ---@field name obsidian.config.Picker|?
+  ---@field note_mappings? obsidian.config.PickerNoteMappingOpts
+  ---@field tag_mappings? obsidian.config.PickerTagMappingOpts
+  picker = {
+    name = nil,
+    -- TODO: migrate mappings.bookmark mappings.quick_switch mappings.tag or bookmark.mappings quick_switch.mappings tag.mappings | daily_notes.mappings? attachments.mappings?
+    note_mappings = {
+      new = "<C-x>",
+      insert_link = "<C-l>",
+      bookmark = "<C-b>",
+    },
+    tag_mappings = {
+      tag_note = "<C-x>",
+      insert_tag = "<C-l>",
+    },
+  },
+
+  ---@class obsidian.config.SearchOpts
+  ---
+  ---@field sort_by obsidian.config.SortBy|false
+  ---@field sort_reversed boolean
+  ---@field max_lines integer
+  search = {
+    sort_by = "modified",
+    sort_reversed = true,
+    max_lines = 1000,
+  },
+
+  ---@class obsidian.config.DailyNotesOpts
+  ---
+  ---@field enabled? boolean
+  ---@field folder? string
+  ---@field date_format? string
+  ---@field alias_format? string
+  ---@field template? string
+  ---@field default_tags? string[]
+  ---@field workdays_only? boolean
+  ---@field start_of_week? integer 0 is Sunday, 1 is Monday, ..., 6 is Saturday.
+  daily_notes = {
+    enabled = true,
+    folder = nil,
+    date_format = "YYYY-MM-DD",
+    alias_format = nil,
+    default_tags = { "daily-notes" },
+    workdays_only = true,
+    start_of_week = 1, -- Monday
+  },
+
+  ---@class obsidian.config.UICharSpec
+  ---@field char string
+  ---@field hl_group string
+
+  ---@class obsidian.config.CheckboxSpec : obsidian.config.UICharSpec
+  ---@field char string
+  ---@field hl_group string
+
+  ---@class obsidian.config.UIStyleSpec
+  ---@field hl_group string
+
+  ---@class obsidian.config.UIOpts
+  ---
+  ---@field enable boolean|?
+  ---@field enabled boolean|?
+  ---@field ignore_conceal_warn boolean|?
+  ---@field update_debounce integer|?
+  ---@field max_file_length integer|?
+  ---@field checkboxes table<string, obsidian.config.CheckboxSpec>|?
+  ---@field bullets obsidian.config.UICharSpec|?
+  ---@field external_link_icon obsidian.config.UICharSpec|?
+  ---@field reference_text obsidian.config.UIStyleSpec|?
+  ---@field highlight_text obsidian.config.UIStyleSpec|?
+  ---@field tags obsidian.config.UIStyleSpec|?
+  ---@field block_ids obsidian.config.UIStyleSpec|?
+  ---@field hl_groups table<string, table>|?
+  ui = {
+    enable = true,
+    ignore_conceal_warn = false,
+    update_debounce = 200,
+    max_file_length = 5000,
+    checkboxes = {
+      [" "] = { char = "󰄱", hl_group = "obsidiantodo" },
+      ["~"] = { char = "󰰱", hl_group = "obsidiantilde" },
+      ["!"] = { char = "", hl_group = "obsidianimportant" },
+      [">"] = { char = "", hl_group = "obsidianrightarrow" },
+      ["x"] = { char = "", hl_group = "obsidiandone" },
+    },
+    bullets = { char = "•", hl_group = "ObsidianBullet" },
+    external_link_icon = { char = "", hl_group = "ObsidianExtLinkIcon" },
+    reference_text = { hl_group = "ObsidianRefText" },
+    highlight_text = { hl_group = "ObsidianHighlightText" },
+    tags = { hl_group = "ObsidianTag" },
+    block_ids = { hl_group = "ObsidianBlockID" },
+    hl_groups = {
+      ObsidianTodo = { bold = true, fg = "#f78c6c" },
+      ObsidianDone = { bold = true, fg = "#89ddff" },
+      ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+      ObsidianTilde = { bold = true, fg = "#ff5370" },
+      ObsidianImportant = { bold = true, fg = "#d73128" },
+      ObsidianBullet = { bold = true, fg = "#89ddff" },
+      ObsidianRefText = { underline = true, fg = "#c792ea" },
+      ObsidianExtLinkIcon = { fg = "#c792ea" },
+      ObsidianTag = { italic = true, fg = "#89ddff" },
+      ObsidianBlockID = { italic = true, fg = "#89ddff" },
+      ObsidianHighlightText = { bg = "#75662e" },
+    },
+  },
+
+  ---@class obsidian.config.UniqueNoteOpts
+  ---
+  ---@field enabled? boolean
+  ---@field format? string|fun():string
+  ---@field folder? string
+  ---@field template? string
+  unique_note = {
+    enabled = true,
+    format = "YYYYMMDDHHmm",
+    folder = nil,
+    template = nil,
+  },
+
+  ---@class obsidian.config.AttachmentsOpts
+  ---
+  ---Default folder to save images to, relative to the vault root (/) or current dir (.), see https://github.com/obsidian-nvim/obsidian.nvim/wiki/Images#change-image-save-location
+  ---@field folder? string
+  ---
+  ---Default name for pasted images
+  ---@field img_name_func? fun(): string
+  ---
+  ---Default text to insert for pasted images
+  ---@field img_text_func? fun(path: obsidian.Path): string
+  ---
+  ---Whether to confirm the paste or not. Defaults to true.
+  ---@field confirm_img_paste? boolean
+  attachments = {
+    folder = "attachments",
+    img_text_func = require("obsidian.builtin").img_text_func,
+    img_name_func = function()
+      return string.format("Pasted image %s", os.date("%Y%m%d%H%M%S"))
+    end,
+    confirm_img_paste = true, -- TODO: move to paste module, paste.confirm
+  },
+
+  ---https://help.obsidian.md/sync/settings
+  ---@class obsidian.config.SyncOpts
+  ---
+  ---@field enabled? boolean
+  ---
+  ---Which backend to use. Built-in: "obsidian" (obsidian-headless CLI).
+  ---Custom backends can be added with `require("obsidian.sync").register(name, backend)`.
+  ---@field backend? string
+  ---
+  ---When to run a sync.
+  --- - "continuous": keep a long-running sync process (default for obsidian backend).
+  --- - "on_write": run a one-shot sync (debounced) after each note save.
+  --- - "manual": only sync via :Obsidian sync start or explicit calls.
+  ---@field trigger? obsidian.config.SyncTrigger
+  ---
+  ---Sync mode: bidirectional (default), pull-only (only download, ignore local changes), or mirror-remote (only download, revert local changes)
+  ---@field mode? obsidian.config.SyncMode
+  ---
+  ---Conflict strategy when a conflict is detected, NOTE: conflict is not currently supported in this client
+  ---@field conflict_strategy? obsidian.config.ConflictStrategy
+  ---
+  ---Attachment types to sync: image, audio, video, pdf, unsupported, empty table to disable attachment syncing
+  ---@field file_types? obsidian.sync.FileType[]
+  ---
+  ---Config categories to sync. nil = leave server config unchanged. {} = explicitly disable config syncing (pass --configs ""). Non-empty list = sync only those categories.
+  ---@field configs? obsidian.sync.ConfigCategory[]
+  ---
+  ---Config directory name, this is for obsidian app
+  ---@field config_dir? string
+  ---
+  ---Folders to exclude
+  ---@field excluded_folders? string[]
+  ---
+  ---Device name to identify this client in the sync version history
+  ---@field device_name? string
+  sync = {
+    enabled = false,
+    backend = "obsidian",
+    trigger = "continuous",
+    mode = nil,
+    conflict_strategy = "merge",
+    file_types = { "image", "audio", "video", "pdf", "unsupported" },
+    configs = { "core-plugin", "core-plugin-data" },
+    excluded_folders = {},
+    device_name = nil,
+    config_dir = ".obsidian",
+  },
+
+  ---@class obsidian.config.CallbackConfig
+  ---
+  ---Runs right after setup
+  ---@field post_setup? fun()
+  ---
+  ---Runs when `Note.create` builds a note object. `opts.scope` is inherited from the `Note.create` opts, defaulting to `"plain"`.
+  ---@field create_note? fun(note: obsidian.Note, opts: obsidian.note.CreateCallbackOpts)
+  ---
+  ---Runs when entering a note buffer.
+  ---@field enter_note? fun(note: obsidian.Note)
+  ---
+  ---Runs when leaving a note buffer.
+  ---@field leave_note? fun(note: obsidian.Note)
+  ---
+  ---Runs right before writing a note buffer.
+  ---@field pre_write_note? fun(note: obsidian.Note)
+  ---
+  ---Runs after adding an attachment.
+  ---@field add_attachment? fun(path: string, ctx: obsidian.AddAttachmentContext)
+  ---
+  ---Runs anytime the workspace is set/changed.
+  ---@field post_set_workspace? fun(workspace: obsidian.Workspace)
+  callbacks = {},
+
+  ---@class obsidian.config.ResolverConfig
+  ---
+  ---Resolve an attachment source before `actions.add_attachment` copies/downloads it.
+  ---@field attachment? obsidian.Resolver
+  ---
+  ---Resolve a date before date-based actions, such as `daily.pick`, continue.
+  ---@field date? obsidian.Resolver
+  ---
+  ---Build serializable LSP inlay hints for a note.
+  ---@field hints? obsidian.resolver.Hints
+  resolvers = {},
+
+  ---@class obsidian.config.FooterOpts
+  ---
+  ---@field enabled? boolean
+  ---@field format? string
+  ---@field hl_group? string
+  ---@field separator? string|false Set false to disable separator; set an empty string to insert a blank line separator.
+  footer = {
+    enabled = true,
+    format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
+    hl_group = "Comment",
+    separator = string.rep("-", 80),
+  },
+
+  ---@class obsidian.config.OpenOpts
+  ---
+  ---Opens the file with current line number
+  ---@field use_advanced_uri? boolean
+  ---
+  ---Function to do the opening, default to vim.ui.open
+  ---@field func? fun(uri: string)
+  ---
+  ---URI scheme whitelist, new values are appended to this list, and URIs with schemes in this list, will not be prompted to confirm opening
+  ---@field schemes? string[]
+  open = {
+    use_advanced_uri = false,
+    func = vim.ui.open,
+    schemes = { "https", "http", "file", "mailto" },
+  },
+
+  ---@class obsidian.config.CheckboxOpts
+  ---
+  ---@field enabled? boolean
+  ---
+  ---Order of checkbox state chars, e.g. { " ", "x" }
+  ---@field order? string[]
+  ---
+  ---Whether to create new checkbox on paragraphs
+  ---@field create_new? boolean
+  checkbox = {
+    enabled = true,
+    create_new = true,
+    order = { " ", "~", "!", ">", "x" },
+  },
+
+  ---@class obsidian.config.CommentOpts
+  ---@field enabled? boolean
+  comment = {
+    enabled = false,
+  },
+
+  ---@class obsidian.config.SlidesOpts
+  ---@field enabled? boolean
+  slides = {
+    enabled = true,
+  },
+
+  ---@class obsidian.config.CacheOpts
+  ---@field enabled? boolean
+  ---@field backend? string Built-in: "json", "memory". Custom backends can be added with `require("obsidian.cache").register(name, backend)`.
+  cache = {
+    enabled = false,
+    backend = "json",
+  },
+}

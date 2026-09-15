@@ -1,4 +1,4 @@
-{ self, inputs, ... }@top:
+{ ... }:
 let
   plugin_name = "markdown";
 in
