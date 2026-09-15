@@ -19,8 +19,8 @@ in
             left = "";
             right = "";
             diag = ""; #     󰊠  ●
-            arrow = " <- ";
-            up_arrow = " ⮬ ";
+            arrow = "󰜱"; # 󰜱 󰁍
+            up_arrow = " 󰜷 "; # 󰞙 󰜷 ⮬
             vertical = " │";
             vertical_end = " └";
           };
