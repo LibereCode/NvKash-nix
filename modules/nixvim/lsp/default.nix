@@ -153,17 +153,20 @@
 
           # biome.enable = true; # js/ts/html/...
 
-          ccls.enable = true; # c / c++
+          # ccls.enable = true; # c / c++
 
-          # # c / c++
-          # clangd = {
-          #   enable = true;
-          #   config = {
-          #     cmd = [ "clangd" "--background-index" ];
-          #     filetypes = [ "c" "cpp" ];
-          #     # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
-          #   };
-          # };
+          clangd = {
+            enable = true;
+            config = {
+              cmd = [
+                "clangd"
+                "--background-index"
+                # "--clang-tidy"
+              ];
+              # filetypes = [ "c" "cpp" ];
+              # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
+            };
+          };
 
           codebook.enable = true; # C, Go, Java, JavaScript, Lua, Markdown, Odin, Plain Text, Python, Ruby, Rust, TOML, TypeScript, Zig
 
