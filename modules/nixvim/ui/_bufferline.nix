@@ -8,8 +8,8 @@ in
     {
       # see: <https://nix-community.github.io/nixvim/plugins/bufferline/index.html>
       plugins = {
-        ${plugin_name} = {
-          enable = true;
+        bufferline = {
+          enable = false; # true;
 
           # <https://nix-community.github.io/nixvim/plugins/bufferline/settings/index.html>
           settings = {
@@ -201,11 +201,11 @@ in
               blmap("<M-S-,>", function() bl.move(-1) end, { desc = "move buf pos left" }) -- h -> ,
               blmap("<M-S-.>", function() bl.move(1) end, { desc = "move buf pos right" }) -- l -> .
 
-              -- for i=1, 9, 1 do
-              --   local i_str = tostring(i)
-              --   blmap("<leader>" .. i_str, function() bl.go_to(i) end, { desc = "goto buf " .. i_str})
-              -- end
-              -- blmap("<leader>0", function() bl.go_to(-1) end, { desc = "goto last buf"})
+              for i=1, 9, 1 do
+                local i_str = tostring(i)
+                blmap("<leader>" .. i_str, function() bl.go_to(i) end, { desc = "goto buf " .. i_str})
+              end
+              blmap("<leader>0", function() bl.go_to(-1) end, { desc = "goto last buf"})
 
               blmap("<leader>bd", function() bl.unpin_and_close() end, { desc = "buf unpin_and_close" })
               blmap("<leader>x", function() bl.unpin_and_close() end, { desc = "buf unpin_and_close" })

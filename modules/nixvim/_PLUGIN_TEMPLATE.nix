@@ -31,9 +31,14 @@ in
           #
           # };
           #
-          # luaConfig.post = ''
-          #
-          # '';
+          # luaConfig = { #TODO: This format in all `plugins.<plug>.luaConfig.<pos>`
+          #   post = ''
+          #     ---`plugins.${pluginName}.luaConfig.post`
+          #     do
+          #       -- ... Stuff ...
+          #     end
+          #   '';
+          # };
         };
     };
 }

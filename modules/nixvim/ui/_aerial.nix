@@ -18,7 +18,7 @@ in
 
       plugins = {
         aerial = {
-          enable = true;
+          enable = false;
           # INFO <https://github.com/stevearc/aerial.nvim/#options>
           settings = {
             attach_mode = "global";

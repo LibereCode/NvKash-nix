@@ -24,7 +24,7 @@
         in
         with builtins;
         {
-          extraConfigLuaPost = ''
+          extraConfigLua = ''
             -- extraConfigLuaPost (nixvim):
             --[[
               ```nix

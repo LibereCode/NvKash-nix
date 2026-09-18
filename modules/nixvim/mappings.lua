@@ -83,12 +83,29 @@ map("<leader>bb", ":e #<CR>", { desc = "switch to other", noremap = true, silent
 map("<leader>bl", ":buffers<CR>", { desc = "[l]list buffers", noremap = true, silent = true }, "n")
 map("<leader>bn", ":enew<CR>", { desc = "new buffer", noremap = true, silent = true }, "n")
 
--- -- Moved to bufferline
--- map("H", ":bp<CR>", { desc = "prev buf", noremap = true, silent = true }, "n")
--- map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
--- local bufdel = ":enew|bd # |bn| bd #<CR>"
--- map("<leader>bd", bufdel, { desc = "[d]delete", noremap = true, silent = true }, "n")
--- map("<leader>x", bufdel, { desc = "delete[x]buffer", noremap = true, silent = true }, "n")
+-- Moved to bufferline
+map("H", ":bp<CR>", { desc = "prev buf", noremap = true, silent = true }, "n")
+map("L", ":bn<CR>", { desc = "next buf", noremap = true, silent = true }, "n")
+
+---Better, non-hacky, way of removing buffer but keeping the window.
+---```lua old version:
+---local bufdel = ":enew|bd # |bn| bd #<CR>"
+---```
+---@param bufnr? integer
+local function close_buf(bufnr)
+  local old_bufnr = vim.fn.bufnr()
+  bufnr = bufnr or old_bufnr
+  if bufnr == old_bufnr then
+    vim.cmd("bn")
+    if vim.fn.bufnr() == old_bufnr then
+      vim.cmd("enew")
+    end
+  end
+  vim.bo[bufnr].buflisted = false
+  vim.api.nvim_buf_delete(old_bufnr, { unload = true })
+end
+map("<leadr>bd", close_buf, { desc = "[d]del buffer", noremap = true, silent = true }, "n")
+map("<leader>x", close_buf, { desc = "delete[x]buffer", noremap = true, silent = true }, "n")
 
 --[[
     Window

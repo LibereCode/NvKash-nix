@@ -12,7 +12,7 @@ in
     {
       # see: <https://nix-community.github.io/nixvim/plugins/lualine/index.html>
       plugins = {
-        ${plugin_name} = {
+        lualine = {
           enable = true;
 
           settings = {
@@ -227,19 +227,19 @@ in
               ];
             };
 
-            # tabline = {
-            #   lualine_a = [
-            #     {
-            #       __unkeyed-1 = "buffers";
-            #       symbols = {
-            #         alternate_file = "";
-            #       };
-            #     }
-            #   ];
-            #   lualine_z = [
-            #     "tabs"
-            #   ];
-            # };
+            tabline = {
+              lualine_a = [
+                {
+                  __unkeyed-1 = "buffers";
+                  symbols = {
+                    alternate_file = "";
+                  };
+                }
+              ];
+              lualine_z = [
+                "tabs"
+              ];
+            };
 
             winbar = {
               lualine_x = [

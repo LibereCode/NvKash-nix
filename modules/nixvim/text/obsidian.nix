@@ -5,6 +5,9 @@ in
 {
   flake.nixvimModules.${pluginName} =
     { ... }:
+    let
+      workspacesDir = "~/Notes/obsidian";
+    in
     {
       plugins = {
         obsidian = {
@@ -20,17 +23,20 @@ in
             workspaces = [
               {
                 name = "projects";
-                path = "~/Notes/obsidian/projects";
+                path = "${workspacesDir}/projects";
               }
             ];
           };
 
-          # luaConfig.post = #TODO: This format in all `plugins.<plug>.luaConfig.<pos>`
-          #   ''
-          #     ---`plugins.obsidian.luaConfig.post`
-          #     do
-          #     end
-          #   '';
+          luaConfig = {
+            pre = ''
+              ---`plugins.obsidian.luaConfig.post`
+              do
+                ---INFO Fixes "directory doesn't exist" error (especially during `nix flake check`)
+                vim.fn.mkdir(vim.fn.expand("${workspacesDir}/projects"), "p" )
+              end
+            '';
+          };
         };
       };
     };
