@@ -1,0 +1,39 @@
+* HEADER
+  What the frick?
+  *I'm bold and brave*
+  /I'm italian/
+  _See me? Underlined_
+** Tasks
+  - ( ) Undone -> not done yet
+  - (x) Done -> done with that
+  - (?) Needs further input
+
+  - (!) Urgent -> high priority task
+  - (+) Recurring task with children
+
+  - (-) Pending -> currently in progress
+  - (=) Task put on hold
+  - (_) Task cancelled (put down)
+
+  ===
+@code rust
+/// A rust-codeblock inside norg
+///
+/// Will print "Hello, World!"
+///
+/// All the variables used here aren't needed.
+/// The type annotation for the variables here are not needed.
+/// A simpler "Hello, World!" (that will do the same):
+/// ```rust main.rs
+/// fn main() {
+/// println!("Hello, World!")
+/// }
+/// ```
+fn main() {
+let mut hi: String = String::from("Hello");
+let comma: &str = ", ";
+hi += comma;
+let planet = "World";
+println!("{}{}!", hi, planet)
+}
+@end

@@ -26,16 +26,29 @@ in
                 path = "${workspacesDir}/projects";
               }
             ];
+            checkbox.order = [
+              " "
+              "-"
+              "x"
+              # "?"
+              # "!"
+              # "+"
+              # "="
+            ];
           };
 
           luaConfig = {
-            pre = ''
-              ---`plugins.obsidian.luaConfig.post`
-              do
-                ---INFO Fixes "directory doesn't exist" error (especially during `nix flake check`)
-                vim.fn.mkdir(vim.fn.expand("${workspacesDir}/projects"), "p" )
-              end
-            '';
+            pre = # lua
+              ''
+                ---`plugins.obsidian.luaConfig.pre`
+                do
+                  ---Could be inline, but this gives better syntax-highlighting...
+                  ---Base directory of where to keep obsidian-vaults.
+                  local workspacesDir = [[${workspacesDir}]]
+                  ---INFO Fixes "directory doesn't exist" error (especially during `nix flake check`)
+                  vim.fn.mkdir(vim.fn.expand(workspacesDir.."/projects"), "p" )
+                end
+              '';
           };
         };
       };
