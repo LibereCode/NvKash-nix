@@ -7,6 +7,7 @@ in
 {
   flake.nixvimModules.${pluginName} =
     {
+      config,
       ...
     }:
     let
@@ -33,20 +34,22 @@ in
         };
 
         ## See <https://nvim-orgmode.github.io/plugins#blinkcmp>
-        blink-cmp.settings = {
-          sources = {
-            # per_filetype = {
-            #   org = [ "orgmode" ];
-            # };
-            providers = {
-              orgmode = {
-                name = "Orgmode";
-                module = "orgmode.org.autocompletion.blink";
-                fallbacks = [ "buffer" ];
+        blink-cmp.settings.sources =
+          if config.plugins.orgmode.enable then
+            {
+              # per_filetype = {
+              #   org = [ "orgmode" ];
+              # };
+              providers = {
+                orgmode = {
+                  name = "Orgmode";
+                  module = "orgmode.org.autocompletion.blink";
+                  fallbacks = [ "buffer" ];
+                };
               };
-            };
-          };
-        };
+            }
+          else
+            { };
       };
     };
 }
