@@ -1,5 +1,4 @@
 {
-  self,
   ...
 }:
 {
@@ -45,31 +44,33 @@
           };
         };
 
-        lspconfig.enable = true;
+        lspconfig = {
+          enable = true;
+        };
       };
 
-      # extraPackages = with pkgs; [ alejandra ]; # nixfmt
+      #: extraPackages = with pkgs; [ alejandra ]; # nixfmt
 
       #INFO: According to docs, `config.plugins.lsp = {};` is deprecated,
-      ## lspconfig (small) will move to `config.plugins.lspconfig = {};`, and
-      ## server settings moved to here: `config.lsp = {};`
-      ## <https://nix-community.github.io/nixvim/plugins/lspconfig/index.html>
-      ## <https://nix-community.github.io/nixvim/lsp/index.html>
-      ## best sauce (because it include lspconfig comment and URL):
-      ## <https://nix-community.github.io/nixvim/plugins/lsp/index.html> <--
+      #: lspconfig (small) will move to `config.plugins.lspconfig = {};`, and
+      #: server settings moved to here: `config.lsp = {};`
+      #: <https://nix-community.github.io/nixvim/plugins/lspconfig/index.html>
+      #: <https://nix-community.github.io/nixvim/lsp/index.html>
+      #: best sauce (because it include lspconfig comment and URL):
+      #: <https://nix-community.github.io/nixvim/plugins/lsp/index.html> <--
       lsp = {
         #TODO:
-        # onAttach = /* lua */ ''
-        #   -- Equivalent(?) to:
-        #   -- autocmd("LspAttach", { ..., callback = function()
-        #   --   <THIS>
-        #   -- end, ... })
-        # '';
+        #: onAttach = /* lua */ ''
+        #:   -- Equivalent(?) to:
+        #:   -- autocmd("LspAttach", { ..., callback = function()
+        #:   --   <THIS>
+        #:   -- end, ... })
+        #: '';
 
-        # inlayHints.enable = true; # BUG causes many errors
+        #: inlayHints. enable = true; # BUG causes many errors
         inlayHints.enable = true; # no?
 
-        ## keymaps on LspAttach
+        #: keymaps on LspAttach
         keymaps =
           let
             map_lspBuf =
@@ -115,7 +116,7 @@
               };
           in
           [
-            # (map_lspBuf "gd" "definition" {}) # See: ./plugins/telescope.nix
+            #: (map_lspBuf "gd" "definition" {}) # See: ./plugins/telescope.nix
             (map_lspBuf "gD" "references" { })
             (map_lspBuf "gt" "type_definition" { })
             (map_lspBuf "gi" "implementation" { })
@@ -135,8 +136,8 @@
           ];
 
         #TODO: disable most ; instead use:
-        ## + devenv (get lsp)
-        ## + .nvim.lua (to enable them)
+        #: + devenv (get lsp)
+        #: + .nvim.lua (to enable them)
         servers = {
           "*" = {
             config = {
@@ -147,34 +148,61 @@
             };
           };
 
-          # ast_grep.enable = true; # c-like *
+          # ast_grep = # c-like *
+          # {
+          #   enable = true;
+          # };
 
-          bashls.enable = true; # bash / shell
-
-          # biome.enable = true; # js/ts/html/...
-
-          # ccls.enable = true; # c / c++
-
-          clangd = {
-            enable = true;
-            config = {
-              cmd = [
-                "clangd"
-                "--background-index"
-                # "--clang-tidy"
-              ];
-              # filetypes = [ "c" "cpp" ];
-              # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
+          bashls = # bash / shell
+            {
+              enable = true;
             };
-          };
 
-          codebook.enable = true; # C, Go, Java, JavaScript, Lua, Markdown, Odin, Plain Text, Python, Ruby, Rust, TOML, TypeScript, Zig
+          # biome = # js/ts/html/...
+          # {
+          #   enable = true;
+          # };
 
-          cssls.enable = true; # css
+          # ccls = # c / c++
+          # {
+          #   enable = true;
+          # };
 
-          # XXX It started either way ...
-          # # See also: lua_ls and ./lazydev.nix
-          # emmylua_ls = {
+          clangd = # c / c++
+            {
+              enable = true;
+              config = {
+                cmd = [
+                  "clangd"
+                  "--background-index"
+                  # "--clang-tidy"
+                ];
+                filetypes = [
+                  "c"
+                  "cpp"
+                  "doxygen" # "c.doxygen" "cpp.doxygen"
+                  "objc"
+                  "objcpp"
+                  "cuda"
+                ];
+                # root_markers = [ "compile_commands.json" "compile_flags.txt" ];
+              };
+            };
+
+          codebook = # C, Go, Java, JavaScript, Lua, Markdown, Odin, Plain Text, Python, Ruby, Rust, TOML, TypeScript, Zig
+            {
+              enable = true;
+            };
+
+          cssls = # css
+            {
+              enable = true;
+            };
+
+          #: XXX It started either way ...
+          # #: See also: lua_ls and ./lazydev.nix
+          # emmylua_ls = # lua
+          # {
           #   enable = true;
           #   config = {
           #     # NOTE more restrictive root_markers
@@ -186,87 +214,138 @@
           #   };
           # };
 
-          fish_lsp.enable = true; # fish
-
-          # gopls.enable = true; # go
-
-          html.enable = true; # html
-
-          # jdtls.enable = true; # java
-
-          # json*
-          jsonls = {
-            enable = true;
-            config = {
-              filetypes = [
-                "json"
-                "jsonc"
-              ];
+          fish_lsp = # fish
+            {
+              enable = true;
             };
-          };
 
-          lemminx.enable = true; # xml
+          # gopls = # go
+          # {
+          #   enable = true;
+          # };
 
-          # See: <https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua>
-          # See luaConfig.port bellow for lua_ls config
-          # NOTE Configure with lazydev instead
-          lua_ls.enable = true; # lua
+          html = # html
+            {
+              enable = true;
+            };
 
-          marksman.enable = true; # markdown
+          # jdtls = # java
+          # {
+          #   enable = true;
+          # };
 
-          # nix
-          nil_ls = {
-            enable = true;
-            config = {
-              settings = {
-                # formatting = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ]; # "alejandra"
-                nix.flake = {
-                  autoArchive = true;
-                  autoEvalInputs = true;
-                };
-                #TODO: disable lsp-function: goto definition
-                ## nixd also has it
+          jsonls = # json*
+            {
+              enable = true;
+              config = {
+                filetypes = [
+                  "json"
+                  "jsonc"
+                ];
               };
             };
-          };
-          # NOTE: See below, I will use luaConfig.post = '' ... '';
-          nixd = {
-            enable = true;
-            config = {
-              # cmd.__raw = ''vim.env.DEVENV_ROOT and { "devenv", "lsp" } or { "nixd" }'';
-              settings = {
-                nixd = {
-                  nixpkgs = {
-                    expr = "import <nixpkgs> { }";
-                  };
-                  formatting = {
-                    command = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ];
-                  };
 
-                  ## WARN Prefer having config at: <repo>/.nvim/lsp/nixd.lua
-                  ##      (That way, it is local only. I don't want this to be global)
-                  # options = {
-                  #   nixvim.expr = ''(builtins.getFlake "${self}").packages.${pkgs.stdenv.hostPlatform.system}.default.options'';
-                  # };
+          lemminx = # xml
+            {
+              enable = true;
+              config = {
+                filetypes = [
+                  "xml"
+                  "xsd"
+                  # "xsl"
+                  "xslt"
+                  "svg"
+                ];
+              };
+            };
+
+          #: See: <https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua>
+          #: See luaConfig.port bellow for lua_ls config
+          #: NOTE Configure with lazydev instead
+          lua_ls = # lua
+            {
+              enable = true;
+            };
+
+          marksman = # markdown
+            {
+              enable = true;
+              config = {
+                filetypes = [ "markdown" ];
+              };
+            };
+
+          nil_ls = # nix
+            {
+              enable = true;
+              config = {
+                settings = {
+                  # formatting = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ]; # "alejandra"
+                  nix.flake = {
+                    autoArchive = true;
+                    autoEvalInputs = true;
+                  };
+                  #TODO: disable lsp-function: goto definition
+                  #: nixd also has it
                 };
               };
             };
-          };
+          #: NOTE: See below, I will use luaConfig.post = '' ... '';
+          nixd = # nix
+            {
+              enable = true;
+              config = {
+                #: cmd.__raw = ''vim.env.DEVENV_ROOT and { "devenv", "lsp" } or { "nixd" }'';
+                settings = {
+                  nixd = {
+                    nixpkgs = {
+                      expr = "import <nixpkgs> { }";
+                    };
+                    formatting = {
+                      command = [ "${lib.getExe' pkgs.nixfmt-rs "nixfmt"}" ];
+                    };
 
-          ## enable in treefmt (devenv)
-          # prettierd.enable = true; # yml/json/toml/... # XXX does not exist in `config.lsp`
+                    #: WARN Prefer having config at: <repo>/.nvim/lsp/nixd.lua
+                    #:      (That way, it is local only. I don't want this to be global)
+                    # options = {
+                    #   nixvim.expr = ''(builtins.getFlake "${self}").packages.${pkgs.stdenv.hostPlatform.system}.default.options'';
+                    # };
+                  };
+                };
+              };
+            };
 
-          # qmlls.enable = true; # qml
+          #: XXX does not exist in `config.lsp` # enable in treefmt (devenv) instead
+          # prettierd = # yml/json/toml/...
+          # {
+          #   enable = true;
+          # };
 
-          ## enable in treefmt (devenv)
-          # ruff.enable = true; # python
+          # qmlls = # qml
+          # {
+          #   enable = true;
+          # };
 
-          rumdl.enable = true; # markdown
+          #: enable in treefmt (devenv)
+          # ruff = # python
+          # {
+          #   enable = true;
+          # };
 
-          # shuck.enable = true; # ba/z/sh # XXX Doesent exist yet for nixos D:
+          rumdl = # markdown
+            {
+              enable = true;
+            };
 
-          # ## rust
-          # rust_analyzer = { # XXX Caused error because `rustc` was missing
+          #: XXX Doesent exist yet for nixos D:
+          # shuck = # ba/z/sh
+          # {
+          #   enable = true;
+          # };
+
+          #: XXX Caused error because `rustc` was missing (add to dependencies?)
+          # rust_analyzer = # rust
+          # {
           #   enable = true;
           #   settings = {
           #     rust-analyzer = {
@@ -277,23 +356,48 @@
           #   };
           # };
 
-          ## enable in treefmt (devenv)
-          # stylua.enable = true; # lua
+          # stylua = # enable in treefmt (devenv)
+          # {
+          #   enable = true; # lua
+          # };
 
-          # superhtml.enable = true; # html # XXX use `lsp.html` instead
+          #: XXX use `lsp.html` instead
+          # superhtml = # html
+          # {
+          #   enable = true;
+          # };
 
-          tombi.enable = true; # toml
+          tombi = # toml
+            {
+              enable = true;
+            };
 
-          ts_ls.enable = true; # typescript
+          ts_ls = # typescript
+            {
+              enable = true;
+            };
 
-          ty.enable = true; # python
+          ty = # python
+            {
+              enable = true;
+            };
 
-          ## text / markdown (spellcheck)
-          # vale_ls = { enable = true; config = { filetypes = [ "text" "markdown" ]; }; }; # XXX replaced with `codebook`
+          #: text / markdown (spellcheck)
+          #: XXX replaced with `codebook`
+          # vale_ls = { enable = true; config = { filetypes = [ "text" "markdown" ]; }; };
 
-          yamlls.enable = true; # yaml
+          yamlls = # yaml
+            {
+              enable = true;
+              config = {
+                filetypes = [ "yaml" ];
+              };
+            };
 
-          zls.enable = true; # zig
+          zls = # zig
+            {
+              enable = true;
+            };
         };
         luaConfig.post = ''
           do
