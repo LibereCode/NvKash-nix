@@ -409,9 +409,9 @@
               group = augroup('LspAttach_Nested_autocmd', { clear = true }),
 
               callback = function(event)
-                  -- Nice highlight on lsp sysmbols
-                  local client = vim.lsp.get_client_by_id(event.data.client_id)
-                  if client and client:supports_method('textDocument/documentHighlight', event.buf) then
+                -- Nice highlight on lsp sysmbols
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                if client and client:supports_method('textDocument/documentHighlight', event.buf) then
 
                   local highlight_augroup = augroup('Lsp_Nested_CursorHold', { clear = false })
                   autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -434,6 +434,9 @@
                     end,
                   })
                 end
+
+                -- make the log stfu -- see: `:h lsp-log`
+                vim.lsp.log.set_level('off')
               end,
             })
           end
