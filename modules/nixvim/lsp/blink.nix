@@ -18,7 +18,7 @@ in
     {
       #INFO: <https://nix-community.github.io/nixvim/plugins/blink-cmp/settings/index.html>
       plugins = {
-        ${plugin_name} = {
+        blink-cmp = {
           enable = true;
           setupLspCapabilities = true;
 
@@ -80,8 +80,29 @@ in
               };
               menu = {
                 border = "none";
-                direction_priority = mkRaw ''
+                direction_priority.__raw = ''
                   function() -- :h blink-cmp-recipes --> ghost_text
+                    ---fix menu blocking cmdline on small screen
+                    ---
+                    ---Simpler solution:
+                    local max_height = require("blink.cmp.config.completion.menu").default.max_height
+                    local ok, tinycmdline = pcall(require, "tiny-cmdline")
+                    if (vim.o.lines / 2) <= max_height then return { "s" } end
+
+                    -- ---More complex solution...
+                    -- ---Why have it be either string or number... D:
+                    -- local max_height = require("blink.cmp.config.completion.menu").default.max_height
+                    -- local ok, tinycmdline = pcall(require, "tiny-cmdline")
+                    -- if ok then
+                    --   local tinycmdline_y = tinycmdline.config.position.y
+                    --   if
+                    --     type(tinycmdline_y) == "string"
+                    --       and (vim.o.lines * tonumber(tinycmdline_y:match("%d*")) / 100) <= max_height ---strips the "%"
+                    --     or type(tinycmdline_y) == "number"
+                    --       and (vim.o.lines - tinycmdline_y - max_height) <= 0
+                    --   then return { "s" } end
+                    -- end
+
                     local blink = require("blink.cmp")
                     local ctx = blink.get_context()
                     local item = blink.get_selected_item()
