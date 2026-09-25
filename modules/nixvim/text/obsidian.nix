@@ -47,6 +47,9 @@ in
                   local workspacesDir = [[${workspacesDir}]]
                   ---INFO Fixes "directory doesn't exist" error (especially during `nix flake check`)
                   vim.fn.mkdir(vim.fn.expand(workspacesDir.."/projects"), "p" )
+
+                  ---[n]otes -> [o]bsidian
+                  vim.keymap.set("n", "<leader>no", "<CMD>Obsidian<CR>", { desc = "[o]obsidian menu" })
                 end
               '';
           };

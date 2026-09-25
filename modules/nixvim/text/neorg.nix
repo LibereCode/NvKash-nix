@@ -42,9 +42,14 @@ in
             # logger = { };
           };
 
-          # luaConfig.post = ''
-          #
-          # ''
+          luaConfig.post = ''
+
+            ---text/neorg.nix luaConfig.post
+            do
+              ---[n]otes -> n[e]org
+              vim.keymap.set("n", "<leader>ne", "<CMD>Neorg<CR>", { desc = "[e]Neorg menu" })
+            end
+          '';
         };
       };
       extraFiles."ftplugin/norg.lua".source = ./norg.lua;
