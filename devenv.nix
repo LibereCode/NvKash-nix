@@ -19,6 +19,8 @@
   languages = {
     nix.enable = true;
     lua.enable = true;
+
+    rust.enable = true;
   };
 
   # https://devenv.sh/processes/

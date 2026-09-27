@@ -344,17 +344,20 @@
           # };
 
           #: XXX Caused error because `rustc` was missing (add to dependencies?)
+          #: way easier to just enable it per-project
           # rust_analyzer = # rust
-          # {
-          #   enable = true;
-          #   settings = {
-          #     rust-analyzer = {
-          #       check = {
-          #         command = lib.getExe pkgs.clippy;
+          #   {
+          #     enable = true;
+          #     config.settings = {
+          #         rust-analyzer = {
+          #           checkOnSave = true;
+          #           check = {
+          #             command = lib.getExe pkgs.clippy;
+          #             extraArgs = [ "--" "-W" "clippy::pedantic" ];
+          #           };
           #       };
           #     };
           #   };
-          # };
 
           # stylua = # enable in treefmt (devenv)
           # {
