@@ -82,7 +82,7 @@ o.smartcase = true
 o.inccommand = "split"
 o.virtualedit = "block"
 
-o.scrolloff = 10
+o.scrolloff = 999 -- 10 -- TEST
 o.sidescrolloff = 10
 
 o.foldlevel = 99
@@ -91,7 +91,7 @@ o.foldtext = ""
 
 o.smarttab = true
 o.expandtab = true
--- o.smartindent = true -- TODO cindent for ~nix~ ALL files
+-- o.smartindent = true
 o.autoindent = true
 o.cindent = true
 opt.cinkeys:remove("0#") -- remove stupid tab de-indent

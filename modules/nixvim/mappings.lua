@@ -74,6 +74,9 @@ map("<leader>uC", function()
   vim.opt_local.cursorline = not vim.o.cursorline
   vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
 end, { desc = "toggle [C]cursor{Line+Column}" })
+map("<leader>us", function()
+  vim.o.scrolloff = vim.o.scrolloff ~= 999 and 999 or 10
+end, { desc = "toggle [s]scrolloff" })
 
 --[[
     Buffer
