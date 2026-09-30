@@ -17,7 +17,7 @@ in
       plugins = {
         ## INFO GUIDE <https://nvim-orgmode.github.io/tutorial>
         orgmode = {
-          enable = false; # true; # see ./neorg.nix
+          enable = true; # see ./neorg.nix
 
           ## DOCS <https://nvim-orgmode.github.io/configuration>
           settings = {
