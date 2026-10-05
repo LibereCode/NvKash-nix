@@ -3,16 +3,16 @@
 }:
 let
   #XXX: RENAME TO PLUGIN'S NAME
-  pluginName = "FOOBAR";
+  module_name = "FOOBAR";
 in
 {
-  flake.nixvimModules.${pluginName} =
+  flake.nixvimModules.${module_name} =
     {
       ...
     }:
     {
       plugins
-        # .CHANGE_ME # XXX: RENAME ME (I don't use the variable, because of nixd completions)
+        # .CHANGE_ME #XXX: RENAME ME (I don't use the variable, because of nixd completions)
         = {
           # enable = true;
           #

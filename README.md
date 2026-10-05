@@ -1,5 +1,9 @@
 # New Nixvim template
 
+> [!NOTE]
+> THIS WASEN'T WRITTEN BY ME (liberecode).
+> IT WAS INCLUDED FROM THE FORK!
+
 This template gives you a good starting point for configuring NixVim as a standalone module configuration.
 
 ## Configuring
@@ -29,6 +33,8 @@ This is exported as the flake output `checks.<system>.default`.
 This test can be run using `nix flake check`.
 
 ## DEV
+
+(This was me, hihi).
 
 See an AWESOME nvim-lsp-devenv integration at [./.nvim.lua].
 You will get lsp-completions for **NixVim** via `nixd`.
