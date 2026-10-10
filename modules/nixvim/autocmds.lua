@@ -1,4 +1,5 @@
---[[ |==============|
+--[[
+|==============|
 |   AUTOCMDS   |
 |==============|
 --]]
@@ -42,7 +43,7 @@ autocmd("CmdwinEnter", "CmdwinEnter-syntaxHL", {
   end,
 })
 
--- NOTE set filetypes
+---{{ NOTE set filetypes
 
 local function autoSetFt(ft, pattern)
   autocmd("BufEnter", "BufEnter_set_ft_" .. ft, {
@@ -65,3 +66,21 @@ autoSetFt("todotxt", { "*.todo.txt", "todo.txt", "*.done.txt", "done.txt", "*.2d
 -- autoSetFt("2do", { "*.2do", "*.2do.txt", "2do.txt" }) -- TODO replace ft: todotxt -> 2do
 autoSetFt("dosini", { "*config", "config" })
 autoSetFt("log", { "*.log" })
+
+---NOTE filetype autocmds }}
+
+autocmd("BufWinEnter", "BufWinEnter_todotxt_.nvim", {
+  desc = "Filetype config for todotxt.",
+  pattern = "*todo.txt",
+  callback = function(ev)
+    local map = vim.keymap.set
+    map({ "n" }, "<localleader>x", function()
+      local line = vim.api.nvim_get_current_line()
+      if line:sub(1, 1) == "x" then
+        vim.api.nvim_set_current_line(line:sub(3))
+      else
+        vim.api.nvim_set_current_line("x " .. line)
+      end
+    end, { desc = "toggle done", buf = ev.buf })
+  end,
+})
