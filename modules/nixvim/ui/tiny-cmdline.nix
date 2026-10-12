@@ -35,6 +35,7 @@ in
 
                   -- border = "shadow", -- I... AM... _A.T.O.M.I.C_
                   border = "double", -- nil, "none", vim.o.winborder options
+                  -- border = { "·", "¯", "·", "¦", "·", "ˍ", "·", "¦", },
 
                   menu_col_offset = 3,
 
