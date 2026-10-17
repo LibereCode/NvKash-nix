@@ -101,15 +101,18 @@ in
 
                   vim.fn.mkdir(journal_dir, "p")
                   if not vim.uv.fs_stat(journal_entry) then
-                    local data = {
+                    local date = year .. "-" .. month .. "-" .. day
+                    local text = {
                       "---",
-                      "id: " .. year .. "-" .. month .. "-" .. day,
+                      "id: " .. date,
                       "aliases: []",
                       "tags:",
                       "  - daily-notes",
                       "---",
+                      "",
+                      "# " .. date,
                     }
-                    vim.fn.writefile(data, journal_entry)
+                    vim.fn.writefile(text, journal_entry)
                   end
                   vim.cmd.edit({ args = { journal_entry } })
                 end, {
