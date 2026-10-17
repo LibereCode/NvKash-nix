@@ -57,30 +57,11 @@ in
               ---`plugins.obsidian.luaConfig.post`:
               ---{{
 
+              ---TEST: TEMP
+              -- local obsidian_workspace = "~/Notes/obsidian"
+
               do
-                ---Return the directory and file of the new journal entry.
-                ---@param day_mod number number of days from current day (ie: tomorrow = 1, yesterday = -1, 2 months = 61)
-                ---@return string journal_dir _dirname_ to the journal_entry (**WITHOUT** tailing "/")
-                ---@return string journal_entry _filename_ of the journal_entry
-                local function get_journal_path(day_mod)
-                  ---@type osdateparam
-                  ---@diagnostic disable-next-line: assign-type-mismatch
-                  local date = os.date("*t")
-                  date.day = date.day + tonumber(day_mod) ---yes, this work
-                  local time = os.time(date)
-
-                  ---@type osdateparam
-                  ---@diagnostic disable-next-line: assign-type-mismatch
-                  local date_time = os.date("*t", time)
-                  local year, month, day = tostring(date_time.year), tostring(date_time.month), tostring(date_time.day)
-                  local journal_dir = vim.fn.expand(obsidian_workspace .. "/journal" .. "/" .. year .. "/" .. month)
-                  local journal_entry = journal_dir .. "/" .. day .. ".md"
-                  return journal_dir, journal_entry
-                end
                 vim.api.nvim_create_user_command("ObsidianJournal", function(opts)
-                  ---TEST: TEMP
-                  -- local obsidian_workspace = "~/Notes/obsidian"
-
                   ---`print` and `input` to get `day_mod`
                   ---@return integer? day_mod answer from input
                   local function day_mod_input()
@@ -100,12 +81,36 @@ in
 
                   local day_mod = tonumber(opts.args) or day_mod_input()
                   ---Cancel if day_mod_input return nothing (ie: non-integer)
-                  if not day_mod then return end
+                  if not day_mod then
+                    return
+                  end
 
-                  local journal_dir, journal_entry = get_journal_path(day_mod)
+                  ---@type osdateparam
+                  ---@diagnostic disable-next-line: assign-type-mismatch
+                  local date = os.date("*t")
+                  date.day = date.day + tonumber(day_mod) ---yes, this work
+                  local time = os.time(date)
+
+                  ---@type osdateparam
+                  ---@diagnostic disable-next-line: assign-type-mismatch
+                  local date_time = os.date("*t", time)
+                  local year, month, day = tostring(date_time.year), tostring(date_time.month), tostring(date_time.day)
+                  local journal_dir = vim.fn.expand(obsidian_workspace .. "/journal" .. "/" .. year .. "/" .. month)
+                  local journal_entry = journal_dir .. "/" .. day .. ".md"
                   -- vim.print(journal_dir, journal_entry) ---Debug
 
                   vim.fn.mkdir(journal_dir, "p")
+                  if not vim.uv.fs_stat(journal_entry) then
+                    local data = {
+                      "---",
+                      "id: " .. year .. "-" .. month .. "-" .. day,
+                      "aliases: []",
+                      "tags:",
+                      "  - daily-notes",
+                      "---",
+                    }
+                    vim.fn.writefile(data, journal_entry)
+                  end
                   vim.cmd.edit({ args = { journal_entry } })
                 end, {
                   desc = "A better version of `:Obsidian today/tomorrow/yesterday`. (Declared in nixvim/text/obsidian.nix)",
