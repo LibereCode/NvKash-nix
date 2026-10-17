@@ -192,6 +192,7 @@ map("<M-i>", "^", { desc = "Left<-most" }, "n") -- remap = true
 map("<M-a>", "$", { desc = "Right->most" }, "n") -- remap = true
 
 map("<M-f>", "za", { desc = "[f]fold" }, "n")
+map("zz", "za", { desc = "toggle fold under cursor (za)" }, "n")
 
 map("<leader>m", ":mes<CR>", { desc = "[m]messages", silent = true }, "n")
 

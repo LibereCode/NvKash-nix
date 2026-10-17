@@ -1,4 +1,4 @@
-{ self, inputs, ... }@top:
+{ ... }:
 let
   plugin_name = "lualine";
 in
@@ -103,6 +103,8 @@ in
               lualine_c = [
                 "branch"
                 "diff"
+
+                # "%S" # See `:h showcmdloc`
               ];
               lualine_x = [
                 "diagnostics"
@@ -283,6 +285,27 @@ in
             ];
 
           }; # TODO: <https://nix-community.github.io/nixvim/plugins/lualine/settings/index.html>
+
+          luaConfig.post = ''
+            ---`plugins.lualine.luaConfig.post`
+            ---{{
+            do
+              vim.api.nvim_create_autocmd("RecordingEnter", {
+                group = vim.api.nvim_create_augroup("RecordingEnter_notify", { clear = true }),
+                desc = "Notify when starting to record a macro.",
+                callback = function(ev)
+                  local msg, level = "RECORDING macro on registry: " .. vim.fn.reg_recording(), vim.log.levels.WARN
+                  vim.notify(msg, level)
+
+                  local ok, fidget = pcall(require, "fidget")
+                  if ok then
+                    fidget.notify(msg, level)
+                  end
+                end,
+              })
+            end
+            ---}}
+          '';
         };
       };
     };

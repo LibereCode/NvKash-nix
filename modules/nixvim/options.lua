@@ -117,6 +117,9 @@ opt.wildoptions = { "fuzzy", "pum", "tagfile" }
 opt.whichwrap:append("<>[]hl")
 opt.shortmess:append("as")
 
+o.showcmd = true
+o.showcmdloc = "statusline"
+
 -- ---------
 -- # globals
 -- ---------
