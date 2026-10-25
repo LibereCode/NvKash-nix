@@ -5,7 +5,7 @@
     {
       plugins = {
         trouble = {
-          enable = true;
+          enable = false; # true; # NOTE
 
           settings = {
             # auto_close = false; # when 0 diagnostics

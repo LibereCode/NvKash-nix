@@ -5,16 +5,15 @@ let
   pluginName = "perfanno";
 in
 {
-  flake.nixvimModules.plugins =
+  flake.nixvimModules.${pluginName} =
     {
       lib,
       ...
     }:
     {
       plugins = {
-        #TEST:
-        ${pluginName} = {
-          enable = true;
+        perfanno = {
+          enable = false; # true; # NOTE
           settings = {
             annotate_after_load = true;
             annotate_on_open = true;

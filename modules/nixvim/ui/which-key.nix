@@ -80,8 +80,30 @@ in
                 group = "[f]find/files";
               }
               {
+                __unkeyed-1 = "<leader>g";
+                group = "[g]git";
+              }
+              {
+                __unkeyed-1 = "<leader>l";
+                group = "[l]lsp";
+                icon = " ";
+              }
+              {
+                __unkeyed-1 = "<leader>n";
+                group = "[n]notes";
+                icon = "󰹕 ";
+              }
+              {
+                __unkeyed-1 = "<leader>q";
+                group = "[q]quit/session";
+              }
+              {
                 __unkeyed-1 = "<leader>s";
                 group = "[s]search/string";
+              }
+              {
+                __unkeyed-1 = "<leader>t";
+                group = "[t]test";
               }
               {
                 __unkeyed-1 = "<leader>u";
@@ -102,7 +124,16 @@ in
                 ## motions, text-objects, operators, nav, z, and g (and more?)
               }
 
-              ## END W LEADER
+              {
+                __unkeyed-1 = "<leader><tab>";
+                group = "tab";
+              }
+              {
+                __unkeyed-1 = "<leader><leader>";
+                group = "<space>local-leader";
+              }
+
+              ## END WITH LEADER
 
               {
                 __unkeyed-1 = "Z";

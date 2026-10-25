@@ -5,14 +5,14 @@ in
 {
   flake.nixvimModules.${module_name} =
     {
-      pkgs,
+      # pkgs,
       ...
     }:
     {
       plugins = {
         ## [See `vimtex` docs](https://github.com/lervag/vimtex#configuration)
         vimtex = {
-          enable = true;
+          enable = false; # true; # NOTE
           # WARN Default texlive (texliveMedium) is ~= 1.7 GiB, and it is required...
           # texlivePackage = pkgs.texliveMedium;
           settings = {

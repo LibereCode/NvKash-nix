@@ -12,7 +12,7 @@ in
     {
       plugins = {
         neotest = {
-          enable = true;
+          enable = false; # true; # XXX too complex
           adapters = {
             bash.enable = true;
             ctest.enable = true; # c

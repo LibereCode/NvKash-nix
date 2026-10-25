@@ -4,11 +4,14 @@ let
 in
 {
   flake.nixvimModules.${pluginName} =
-    { ... }:
+    {
+      config,
+      ...
+    }:
     {
       plugins = {
         neorg = {
-          enable = true;
+          enable = false; # true; # NOTE simple markdown is better
           telescopeIntegration.enable = true;
 
           # lazyLoad.settings = {
@@ -52,6 +55,9 @@ in
           '';
         };
       };
-      extraFiles."ftplugin/norg.lua".source = ./norg.lua;
+      extraFiles."ftplugin/norg.lua" = {
+        source = ./norg.lua;
+        enable = config.plugins.neorg.enable;
+      };
     };
 }

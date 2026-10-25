@@ -46,7 +46,7 @@ in
             '';
           };
 
-          #NOTE: by default all grammar is installed
+          # #NOTE: by default all grammar is installed
           # grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
           #   awk
           #   bash

@@ -9,8 +9,8 @@ in
     }:
     {
       plugins = {
-        ${plugin_name} = {
-          enable = true;
+        otter = {
+          enable = false; # true; # NOTE
 
           autoActivate = false;
           #XXX: Really many errors. Instead activate on:
